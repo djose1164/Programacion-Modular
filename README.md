@@ -9,4 +9,4 @@ Compras:  Comprar producotos, Crear y comprar productos, Ver compras hechas, Eli
 
 Ventas: Vender, ver las ventas realizadas, editar pedidos(sudo), eliminar pedidos(sudo), caja registradora
 
-Contabilidad: Estado de resultado, modificar cuentas(sudo) Devito, Credito, Banco, Cuentas por cobrar, Cuentas por pagar,
+Contabilidad: Estado de resultado, modificar cuentas(sudo) Devito, Credito, Banco, Cuentas por cobrar, Cuentas por pagar.

@@ -5,7 +5,7 @@
 - Contabiliad
 
 Inventario: Guardara los productos, Editar productos(sudo), Eliminar producto(sudo), Reporte de inventario
-Compras:  Comprar producotos, Crear y comprar productos, Ver compras hechas, Eliminar y editar compras(sudo)
+Compras: Comprar producotos, Crear y comprar productos, Ver compras hechas, Eliminar y editar compras(sudo)
 
 Ventas: Vender, ver las ventas realizadas, editar pedidos(sudo), eliminar pedidos(sudo), caja registradora
 

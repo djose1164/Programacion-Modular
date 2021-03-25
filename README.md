@@ -11,3 +11,6 @@ Compras: Comprar producotos, Crear y comprar productos, Ver compras hechas, Elim
 Ventas: Vender, ver las ventas realizadas, editar pedidos(sudo), eliminar pedidos(sudo), caja registradora
 
 Contabilidad: Estado de resultado, modificar cuentas(sudo) Devito, Credito, Banco, Cuentas por cobrar, Cuentas por pagar.
+
+## Contribuidores
+Jose S. Daniel - 2020-10646

@@ -15,4 +15,6 @@ Contabilidad: Estado de resultado, modificar cuentas(sudo) Devito, Credito, Banc
 ## Contribuidores
 Jose S. Daniel - 2020-10646
 
-Milvia Victorio - 2020-9598
+Milvia Victorio - 20209598
+
+Engeers O.Rossis - 2020-10573

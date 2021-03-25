@@ -13,8 +13,8 @@ Ventas: Vender, ver las ventas realizadas, editar pedidos(sudo), eliminar pedido
 Contabilidad: Estado de resultado, modificar cuentas(sudo) Devito, Credito, Banco, Cuentas por cobrar, Cuentas por pagar.
 
 ## Contribuidores
-Jose S. Daniel - 2020-10646
+* Jose S. Daniel - 2020-10646
 
-Milvia Victorio - 20209598
+* Milvia Victorio - 20209598
 
-Engeers O.Rossis - 2020-10573
+* Engeers O.Rossis - 2020-10573

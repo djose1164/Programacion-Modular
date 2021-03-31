@@ -12,16 +12,6 @@
 #define USERS_H
 
 /**
- * @brief Luego de haber registrado un nuevo usario esta funcion lo agregara a un archivo de texto.
- * Si el archivo no existe creara uno.
- * 
- * @param file_name Nombre del archivo de txt donde se guardaran los datos.
- * @param username El nombre del usuario a guardar.
- * @param password La contraseña del usuario a guardar.
- */
-void __save_into_file__(const char *username, const char *password);
-
-/**
  * @brief Constantes para el eturn de la funcion validate.
  * 
  */
@@ -46,8 +36,18 @@ struct User
     unsigned short full;
 };
 
-/* Si el usario esta registrado 0, de lo contrario 1 */
-extern short valide_user;
+// Fichero a usar.
+const char *file_name;
+
+/**
+ * @brief Luego de haber registrado un nuevo usario esta funcion lo agregara a un archivo de texto.
+ * Si el archivo no existe creara uno.
+ * 
+ * @param file_name Nombre del archivo de txt donde se guardaran los datos.
+ * @param username El nombre del usuario a guardar.
+ * @param password La contraseña del usuario a guardar.
+ */
+void __save_into_file__(const char *username, const char *password);
 
 /**
  * @brief Anade un nuevo usuario a nueva struct.
@@ -71,4 +71,17 @@ int validate_user(const char *username, const char *password);
  * 
  */
 void __init_usersarr__();
+/**
+ * @brief Usalo para cuando quieras validar desde fichero.
+ * Si la funcion encuentra la primera linea en blanco significa que el fichero es nuevo,
+ * y por lo tanto no habra informacion a validar.
+ * 
+ * @param __f Conecion al fichero.
+ * @param username Nombre del usuario a validar.
+ * @param password La contraseña del usuario a validar.
+ * @return Retorna 0 si fue exitoso, 1 de lo contrario.
+ *
+ * Todo: @Engeers @milv24 
+ */
+int __validate_from_file__(const char *file_name, const char *username, const char *password);
 #endif //USERS_H

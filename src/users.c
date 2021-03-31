@@ -1,3 +1,13 @@
+/**
+ * @file users.c
+ * @author @djose1164
+ * @brief Implemetacion del header "users.h".
+ * @version 0.1
+ * @date 2021-03-31
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include "../include/users.h"
 #include <string.h>
 #include <stdio.h>
@@ -59,4 +69,12 @@ int validate_user(const char *username, const char *password)
     }
 
     return -1;
+}
+
+int __validate_from_file__(const char *file_name, const char *username, const char *password)
+{
+    /**
+     * @brief Definicion aca, pueden cambiar los parametros.
+     * 
+     */
 }

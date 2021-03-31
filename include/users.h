@@ -12,6 +12,16 @@
 #define USERS_H
 
 /**
+ * @brief Luego de haber registrado un nuevo usario esta funcion lo agregara a un archivo de texto.
+ * Si el archivo no existe creara uno.
+ * 
+ * @param file_name Nombre del archivo de txt donde se guardaran los datos.
+ * @param username El nombre del usuario a guardar.
+ * @param password La contraseña del usuario a guardar.
+ */
+void __save_into_file__(const char *username, const char *password);
+
+/**
  * @brief Constantes para el eturn de la funcion validate.
  * 
  */

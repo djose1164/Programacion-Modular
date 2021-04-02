@@ -1,7 +1,7 @@
 /**
  * @file database.c
  * @author @djose1164
- * @brief Implementacion/definicion del header Database.h.
+ * @brief Implementacion/definicion del header database.h.
  * 
  * 
  */
@@ -11,8 +11,7 @@
 //#include "../include/users.h" Para proxima actualizacion.
 #include <string.h>
 
-// El limite de usario que podran register por ejecucion del programa.
-#define MAX_USERS 50
+const size_t MAX_USERS =  50;
 
 // Variables globales.
 sqlite3 *db;
@@ -30,31 +29,20 @@ void check_error(int conn, sqlite3 *db)
     }
 }
 
-// Retorna connn si fue un exito la creacion de la db. Cierra el programa
-// de lo contrario.
 static int __init_database__(const char *database_name)
 {
-#ifndef CONNECTED
-#define CONNECTED
     int conn = sqlite3_open(database_name, &db);
     check_error(conn, db);
     return 0;
-#endif //CONNECTED
 }
 
-static bool __create_table__(const char *query)
+static void __create_table__(const char *query)
 {
     char *errmsg;
+
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
-    if (!conn)
-    {
-        return true;
-    }
-    else
-    {
+    if (conn != SQLITE_OK)
         fprintf(stderr, "Couldn't create the table: %s.", errmsg);
-        return false;
-    }
 }
 
 static int __validate__(const char *const username, const char *const password)
@@ -89,13 +77,25 @@ static int __validate__(const char *const username, const char *const password)
     int step;
 
     if ((step = sqlite3_step(res)) != SQLITE_ROW)
+    {
+        sqlite3_finalize(res);
+        sqlite3_close(db);
         return not_found;
+    }
     else
     {
         if (1 == sqlite3_column_int(res, 2))
+        {
+            sqlite3_finalize(res);
+            sqlite3_close(db);
             return admin;
+        }
         else
+        {
+            sqlite3_finalize(res);
+            sqlite3_close(db);
             return guest;
+        }
     }
     return -1;
 }
@@ -105,15 +105,60 @@ int validate(const char *username, const char *password)
     return __validate__(username, password);
 }
 
+void __insert_into__(const char *table_name, const char *columns_name[],
+                     const char *rows)
+{
+    if (table_name == NULL)
+    {
+        char *query = {
+            "INSERT INTO users(username, password, is_admin) "
+            "VALUES(?, ?, ?);"
+        };
+    }
+    // Array de punteros a los datos.
+    char *data[] = {(char *)username, (char *)password};
+
+    // Mensaje de error.
+    char *errmsg;
+
+    char *query = {
+        "INSERT INTO users(username, password, is_admin) "
+        "VALUES(?, ?, ?);"};
+
+    // Prepara la coneccion.
+    conn = sqlite3_prepare_v2(db, query, -1, &res, NULL);
+    check_error(conn, db);
+
+    for (size_t i = 1; i <= 2; i++)
+    {
+        // Enlaza el valor (cambia ? por su debido valor).
+        conn = sqlite3_bind_text(res, i, data[i - 1], -1, NULL);
+        check_error(conn, db);
+    }
+    conn = sqlite3_bind_int(res, 3, is_admin);
+    check_error(conn, db);
+
+    int step = sqlite3_step(res);
+}
+
 void add_user(const char *username, const char *password, int is_admin)
 {
+    /**
+     **Solo establecera la coneccion con la database una vez por ejecucion del
+     **programa.
+    */
+#ifndef CONNECTED
+#define CONNECTED
     __init_database__("test.db");
+
     // Crea una query para luego ser usada para crear la database
     char *table_query = {"CREATE TABLE IF NOT EXISTS users("
                          "username TEXT, "
                          "password TEXT, "
                          "is_admin INT);"};
-    bool status = __create_table__(table_query);
+    __create_table__(table_query);
+#endif //CONNECTED
+
     int conn;
 #if 0  // 0
     struct toValidate toValidate[MAX_USERS];
@@ -132,33 +177,11 @@ void add_user(const char *username, const char *password, int is_admin)
         }
     }
 #endif //0
+    char *columns_name[] = {"username", "password", "is_admin"};
+    const char *rows[] = {username, password, is_admin};
+    __insert_into__(NULL, columns_name, );
 
-    // Array de punteros a los datos.
-    char *data[] = {(char *)username, (char *)password};
-
-    // Mensaje de error.
-    char *errmsg;
-
-    if (status == false)
-        exit(-1);
-
-    char *query = {"INSERT INTO users(username, password, is_admin) VALUES(?, ?, ?);"};
-    // Prepara la coneccion.
-    conn = sqlite3_prepare_v2(db, query, -1, &res, NULL);
-    check_error(conn, db);
-
-    for (size_t i = 1; i <= 2; i++)
-    {
-        // Enlaza el valor (cambia ? por su debido valor).
-        conn = sqlite3_bind_text(res, i, data[i - 1], -1, NULL);
-        check_error(conn, db);
-    }
-    conn = sqlite3_bind_int(res, 3, is_admin);
-    check_error(conn, db);
-
-    int step = sqlite3_step(res);
-
-    printf("User created successfully!\n");
+        printf("User created successfully!\n");
 }
 
 /*

@@ -1,27 +1,46 @@
+/**
+ * @file main.c
+ * @author @djose1164, @Engeers, @milv24
+ * @brief Ejecucion del programa.
+ * 
+ * Mas detalles aca
+ * 
+ * Para iniciar seccion como root deberas pasar la contraseña: 1234, por la terminal
+ * cuando vayas a ejucutar el programa. Ej: En Linux ./main 1234.
+ * @version 0.1
+ * @date 2021-04-01
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include <stdio.h>
-#include "../include/users.h"
+#include <string.h>
+#include "../include/database.h"
 
-int main()
+int main(int argc, char *const argv[])
 {
-	__init_usersarr__();
-	add_user("djose1164", "1234");
-	short status = validate_user("djose1164", "124");
+	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
+		printf("Welcome back, master.\n");
 
-	if (!status)
-		printf("Bienvenido!\n");
-	else
-		switch (status)
-		{
-		case invalid_user:
-			printf("Tu nombre de usuario no fue encontrado.\n"
-				   "Verica que te hallas registrado.\n");
-			break;
-		case invalid_password:
-			printf("Tu contraseña es incorrecta.\n");
-			break;
-		default:
-			printf("Parece que hay un bug.\n");
-			break;
-		}
-	return (0);
+	printf("El programa esta en: %s\n", argv[0]);
+
+	add_user("djose1164", "1234", 1);
+	int status = validate("djose1164", "1234");
+	switch (status)
+	{
+	case admin:
+		printf("Eres admin.\n");
+		break;
+	case guest:
+		printf("Eres invitado.\n");
+		break;
+	case not_found:
+		printf("Verifica que hayas ingresado los datos correctamente.\n");
+		break;
+	default:
+		printf("Error! Put a issue well explained about this bug.\n");
+		break;
+	}
+
+	return 0;
 }

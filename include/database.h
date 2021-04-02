@@ -20,10 +20,36 @@ struct toValidate
     char *password;
 };
 
+enum return_validate
+{
+    admin,
+    guest,
+    not_found
+};
+
+// Variables para el manejo de la base de datos.
 extern sqlite3 *db;
 extern sqlite3_stmt *res;
 extern char *errmsg;
 extern int conn;
+
+/**
+ * @brief Anade a un nuevo usario a la database.
+ * 
+ * @param username Nombre del usuario.
+ * @param password La contraseña.
+ * @param is_admin True si lo es, false si es invitado.
+ * @return int 
+ */
+void add_user(const char *username, const char *password, int is_admin);
+
+/**
+ * @brief Para uso interno.
+ * 
+ * TODO: Hacerlo mas abstracto.
+ * 
+ */
+static int __validate__(const char *const username, const char *const password);
 
 /**
  * @brief Usalo para verificar el usario y la contraseña del usario.
@@ -33,17 +59,19 @@ extern int conn;
  * @return int Retorna 0 si esta registrado. Retorna 1 si el username esta incorrecto
  *         Retorna -1 si el password esta incorrecto.
  */
-extern bool __validate__(const char *const username, const char *const password);
+extern int validate(const char *const username, const char *const password);
 
 /**
  * @brief Crea una nueva database si no existe.
  * Ej: Si pasas como nombre test.db y test.db no esta en tu actual directorio (donde estas ejucutando,
  * el programa) creara una nueva database; en caso de que exista creara una conexion.
  * 
+ * IMPORTANT: Para uso interno
+ * 
  * @param database_name 
  * @return int 
  */
-extern int __init_database__(const char *database_name);
+static int __init_database__(const char *database_name);
 
 /**
  * @brief Crea una nueva tabla. Para ver como crear un tabla visita el siguiente link:
@@ -54,7 +82,7 @@ extern int __init_database__(const char *database_name);
  * @return true Si fue exitoso.
  * @return false Si fallo.
  */
-extern bool __create_table__(const char *query);
+static bool __create_table__(const char *query);
 
 /**
  * @brief Se usara para insertar datos en la tabla productos.
@@ -66,7 +94,7 @@ extern bool __create_table__(const char *query);
  * @return true Si se pudo insertar los datos.
  * @return false Error al insertar.
  */
-extern bool __insert_into__(void*parametros);
+static bool __insert_into__(void *parametros);
 
 /**
  * @brief Busca un producto por su id y muestra toda su informacion.
@@ -74,7 +102,7 @@ extern bool __insert_into__(void*parametros);
  * @param id 
  * @return char* Devuelve la informacion recolectada.
  */
-extern char* search_product_by_id(const int id);
+extern char *search_product_by_id(const int id);
 
 /**
  * @brief Actualiza un valor. Ej: id = 10, new_value = 50, is_int = true;

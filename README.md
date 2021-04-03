@@ -1,12 +1,10 @@
 # Programacion-Modular
 
-Proyecto orientado a simular una pequena tiendas con diferentes modulos. Siendo database.h el mas importante. Implementado con SQLite3.
+Proyecto orientado a simular una pequena tienda con diferentes modulos. Siendo database.h el mas importante(necesitas saber SQL para poder modificarlo debidamente). Implementado con SQLite3.
 
 ## Como copilar?
 
-Debido a que se implementa la API de SQLite3, si no la incluyes no podras copilar. Para copilar debes agregar la libreria con **l sqlite3**: Ej: gcc -o main src/main.c src/database.c -l sqlite3
-
-Ejemplo para que algo haya cambiado y hacer el commit. Anadi algo mas a esto.
+Debido a que se implementa la API de SQLite3, si no la incluyes no podras copilar. Para copilar debes agregar la libreria con __-l sqlite3__: Ej: gcc -o main src/main.c src/database.c -l sqlite3
 
 ## Contribuidores
 
@@ -15,3 +13,5 @@ Ejemplo para que algo haya cambiado y hacer el commit. Anadi algo mas a esto.
 - Milvia Victorio - 2020-9598
 
 - Engeers O.Rossis - 2020-10573
+
+- Robeert Avila - 2019-8215

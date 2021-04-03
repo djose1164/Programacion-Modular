@@ -1,6 +1,6 @@
 /**
  * @file main.c
- * @author @djose1164, @Engeers, @milv24
+ * @author @djose1164, @Engeers, @milv24, @robert1090
  * @brief Ejecucion del programa.
  * 
  * Mas detalles aca
@@ -19,13 +19,16 @@
 
 int main(int argc, char *const argv[])
 {
+	/**
+	 * TODO: Hacer algo.
+	 */
 	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
 		printf("Welcome back, master.\n");
 
 	printf("El programa esta en: %s\n", argv[0]);
 
-	add_user("djose1164", "1234", 1);
-	int status = validate("djose1164", "1234");
+	add_user("Jose", "1234", 0);
+	int status = validate("Jose", "1234");
 	switch (status)
 	{
 	case admin:

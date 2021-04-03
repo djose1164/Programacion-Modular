@@ -15,22 +15,19 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-
 /**Struct donde se almacenara los datos a guardar. Deberas pasar esto a su
  * debida funcion.
  */
 struct to_insert
 {
     // Nombre del usuario a guardar.
-    const char *username;
+    char username[50];
     // Password del usuario a guardar.
-    const char *password;
+    char password[50];
     // Su nivel de priveligio.
     int is_admin;
-    // Nomres de la columna donde se insertaran los datos.
-    char **columns_name;
-    // Los valores para las columnas.
-    char *rows[];
+    // Esta llena?
+    bool full;
 };
 
 enum return_validate
@@ -100,8 +97,8 @@ static void __create_table__(const char *query);
  * @param rows La cantidad de datos por fila 
  * 
  */
-static void __insert_into__(const char *table_name, const char *columns_name[],
-                            const char *rows);
+static bool __insert_into__(const char *table_name, const char *columns_name[],
+                            struct to_insert *const rows);
 
 /**-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- */
 /**

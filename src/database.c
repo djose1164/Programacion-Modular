@@ -11,7 +11,7 @@
 //#include "../include/users.h" Para proxima actualizacion.
 #include <string.h>
 
-const size_t MAX_USERS =  50;
+const size_t MAX_USERS = 50;
 
 // Variables globales.
 sqlite3 *db;
@@ -105,25 +105,20 @@ int validate(const char *username, const char *password)
     return __validate__(username, password);
 }
 
-void __insert_into__(const char *table_name, const char *columns_name[],
-                     const char *rows)
+bool __insert_into__(const char *table_name, const char *columns_name[],
+                     struct to_insert *const rows)
 {
-    if (table_name == NULL)
-    {
-        char *query = {
-            "INSERT INTO users(username, password, is_admin) "
-            "VALUES(?, ?, ?);"
-        };
-    }
-    // Array de punteros a los datos.
-    char *data[] = {(char *)username, (char *)password};
-
-    // Mensaje de error.
-    char *errmsg;
+    int conn;
 
     char *query = {
         "INSERT INTO users(username, password, is_admin) "
         "VALUES(?, ?, ?);"};
+
+    // Mensaje de error.
+    char *errmsg;
+
+    // Cambiando estructura de datos.
+    char *data[] = {rows->username, rows->password};
 
     // Prepara la coneccion.
     conn = sqlite3_prepare_v2(db, query, -1, &res, NULL);
@@ -135,10 +130,12 @@ void __insert_into__(const char *table_name, const char *columns_name[],
         conn = sqlite3_bind_text(res, i, data[i - 1], -1, NULL);
         check_error(conn, db);
     }
-    conn = sqlite3_bind_int(res, 3, is_admin);
+    conn = sqlite3_bind_int(res, 3, rows->is_admin);
     check_error(conn, db);
 
     int step = sqlite3_step(res);
+
+    return true;
 }
 
 void add_user(const char *username, const char *password, int is_admin)
@@ -160,28 +157,33 @@ void add_user(const char *username, const char *password, int is_admin)
 #endif //CONNECTED
 
     int conn;
-#if 0  // 0
-    struct toValidate toValidate[MAX_USERS];
+
+    struct to_insert to_insert[MAX_USERS];
     // Pone todas las structs a vacia.
     for (size_t i = 0; i < MAX_USERS; i++)
     {
-        toValidate[i].full = false;
+        to_insert[i].full = false;
     }
     // Toma una struct vacia y almacena los datos alli.
-    for (size_t i = 0; i < MAX_USERS; i++)
+    bool temp = true;
+    for (size_t i = 0; i < MAX_USERS && temp; i++)
     {
-        if (!toValidate[i].full)
+        temp = true;
+        if (!to_insert[i].full)
         {
-            strcpy(toValidate[i].username, username);
-            strcpy(toValidate[i].password, password);
+            to_insert[i].full = true;
+            strcpy(to_insert[i].username, username);
+            strcpy(to_insert[i].password, password);
+            to_insert[i].is_admin = is_admin;
+
+            // Almacena los datos por caa cada estructura vacia.
+            char *columns_name[] = {"username", "password", "is_admin"};
+            if (__insert_into__("users", (const char **)columns_name, &to_insert[i]))
+                printf("User created successfully!\n");
+
+            temp = false;
         }
     }
-#endif //0
-    char *columns_name[] = {"username", "password", "is_admin"};
-    const char *rows[] = {username, password, is_admin};
-    __insert_into__(NULL, columns_name, );
-
-        printf("User created successfully!\n");
 }
 
 /*
@@ -189,9 +191,9 @@ int callback(void *data, int column_count, char **columns, char **columns_names)
 {
     for (int i = 0; i < column_count; i++)
     {
-        if (strcmp(toValidate.username, columns[i]) == 0)
+        if (strcmp(to_insert.username, columns[i]) == 0)
             return temp;
-        else if (strcmp(toValidate.password, columns[i]) == 0)
+        else if (strcmp(to_insert.password, columns[i]) == 0)
             return _temp;
     }
     if (!temp && !_temp)

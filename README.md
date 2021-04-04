@@ -8,10 +8,6 @@ Debido a que se implementa la API de SQLite3, si no la incluyes no podras copila
 
 ## Contribuidores
 
-* Jose S. Daniel - 2020-10646
+- Jose S. Daniel - 2020-10646
 
-* Milvia Victorio - 2020-9598
-
-* Engeers O.Rossis - 2020-10573
-
-* Robert Avila - 2019-8215
+- Milvia Victorio - 2020-9598

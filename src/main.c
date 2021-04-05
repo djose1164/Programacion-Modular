@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/database.h"
+#include "../include/inventario.h"
 
 int main(int argc, char *const argv[])
 {
@@ -27,12 +28,18 @@ int main(int argc, char *const argv[])
 
 	printf("El programa esta en: %s\n", argv[0]);
 
-	add_user("Jose", "1234", 0);
-	int status = validate("Jose", "1234");
+	add_user("djose1164", "1234", 1);
+	int status = validate("djose1164", "1234");
 	switch (status)
 	{
 	case admin:
 		printf("Eres admin.\n");
+		short temp = save_product("Lata de maiz", 35, 5);
+		if (temp)
+			printf("The product have been saved successfully!\n");
+		else
+			printf("It looks like the product couldn't be saved. "
+				   "Send an issue about this bug.\n");
 		break;
 	case guest:
 		printf("Eres invitado.\n");

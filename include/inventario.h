@@ -11,31 +11,44 @@
 #ifndef INVENTARIO_H
 #define INVENTARIO_H
 
+#include <stddef.h>
+
 // TODO: Guardar los productos, Editar productos(sudo), Eliminar producto(sudo)
 // TODO: y Reporte de inventario
 /**
  * @brief Estructura para los productos a guardar en la database.
  * 
  */
-struct inventario
+struct products
 {
-  // Nombre del producto a guardar.
-  const char *product_name;
-  // Precio del producto.
-  const int sell_price;
-  // Cantidad del producto.
-  const int quantity_available;
+    char *product_name;
+    int sell_price;
+    int available_quantity;
+    bool full;
 };
+
+// Consts
+extern const size_t MAX_PRODUCTS;
+/**
+ * @brief 
+ * 
+ * @param product Estructura que contiene los datos a guardar. Mirar los
+ * comentarios hechos en la struct para mas info.
+ * @return true 
+ * @return false 
+ */
 
 /**
  * @brief Crea una tabla si no existe, para guardar los productos en la database.
  * 
- * @param product Estructura que contiene los datos a guardar. Mirar los
- * comentarios hechos en la struct para mas info.
+ * @param product_name 
+ * @param sell_price 
+ * @param available_quantity 
  * @return true El producto se ha guardado successfully.
  * @return false No se ha podido guardar.
  */
-bool save_product(struct inventario *const product);
+bool save_product(char const *product_name, unsigned int sell_price, 
+                  unsigned int available_quantity);
 
 /**
  * @brief Edita la informacion de los productos guardados en la database.

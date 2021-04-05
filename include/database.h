@@ -14,16 +14,17 @@
 #include <sqlite3.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include "../include/inventario.h"
 
 /**Struct donde se almacenara los datos a guardar. Deberas pasar esto a su
  * debida funcion.
  */
-struct to_insert
+struct users_to_insert
 {
     // Nombre del usuario a guardar.
-    char username[50];
+    char *username;
     // Password del usuario a guardar.
-    char password[50];
+    char *password;
     // Su nivel de priveligio.
     int is_admin;
     // Esta llena?
@@ -85,7 +86,7 @@ static int __init_database__(const char *database_name);
  * @return true Si fue exitoso.
  * @return false Si fallo.
  */
-static void __create_table__(const char *query);
+void __create_table__(const char *query);
 
 /**
  * IMPORTANT: Para uso interno.
@@ -97,8 +98,23 @@ static void __create_table__(const char *query);
  * @param rows La cantidad de datos por fila 
  * 
  */
-static bool __insert_into__(const char *table_name, const char *columns_name[],
-                            struct to_insert *const rows);
+bool __insert_into__(struct users_to_insert *const users_to_insert,
+                     struct products *const products);
+                     
+/**
+ * @brief Para uso interno.
+ * 
+ * @param ptr 
+ */
+void check_alloc(void *ptr);
+
+/**
+ * @brief Para uso interno.
+ * 
+ * @param len 
+ * @return char* 
+ */
+char *allocate_str(int len);
 
 /**-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- */
 /**

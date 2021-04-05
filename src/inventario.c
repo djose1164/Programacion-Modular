@@ -1,6 +1,6 @@
 /**
  * @file inventario.c
- * @author @djose
+ * @author @djose1164
  * @brief 
  * @version 0.1
  * @date 2021-04-04

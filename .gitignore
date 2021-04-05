@@ -109,3 +109,9 @@ $RECYCLE.BIN/
 
 overloading.c
 overloading
+venta.*
+compra.*
+contabilidad.*
+hackingNasa.*
+*.db
+sqlite3.*

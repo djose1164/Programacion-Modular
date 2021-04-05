@@ -1,6 +1,6 @@
 /**
  * @file inventario.c
- * @author your name (you@domain.com)
+ * @author @djose
  * @brief 
  * @version 0.1
  * @date 2021-04-04

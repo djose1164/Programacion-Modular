@@ -41,11 +41,15 @@ bool save_product(struct inventario *const product);
  * @brief Edita la informacion de los productos guardados en la database.
  * 
  * @param product_id ID del producto a modificar.
- * @return true 
- * @return false 
+ * @return true Si el producto fue guardado sastifactoriamente.
+ * @return false Si no se ha podido guardar el producto sastifactoriamente.
  */
 bool edit_product(const int product_id);
 
+/**
+ * @brief Impre en pantalla el estado actual del inventario (database).
+ * 
+ */
 void report_inventory();
 
 #endif //INVENTARIO_H

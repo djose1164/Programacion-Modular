@@ -106,3 +106,12 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/c,windows,linux,vscode
+
+overloading.c
+overloading
+venta.*
+compra.*
+contabilidad.*
+hackingNasa.*
+*.db
+sqlite3.*

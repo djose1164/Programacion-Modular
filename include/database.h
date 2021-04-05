@@ -13,11 +13,22 @@
 // Librerias necesarias.
 #include "../include/sqlite3.h"
 #include <stdbool.h>
+#include <stddef.h>
+#include "../include/inventario.h"
 
-struct toValidate
+/**Struct donde se almacenara los datos a guardar. Deberas pasar esto a su
+ * debida funcion.
+ */
+struct users_to_insert
 {
+    // Nombre del usuario a guardar.
     char *username;
+    // Password del usuario a guardar.
     char *password;
+    // Su nivel de priveligio.
+    int is_admin;
+    // Esta llena?
+    bool full;
 };
 
 enum return_validate
@@ -32,16 +43,19 @@ extern sqlite3 *db;
 extern sqlite3_stmt *res;
 extern char *errmsg;
 extern int conn;
+// El limite de usario que podran register por ejecucion del programa.
+extern const size_t MAX_USERS;
 
+/**-*-*-*-*-*-*- Metodos internos, no deberian modificarse sin saber SQL.*-*-*-*-*-*-*- */
 /**
- * @brief Anade a un nuevo usario a la database.
+ * @brief Verifica que no haya error en la query.
+ * En caso de lo que haya informara de ello y acabara la
+ * ejecucion del programa.
  * 
- * @param username Nombre del usuario.
- * @param password La contraseña.
- * @param is_admin True si lo es, false si es invitado.
- * @return int 
+ * @param conn Resultado de la query.
+ * @param db Database usada.
  */
-void add_user(const char *username, const char *password, int is_admin);
+static void check_error(int conn, sqlite3 *db);
 
 /**
  * @brief Para uso interno.
@@ -50,16 +64,6 @@ void add_user(const char *username, const char *password, int is_admin);
  * 
  */
 static int __validate__(const char *const username, const char *const password);
-
-/**
- * @brief Usalo para verificar el usario y la contraseña del usario.
- * 
- * @param username El username registrado.
- * @param password La contraseña regristrada.
- * @return int Retorna 0 si esta registrado. Retorna 1 si el username esta incorrecto
- *         Retorna -1 si el password esta incorrecto.
- */
-extern int validate(const char *const username, const char *const password);
 
 /**
  * @brief Crea una nueva database si no existe.
@@ -82,19 +86,56 @@ static int __init_database__(const char *database_name);
  * @return true Si fue exitoso.
  * @return false Si fallo.
  */
-static bool __create_table__(const char *query);
+void __create_table__(const char *query);
 
 /**
- * @brief Se usara para insertar datos en la tabla productos.
- * Es decir, luego de haber creada la tabla se podra agregar 
- * productos a la misma atra ves de esta funcion
+ * IMPORTANT: Para uso interno.
  * 
- * @param parametros Escribe: "@param x" y cambia la x por lo q creas necesario. Dentro
- * del comentario.
- * @return true Si se pudo insertar los datos.
- * @return false Error al insertar.
+ * @brief Funcion abstracta para complementar a otras o ser su base.
+ * 
+ * @param table_name El nombre de la tabla.
+ * @param columns_name El nombre de la columna a la cual deseas agregar datos.
+ * @param rows La cantidad de datos por fila 
+ * 
  */
-static bool __insert_into__(void *parametros);
+bool __insert_into__(struct users_to_insert *const users_to_insert,
+                     struct products *const products);
+                     
+/**
+ * @brief Para uso interno.
+ * 
+ * @param ptr 
+ */
+void check_alloc(void *ptr);
+
+/**
+ * @brief Para uso interno.
+ * 
+ * @param len 
+ * @return char* 
+ */
+char *allocate_str(int len);
+
+/**-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- */
+/**
+ * @brief Anade a un nuevo usario a la database.
+ * 
+ * @param username Nombre del usuario.
+ * @param password La contraseña.
+ * @param is_admin True si lo es, false si es invitado.
+ * @return int 
+ */
+void add_user(const char *username, const char *password, int is_admin);
+
+/**
+ * @brief Usalo para verificar el usario y la contraseña del usario.
+ * 
+ * @param username El username registrado.
+ * @param password La contraseña regristrada.
+ * @return int Retorna 0 si esta registrado. Retorna 1 si el username esta incorrecto
+ *         Retorna -1 si el password esta incorrecto.
+ */
+extern int validate(const char *const username, const char *const password);
 
 /**
  * @brief Busca un producto por su id y muestra toda su informacion.
@@ -117,16 +158,6 @@ extern char *search_product_by_id(const int id);
  * @return false Error encontrado mala suerte xd.
  */
 extern bool update(const char *id, const char *new_value, bool is_int);
-
-/**
- * @brief Verifica que no haya error en la query.
- * En caso de lo que haya informara de ello y acabara la
- * ejecucion del programa.
- * 
- * @param conn Resultado de la query.
- * @param db Database usada.
- */
-void check_error(int conn, sqlite3 *db);
 
 /** 
  * TODO: Si crees que faltan alguna funcion, anadale en forma de comentario. Y explicacion de lo q hace.

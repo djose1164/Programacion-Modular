@@ -1,6 +1,6 @@
 /**
  * @file main.c
- * @author @djose1164, @Engeers, @milv24
+ * @author @djose1164, @Engeers, @milv24, @robert1090
  * @brief Ejecucion del programa.
  * 
  * Mas detalles aca
@@ -16,9 +16,13 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/database.h"
+#include "../include/inventario.h"
 
 int main(int argc, char *const argv[])
 {
+	/**
+	 * TODO: Hacer algo.
+	 */
 	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
 		printf("Welcome back, master.\n");
 
@@ -30,6 +34,12 @@ int main(int argc, char *const argv[])
 	{
 	case admin:
 		printf("Eres admin.\n");
+		short temp = save_product("Lata de maiz", 35, 5);
+		if (temp)
+			printf("The product have been saved successfully!\n");
+		else
+			printf("It looks like the product couldn't be saved. "
+				   "Send an issue about this bug.\n");
 		break;
 	case guest:
 		printf("Eres invitado.\n");

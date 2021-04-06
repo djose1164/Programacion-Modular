@@ -9,3 +9,4 @@ typedef struct IngresodeVentas //Estructura para llenar datos de la facturacion
     float total_a_Pagar;
 
 }facturas[100]; //vector de 100 para las facturas que quiera hacer
+facturas Facturas [50];

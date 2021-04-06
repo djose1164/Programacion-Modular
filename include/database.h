@@ -11,7 +11,7 @@
 #define DATABASE_H
 
 // Librerias necesarias.
-#include "../include/sqlite3.h"
+#include <sqlite3.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include "../include/inventario.h"

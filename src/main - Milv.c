@@ -30,6 +30,10 @@ int main()
 		break;
 	default:
 		Salir();
+<<<<<<< HEAD
+=======
+		break;
+>>>>>>> origin/djose1164-patch-1
 	}
 	getch();
 	return 0;

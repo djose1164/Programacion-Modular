@@ -4,8 +4,8 @@
 #ifdef __WIN32
 #include <windows.h> /* Windows dectetado. */
 #else
-#include <unistdio.h> /* Linux detectado. */
-#endif				  //__WIN32
+#include <unistd.h> /* Linux detectado. */
+#endif				//__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
 //#include"inventario.h"
@@ -95,6 +95,6 @@ int login_user()
 	add_user(username, password, is_admin);
 
 	validate(username, password);
-	
+
 	return -1; // Error
 }

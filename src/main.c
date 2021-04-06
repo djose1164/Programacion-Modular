@@ -17,6 +17,7 @@
 #include <string.h>
 #include "../include/database.h"
 #include "../include/inventario.h"
+#include "../include/login.h"
 
 int main(int argc, char *const argv[])
 {
@@ -28,6 +29,9 @@ int main(int argc, char *const argv[])
 
 	printf("El programa esta en: %s\n", argv[0]);
 
+	login_user();
+
+#if 0 //COMMENTED
 	add_user("djose1164", "1234", 1);
 	int status = validate("djose1164", "1234");
 	switch (status)
@@ -51,6 +55,7 @@ int main(int argc, char *const argv[])
 		printf("Error! Put a issue well explained about this bug.\n");
 		break;
 	}
+#endif //COMMENTED
 
 	return 0;
 }

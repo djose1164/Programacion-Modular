@@ -75,9 +75,9 @@ int login_menu()
 int login_user()
 {
 	/**Almacena el nombre del usuario a registrar. */
-	char *username;
+	char username[MAX_LETTERS];
 	/**Almacena el password del usuario a registrar. */
-	char *password;
+	char password[MAX_LETTERS];
 	/**Es admin? Si lo es 1, si no lo es 0. */
 	int is_admin;
 
@@ -93,8 +93,12 @@ int login_user()
 	getchar();
 
 	add_user(username, password, is_admin);
-
-	validate(username, password);
+	
+	int temp = validate(username, password);
+	if (!temp)
+		printf("Estas dentro para hackear a la NASA.\n");
+	else
+		printf("Aun tas joven.");
 
 	return -1; // Error
 }

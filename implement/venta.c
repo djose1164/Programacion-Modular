@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<conio.h>
 #include"../include/venta.h"
 #include"../include/iniciologin.h"
 
@@ -12,7 +11,7 @@ void vender ()/*hace la factura y calcula el total de la venta, resta los produc
 
     printf("\t\t\t\t Modular Programming Ventas \n");
     printf("Rellene con los datos  pedidos\n");
-    printf("Nombre cliente \tTotal \n");
+    printf("Nombre cliente \n");
     scanf("%c",&Facturas->Nombrecliente);//ingresa nombre del cliente y debe guardarlo para verla mas tarde(no se donde la guardaria)
     printf("\tAtendido por:");
     scanf("%c",&Facturas->Empleadoenturno);
@@ -64,11 +63,8 @@ void eliminiar_pedido_sudo (){
 e introduciendo el nombre del cliente se elimina automaticamente*/
 
 }
-void caja_registradora (){//Da el total de todas las facturas realizadas
-for (size_t i = 0; i < count; i++)
-{
-    /* code */
-}
+void caja_registradora (facturas){//Da el total de todas las facturas realizadas
+caja_registradora = Facturas.TotalaPagar
 
 }
 void salir (){//me saca de la consola

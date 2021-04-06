@@ -6,41 +6,9 @@
 #include <stdbool.h>
 #include <string.h>
 
-void add_user(const char *username, const char *password, int is_admin);
+void add_user(username, password,  is_admin);
 int main(int argc, char *const argv[])
-{
-	/**
-	 * TODO: Hacer algo.
-	 */
-	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
-		printf("Welcome back, master.\n");
-
-	printf("El programa esta en: %s\n", argv[0]);
-
-	add_user("djose1164", "1234", 1);
-	int status = validate("djose1164", "1234");
-	switch (status)
-	{
-	case admin:
-		printf("Eres admin.\n");
-		short temp = save_product("Lata de maiz", 35, 5);
-		if (temp)
-			printf("The product have been saved successfully!\n");
-		else
-			printf("It looks like the product couldn't be saved. "
-				   "Send an issue about this bug.\n");
-		break;
-	case guest:
-		printf("Eres invitado.\n");
-		break;
-	case not_found:
-		printf("Verifica que hayas ingresado los datos correctamente.\n");
-		break;
-	default:
-		printf("Error! Put a issue well explained about this bug.\n");
-		break;
-	}
-	/**Este es el inicio, luego de entrar al sistema
+{	/**Este es el inicio, luego de entrar al sistema
 	 * 
 	 */
 	int options;

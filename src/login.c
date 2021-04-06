@@ -92,8 +92,12 @@ int login_user()
 	scanf("%d", &is_admin);
 	getchar();
 
+	// Anade al usuario.
 	add_user(username, password, is_admin);
-	
+	// Luego entra en un blucle hasta que presione la letra de salir.
+	for (; login_menu();)
+		; // Con el punto y coma aca, es mas leible.
+
 	int temp = validate(username, password);
 	if (!temp)
 		printf("Estas dentro para hackear a la NASA.\n");

@@ -245,12 +245,14 @@ void add_user(const char *username, const char *password, int is_admin)
                          "is_admin INT);"};
     __create_table__(table_query);
 
+    // Coloca memoria para la primera dimension del array.
     struct users_to_insert **users_to_insert = malloc(sizeof(struct users_to_insert) * MAX_USERS);
     if (!users_to_insert)
         exit(-1);
     // Pone todas las structs a vacia.
     for (size_t i = 0; i < MAX_USERS; i++)
     {
+        // Coloca memoria para la segunda dimension del array.
         users_to_insert[i] = malloc(sizeof(users_to_insert[0]));
         if (!users_to_insert[i])
             exit(-1);

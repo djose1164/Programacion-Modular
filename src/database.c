@@ -17,6 +17,7 @@ static short counter;
 // Variables globales.
 sqlite3 *db;
 sqlite3_stmt *res;
+static bool temp = true;
 
 /**
  * @brief Habilita el suficiente espacion en memoria para los strings.
@@ -290,11 +291,45 @@ void add_user(const char *username, const char *password, int is_admin)
     }
 }
 
+bool __update__(const int id, const char *new_name,
+                const int new_sellPrice, const int new_availableQuantity)
+{
+    int conn;
+    char *errmsg;
+    char *sql;
+
+    // Para imprimir los nombre de las columnas.
+    temp = true;
+
+    if (!id)
+        return false;
+
+    sql = "UPDATE products "
+          "SET product_name = ?, "
+          "sell_price = ?, "
+          "available_quantity = ? "
+          "WHERE id = ?;";
+
+    conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
+    check_error(conn, db);
+    conn = sqlite3_bind_text(res, 1, new_name, -1, NULL);
+    check_error(conn, db);
+    conn = sqlite3_bind_int(res, 2, new_sellPrice);
+    check_error(conn, db);
+    conn = sqlite3_bind_int(res, 3, new_availableQuantity);
+    check_error(conn, db);
+    conn = sqlite3_bind_int(res, 4, id);
+    check_error(conn, db);
+
+    int step = sqlite3_step(res);
+    sqlite3_finalize(res);
+    return true;
+}
+
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
 
-    static bool temp = true;
-    for (int i = 0; i < column_count && temp; i++)
+        for (int i = 0; i < column_count && temp; i++)
     {
 
         if (i == column_count - 1)

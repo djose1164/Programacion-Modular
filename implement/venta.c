@@ -4,13 +4,17 @@
 #include "../include/venta.h"
 #include "../include/inventario.h"
 #include "../include/login.h"
+#include<stdbool.h>
 
 
 // Variables globales.
 facturas Facturas[50];
 #define MAX_LETTERS 50
+struct products;
 
-void vender() /*rellena la factura y calcula el total de la venta, resta los productos del inventario,*/
+
+void vender() /*rellena la factura y calcula el total de la venta, resta 
+               los productos del inventario,*/
 {
 
     system("cls");
@@ -24,8 +28,10 @@ void vender() /*rellena la factura y calcula el total de la venta, resta los pro
     printf("\n\tProducto");
     strcpy(Facturas->nombre_producto,);//,"Aca va lo que vas a guardar."
     printf("\tCantidad");
-    strcpy( Facturas->Cantidad,"Aca va lo que vas a guardar.");
+    strcpy( Facturas->Cantidad,product_name"Aca va lo que vas a guardar.");
     printf("\t Precio");//Precio no se de donde va a salir, creo que de inventario
+    //TODO quiero hacer que el precio y el total aparezcan solos, dependiendo de la cantidad 
+    //TODO y dependiendo del producto que este ingresando
     scanf("%f", &Facturas->Precio);
     printf("\tTotal ");
     scanf("%f", &Facturas->Total);
@@ -39,6 +45,7 @@ void agregar_mas_articulos()
 { //Da la opcion de agregar mas articulos a la factura con key1
     int i, j;
     int agregar_articulos = 1;
+    Facturas->Cantidad *= Facturas.//Quiero hacer que el total a pagar sea igual a Cantidad * Precio del producto
 
     printf("Desea agregar mas articulos?");
     fgets("%d", &agregar_articulos);
@@ -65,9 +72,9 @@ void ver_ventas()
 }
 void editar_pedido_sudo()
 {
-    /*
-    TODO: permite editar cualquier factura, con la clave y usuario del admin
-    */
+
+    
+    //TODO: permite editar cualquier factura, con la clave y usuario del admin
 }
 void eliminiar_pedido_sudo()
 {
@@ -78,6 +85,8 @@ TODO: Introduciendo el nombre del cliente se elimina automaticamente la factura
 }
 void caja_registradora()
 { //Da el total de todas las Facturas realizadas
+for (caja_registradora)
+printf("\n\t\t\t******El total de las ventas que hizo ******\n");
 
 }
 void salir()

@@ -3,5 +3,6 @@
         "database.h": "c",
         "iniciologin.h": "c",
         "stdio.h": "c"
+        "unistdio.h": "c"
     }
 }

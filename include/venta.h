@@ -1,6 +1,10 @@
 #ifndef VENTA_H
 #define VENTA_H
 
+//Librerias a usar:
+#include <stdio.h>
+#include <string.h>
+
 typedef struct IngresodeVentas //Estructura para llenar datos de la facturacion
 {
     // La nomenclatura esta mal. Debe ser nombreProducto o nombre_producto.

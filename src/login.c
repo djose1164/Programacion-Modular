@@ -65,7 +65,7 @@ int login_menu()
 			system("cls||clear");/*Si pulsa la tecla 'e' se limpia la pantalla, 
 			imprime un mensaje y sale del programa*/
 			printf("\t\t\tHaz salido de Colmado jackeando la NASA");
-			sleep(1);
+			Sleep(1);
 			getch();
             }
 

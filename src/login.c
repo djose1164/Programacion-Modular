@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 //#include <stdint.h>
 #ifdef __WIN32
 #include <windows.h> /* Windows dectetado. */
-#else
+#elif __linux__
 #include <unistd.h> /* Linux detectado. */
 #endif				//__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
+#include "../include/inventario.h"
 //#include"inventario.h"
 
 #define MAX_LETTERS 50
@@ -19,7 +21,7 @@ int login_menu()
 	/**Este es el inicio, luego de entrar al sistema
 	 * 
 	 */
-	int options,tecla;
+	unsigned options, tecla;
 	// system("color 38"); //cambia el color, el numero cambia el fondo
 	// y la letra cambia el color de letra
 	// No funciona en Linux ^^^
@@ -44,7 +46,7 @@ int login_menu()
 			system("cls||clear");
 		}
 #ifdef __WIN32
-		Sleep(1);
+		Sleep(1000);
 #else
 		sleep(1);
 #endif //__WIN32
@@ -57,62 +59,121 @@ int login_menu()
 	printf("\t2- Compras    \n");
 	printf("\t3- Ventas     \n");
 	printf("\t4- Contabilidad\n");
-	printf(" \tSalir \n"); // Salir deberia tener una clave para salir.
+	printf("\t5- tSalir \n"); // El usuario saldra cuando presione 5.
+	scanf("%d", &options);
 
-	/*switch (options)
-	 {
-	 case 1: Inventario(); break;
-	 case 2: Compras(); break;
-	 case 3: Ventas(); break;
-	 case 4: Contabilidad(); break;
-	 default : Salir();
-	 }*/
+	// TODO: Mejorar con un for y un contador de intentos.
+	do
+	{
+		printf("Heyyy, debes eligir una opcion correcta!!!\n");
+		printf("\n\tSeleccione el modulo al que desea acceder:  \n");
+		printf("\n\t1- Inventario \n");
+		printf("\t2- Compras    \n");
+		printf("\t3- Ventas     \n");
+		printf("\t4- Contabilidad\n");
+		printf("\t5- tSalir \n"); // El usuario saldra cuando presione 5.
+
+	} while (options < 0 || options > 5);
+
+	switch (options)
+	{
+	case inventario:
+		//inventario();
+		break;
+	case compras:
+		//compras();
+		break;
+	case ventas:
+		//ventas();
+		break;
+	case contabilidad:
+		//contabilidad();
+		break;
+	case salir:
+		printf("Hackear a la NASA dejo de ser un sueno.\n");
+		return 0;
+	default:
+		printf("Parece que hay un bug. Envia un issue detallando el bug.\n");
+		break;
+	}
 	//getch ();
 	/**
 	 * Si presiona la letra e, se borra todo en pantalla y se imprime despedida
 	 */
 	return -1; // Error
 }
+
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu de user *-*-*-*-*-*-*-*-*-*-*-*-
+/** IMPORTANT: Esta debe ser la primiera pantalla que el usario vea. */
 
 int login_user()
 {
+	// TODO: Imprimir mas informacion.
+	// Por ejemplo, en printf("(1) Registrarse.\n"
+	//		   				  "(2) Logearse.\n");
+	// Deberia mostromar mas informacion y encabezado.
+
 	/**Almacena el nombre del usuario a registrar. */
 	char username[MAX_LETTERS];
 	/**Almacena el password del usuario a registrar. */
 	char password[MAX_LETTERS];
 	/**Es admin? Si lo es 1, si no lo es 0. */
 	int is_admin;
+	/**Donde se guardara la opcion eligida por el usuario. */
+	unsigned temp = 0;
 
-	printf("Username: ");
-	// TODO: Si da error usar dynamic memory.
-	fgets(username, MAX_LETTERS, stdin);
+	do
+	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
+		printf("(1) Registrarse.\n"
+			   "(2) Logearse.\n");
+		scanf("%d", &temp);
 
-	printf("Password: ");
-	fgets(password, MAX_LETTERS, stdin);
+		/**Imprime al usuario q coga una opcion correta. */
+		if (temp < 0 || temp > 2)
+			printf("Por favor elige una opcion correta.\n");
+	} while (temp < 0 || temp > 2);
 
-	printf("Es admin: ");
-	scanf("%d", &is_admin);
-	getchar();
+	/**Dependiendo del valor en temp, el usuario se logeara o registrara. */
+	switch (temp)
+	{
+	case 1: // Registrarse.
+		printf("Username: ");
+		fgets(username, MAX_LETTERS, stdin);
+		// Cambiar \n con \0
+		username[strcspn(username, "\n")] = 0;
 
-	do{	
-	// Anade al usuario.
-	add_user(username, password, is_admin);
-	// Luego entra en un blucle hasta que presione la letra de salir.
-	for (; login_menu();)
-		; // Con el punto y coma aca, es mas leible.
+		printf("Password: ");
+		fgets(password, MAX_LETTERS, stdin);
+		password[strcspn(password, "\n")] = 0;
 
-	int temp = validate(username, password);
-	if (!temp)
-		printf("Estas dentro para hackear a la NASA.\n");
-	else
-		printf("Aun tas joven.");
-	int login_menu();
-	}while (!getchar());
-	if (getchar == 'e')
-	system("cls || clear");
-	    printf("\n********** Usted ha salido de Colmado jackeando la NASA **********\n");
-		return 0; 
+		printf("Es admin: ");
+		scanf("%d", &is_admin);
+		getchar();
+
+		// Anade al usuario.
+		add_user(username, password, is_admin);
+		return 0;
+
+		// Luego entra en un blucle hasta que presione la letra de salir.
+
+		for (; login_menu();)
+			;
+
+	case 2: // Logearse.
+		printf("Username: ");
+		fgets(username, MAX_LETTERS, stdin);
+		// Cambiar \n con \0
+		username[strcspn(username, "\n")] = 0;
+
+		printf("Password: ");
+		fgets(password, MAX_LETTERS, stdin);
+		password[strcspn(password, "\n")] = 0;
+
+		if (!validate(username, password))
+			return 0;
+		else
+			return 1;
+	}
 
 	return -1; // Error
 }

@@ -35,8 +35,15 @@ int main(int argc, char *const argv[])
 	case admin:
 		printf("Eres admin.\n");
 		short temp = save_product("Lata de maiz", 35, 5);
+		temp = save_product("Lata de maiz2", 35, 5);
+		temp = save_product("Lata de maiz3", 35, 5);
+		temp = save_product("Lata de maiz4", 35, 5);
+		temp = save_product("Lata de maiz5", 35, 5);
 		if (temp)
+		{
 			printf("The product have been saved successfully!\n");
+			report_inventory();
+		}
 		else
 			printf("It looks like the product couldn't be saved. "
 				   "Send an issue about this bug.\n");

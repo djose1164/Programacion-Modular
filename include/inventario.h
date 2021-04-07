@@ -52,6 +52,7 @@ bool save_product(char const *product_name, unsigned int sell_price,
 
 /**
  * @brief Edita la informacion de los productos guardados en la database.
+ * Para ver el ID de todos los productos en la database usar report_inventory.
  * 
  * @param product_id ID del producto a modificar.
  * @return true Si el producto fue guardado sastifactoriamente.

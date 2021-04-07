@@ -100,6 +100,12 @@ void __create_table__(const char *query);
  */
 bool __insert_into__(struct users_to_insert *const users_to_insert,
                      struct products *const products);
+/**
+ * @brief Recibe una query para ejecutar la consulta.
+ * 
+ * @param query Codigo SQL.
+ */
+void __make_query__(const char *query);
                      
 /**
  * @brief Para uso interno.

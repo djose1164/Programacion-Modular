@@ -12,6 +12,7 @@
 #include <string.h>
 
 const size_t MAX_USERS = 2;
+static short counter;
 
 // Variables globales.
 sqlite3 *db;
@@ -79,7 +80,6 @@ static int __validate__(const char *const username, const char *const password)
 {
     char *errmsg;
     int conn;
-    // int callback(void *data, int column_count, char **columns, char **columns_names);
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -231,6 +231,15 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
     return -1;
 }
 
+void __make_query__(const char *query)
+{
+    char *errmsg;
+    int callback(void *data, int column_count, char **columns, char **columns_names);
+
+    int conn = sqlite3_exec(db, query, callback, NULL, &errmsg);
+    check_error(conn, db);
+}
+
 void add_user(const char *username, const char *password, int is_admin)
 {
     /**
@@ -281,18 +290,32 @@ void add_user(const char *username, const char *password, int is_admin)
     }
 }
 
-/*
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
-    for (int i = 0; i < column_count; i++)
+
+    static bool temp = true;
+    for (int i = 0; i < column_count && temp; i++)
     {
-        if (strcmp(to_insert.username, columns[i]) == 0)
-            return temp;
-        else if (strcmp(to_insert.password, columns[i]) == 0)
-            return _temp;
+
+        if (i == column_count - 1)
+            printf("%s\n", columns_names[i]);
+        else
+        {
+            printf("%s\t|", columns_names[i]);
+        }
     }
-    if (!temp && !_temp)
-        return true;
+    temp = false;
+
+    for (size_t i = 0; i < column_count; i++)
+    {
+        fflush(stdout);
+        if (i == column_count - 1)
+            printf("%s\n", columns[i]);
+        else if (i == column_count - 2)
+            printf("%s\t\t|", columns[i]);
+        else
+            printf("%s\t|", columns[i]);
+    }
 
     return false;
-}*/
+}

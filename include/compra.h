@@ -6,7 +6,6 @@
 struct bought_product
 {
     char name[50];
-    char 
 };
 
 /**

@@ -20,7 +20,7 @@ enum menu_option
     contabilidad,
     salir
     
-}
+};
 
 /**
  * @brief Muestra el login principal donde se podra elegir la opcion para ingre-

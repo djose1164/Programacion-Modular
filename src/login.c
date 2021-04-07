@@ -71,7 +71,7 @@ int login_menu()
 		printf("\t2- Compras    \n");
 		printf("\t3- Ventas     \n");
 		printf("\t4- Contabilidad\n");
-		printf("\t5- tSalir \n"); // El usuario saldra cuando presione 5.
+		printf("\t5- Salir \n"); // El usuario saldra cuando presione 5.
 
 	} while (options < 0 || options > 5);
 
@@ -90,6 +90,7 @@ int login_menu()
 		//contabilidad();
 		break;
 	case salir:
+		system("cls||clear");
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
 		return 0;
 	default:
@@ -125,8 +126,11 @@ int login_user()
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
 		printf("(1) Registrarse.\n"
-			   "(2) Logearse.\n");
+			   "(2) Logearse.\n"
+			   "Opcion: ");
 		scanf("%d", &temp);
+		getchar();
+		system("cls||clear");
 
 		/**Imprime al usuario q coga una opcion correta. */
 		if (temp < 0 || temp > 2)
@@ -150,14 +154,15 @@ int login_user()
 		scanf("%d", &is_admin);
 		getchar();
 
+		system("clear||cls");
 		// Anade al usuario.
 		add_user(username, password, is_admin);
-		return 0;
 
 		// Luego entra en un blucle hasta que presione la letra de salir.
-
 		for (; login_menu();)
 			;
+
+		return 0;
 
 	case 2: // Logearse.
 		printf("Username: ");

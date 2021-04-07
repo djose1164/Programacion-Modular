@@ -2,31 +2,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/venta.h"
+#include "../include/inventario.h"
+#include "../include/login.h"
+
 
 // Variables globales.
 facturas Facturas[50];
+#define MAX_LETTERS 50
 
-void vender() /*hace la factura y calcula el total de la venta, resta los productos del inventario,*/
+void vender() /*rellena la factura y calcula el total de la venta, resta los productos del inventario,*/
 {
 
     system("cls");
 
     printf("\t\t\t\t Modular Programming Ventas \n");
     printf("Rellene con los datos  pedidos\n");
-    printf("Nombre cliente \tTotal \n");
-    scanf("%s", Facturas->Nombrecliente);
-    printf("\tAtendido por:");
-    scanf("%c", Facturas->Empleadoenturno);
-    printf("\tProducto");
-    strcpy(Facturas->Nombrecliente, "Aca va lo que vas a guradar.");
+    printf("\nNombre cliente:");
+    fgets(Facturas->nombre_cliente,MAX_LETTERS,stdin);
+    printf("\tAtendido por:\n");
+    fgets(Facturas->empleado_en_turno,MAX_LETTERS,stdin);
+    printf("\n\tProducto");
+    strcpy(Facturas->nombre_producto,);//,"Aca va lo que vas a guardar."
     printf("\tCantidad");
-    strcpy(Facturas->NombreProducto, "Aca va lo que vas a guradar.");
-    printf("\t Precio");
+    strcpy( Facturas->Cantidad,"Aca va lo que vas a guardar.");
+    printf("\t Precio");//Precio no se de donde va a salir, creo que de inventario
     scanf("%f", &Facturas->Precio);
     printf("\tTotal ");
     scanf("%f", &Facturas->Total);
-    printf("\n\n Total a Pagar");
-    scanf("%f", &Facturas->TotalaPagar);
+    for (size_t i = 0; i < count; i++)
+    {
+        /* code */
+    }
+    
 }
 void agregar_mas_articulos()
 { //Da la opcion de agregar mas articulos a la factura con key1
@@ -43,7 +50,7 @@ void agregar_mas_articulos()
         break;
 
     case 0:
-        printf("%d", TotalaPagar); //Necesito imprimir el total a Pagar, me marca como que no existe esta estruct
+        printf("%d", Facturas->TotalaPagar); //Necesito imprimir el total a Pagar, me marca como que no existe esta estruct
 
         break;
     }
@@ -53,7 +60,8 @@ void agregar_mas_articulos()
 void ver_ventas()
 { //permite ver todas las Facturas realizadas de acuerdo al nombre del cliente
     printf("Usted ha elegido ver ventas \n Ingrese el nombre del cliente: \n");
-    fgets("%s"); //necesita buscar el nombre del cliente e imprimir esa factura
+    fgets(Facturas->nombre_cliente,MAX_LETTERS,stdin); //necesita buscar el nombre del cliente e imprimir esa factura
+    printf()//TODO ?Como puedo hacer para presentar todas las facturas registradas??
 }
 void editar_pedido_sudo()
 {
@@ -68,14 +76,17 @@ TODO: permite editar cualquier factura, con la clave y usuario del admin
 TODO: Introduciendo el nombre del cliente se elimina automaticamente la factura
 */
 }
-void caja_registradora(Facturas)
+void caja_registradora()
 { //Da el total de todas las Facturas realizadas
-    caja_registradora = Facturas.TotalaPagar
+
 }
 void salir()
 {
-
-    /* 
-    TODO: Esta me permite salir del moculo ventas y volver al inicio_login
-    */
+printf("*****Usted salio de Ventas *****");
+Sleep(1);
+system("cls");
+login_menu();
+     
+ // TODO: Esta me permite salir del modulo ventas y volver al inicio_login
+    
 }

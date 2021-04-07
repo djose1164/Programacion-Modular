@@ -11,7 +11,7 @@
 #define DATABASE_H
 
 // Librerias necesarias.
-#include <sqlite3.h>
+#include "../include/sqlite3.h"
 #include <stdbool.h>
 
 struct toValidate

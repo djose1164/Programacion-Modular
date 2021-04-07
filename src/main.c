@@ -18,6 +18,8 @@
 #include "../include/database.h"
 #include "../include/inventario.h"
 
+typedef struct products Product;
+
 int main(int argc, char *const argv[])
 {
 	/**
@@ -25,6 +27,14 @@ int main(int argc, char *const argv[])
 	 */
 	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
 		printf("Welcome back, master.\n");
+
+	Product product = {
+		.id = 1,
+		.available_quantity = 20,
+		.full = true,
+		.sell_price = 100,
+		.product_name = "Algo de comer",
+	};
 
 	printf("El programa esta en: %s\n", argv[0]);
 
@@ -42,6 +52,10 @@ int main(int argc, char *const argv[])
 		if (temp)
 		{
 			printf("The product have been saved successfully!\n");
+			report_inventory();
+			edit_product(product.id, product.product_name, product.sell_price, 
+						 product.available_quantity);
+			printf("\n*-*-*-*-*-After Update.*-*-*-*-*-\n");
 			report_inventory();
 		}
 		else

@@ -42,13 +42,14 @@ bool save_product(char const *product_name, unsigned int sell_price,
         product[i]->product_name = malloc(strlen(product_name) + 1);
 
         // Insertacion de datos.
+        product[i]->id = i + 1;
         strcpy(product[i]->product_name, product_name);
         product[i]->sell_price = sell_price;
         product[i]->available_quantity = available_quantity;
+        product[i]->full = true;
 
         // Guarda los datos recogidos por vuelta.
         return __insert_into__(NULL, product[i]);
-            
     }
 
     // Error.
@@ -58,4 +59,11 @@ bool save_product(char const *product_name, unsigned int sell_price,
 void report_inventory()
 {
     __make_query__("SELECT * FROM products;");
+}
+
+bool edit_product(const unsigned id, const char *new_name,
+                  const unsigned new_sellPrice, const unsigned new_availableQuantity)
+{
+    __update__(id, new_name, new_sellPrice, new_availableQuantity);
+    return -1; // Error
 }

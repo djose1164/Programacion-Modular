@@ -71,14 +71,6 @@ int login_menu()
 	/**
 	 * Si presiona la letra e, se borra todo en pantalla y se imprime despedida
 	 */
-	char e;
-	e = getchar();
-	for (size_t i = e; i < count; i++)
-	{
-		/* code */
-	}
-	
-
 	return -1; // Error
 }
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu de user *-*-*-*-*-*-*-*-*-*-*-*-
@@ -120,6 +112,7 @@ int login_user()
 	if (getchar == 'e')
 	system("cls || clear");
 	    printf("\n********** Usted ha salido de Colmado jackeando la NASA **********\n");
+		return 0; 
 
 	return -1; // Error
 }

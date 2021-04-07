@@ -59,16 +59,6 @@ int login_menu()
 	printf("\t4- Contabilidad\n");
 	printf(" \tSalir \n"); // Salir deberia tener una clave para salir.
 
-	if (kbhit() == 1){
-             tecla = getch(); 
-            if (tecla == 'e')
-			system("cls||clear");/*Si pulsa la tecla 'e' se limpia la pantalla, 
-			imprime un mensaje y sale del programa*/
-			printf("\t\t\tHaz salido de Colmado jackeando la NASA");
-			sleep(1);
-			getch();
-            }
-
 	/*switch (options)
 	 {
 	 case 1: Inventario(); break;
@@ -78,6 +68,16 @@ int login_menu()
 	 default : Salir();
 	 }*/
 	//getch ();
+	/**
+	 * Si presiona la letra e, se borra todo en pantalla y se imprime despedida
+	 */
+	char e;
+	e = getchar();
+	for (size_t i = e; i < count; i++)
+	{
+		/* code */
+	}
+	
 
 	return -1; // Error
 }
@@ -103,6 +103,7 @@ int login_user()
 	scanf("%d", &is_admin);
 	getchar();
 
+	do{	
 	// Anade al usuario.
 	add_user(username, password, is_admin);
 	// Luego entra en un blucle hasta que presione la letra de salir.
@@ -115,6 +116,10 @@ int login_user()
 	else
 		printf("Aun tas joven.");
 	int login_menu();
+	}while (!getchar());
+	if (getchar == 'e')
+	system("cls || clear");
+	    printf("\n********** Usted ha salido de Colmado jackeando la NASA **********\n");
 
 	return -1; // Error
 }

@@ -55,7 +55,7 @@ void agregar_mas_articulos()
         break;
     }
     system("cls");
-    main(); //debe volver a imprimir el menu de inicio sin registrar el user
+    login_menu(); //debe volver a imprimir el menu de inicio sin registrar el user
 }
 void ver_ventas()
 { //permite ver todas las Facturas realizadas de acuerdo al nombre del cliente

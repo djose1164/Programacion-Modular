@@ -19,8 +19,9 @@ int login_menu()
 	/**Este es el inicio, luego de entrar al sistema
 	 * 
 	 */
-	int options;
-	// system("color 38"); //cambia el color, el numero cambia el fondo y la letra cambia el color de letra
+	int options,tecla;
+	// system("color 38"); //cambia el color, el numero cambia el fondo
+	// y la letra cambia el color de letra
 	// No funciona en Linux ^^^
 
 	// Para que no se sienta la espera.
@@ -57,6 +58,16 @@ int login_menu()
 	printf("\t3- Ventas     \n");
 	printf("\t4- Contabilidad\n");
 	printf(" \tSalir \n"); // Salir deberia tener una clave para salir.
+
+	if (kbhit() == 1){
+             tecla = getch(); 
+            if (tecla == 'e')
+			system("cls||clear");/*Si pulsa la tecla 'e' se limpia la pantalla, 
+			imprime un mensaje y sale del programa*/
+			printf("\t\t\tHaz salido de Colmado jackeando la NASA");
+			sleep(1);
+			getch();
+            }
 
 	/*switch (options)
 	 {
@@ -103,6 +114,7 @@ int login_user()
 		printf("Estas dentro para hackear a la NASA.\n");
 	else
 		printf("Aun tas joven.");
+	int login_menu();
 
 	return -1; // Error
 }

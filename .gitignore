@@ -112,6 +112,8 @@ overloading
 venta.*
 compra.*
 contabilidad.*
+database.*
 hackingNasa.*
 *.db
 sqlite3.*
+test.*

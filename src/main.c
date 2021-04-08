@@ -16,6 +16,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "../include/database.h"
+#include "../include/inventario.h"
+
+typedef struct products Product;
 
 int main(int argc, char *const argv[])
 {
@@ -25,14 +28,39 @@ int main(int argc, char *const argv[])
 	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
 		printf("Welcome back, master.\n");
 
+	Product product = {
+		.id = 1,
+		.available_quantity = 20,
+		.full = true,
+		.sell_price = 100,
+		.product_name = "Algo de comer",
+	};
+
 	printf("El programa esta en: %s\n", argv[0]);
 
-	add_user("Jose", "1234", 0);
-	int status = validate("Jose", "1234");
+	add_user("djose1164", "1234", 1);
+	int status = validate("djose1164", "1234");
 	switch (status)
 	{
 	case admin:
 		printf("Eres admin.\n");
+		short temp = save_product("Lata de maiz", 35, 5);
+		temp = save_product("Lata de maiz2", 35, 5);
+		temp = save_product("Lata de maiz3", 35, 5);
+		temp = save_product("Lata de maiz4", 35, 5);
+		temp = save_product("Lata de maiz5", 35, 5);
+		if (temp)
+		{
+			printf("The product have been saved successfully!\n");
+			report_inventory();
+			edit_product(product.id, product.product_name, product.sell_price, 
+						 product.available_quantity);
+			printf("\n*-*-*-*-*-After Update.*-*-*-*-*-\n");
+			report_inventory();
+		}
+		else
+			printf("It looks like the product couldn't be saved. "
+				   "Send an issue about this bug.\n");
 		break;
 	case guest:
 		printf("Eres invitado.\n");

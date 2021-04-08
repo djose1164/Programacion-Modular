@@ -54,3 +54,16 @@ bool save_product(char const *product_name, unsigned int sell_price,
     // Error.
     return -1;
 }
+
+void report_inventory()
+{
+    __make_query__("SELECT * FROM products;");
+}
+
+bool edit_product(const unsigned id, const char *new_name,
+                  const unsigned new_sellPrice, const unsigned new_availableQuantity)
+{
+    __update__(id, new_name, new_sellPrice, new_availableQuantity);
+    return -1; // Error
+}
+

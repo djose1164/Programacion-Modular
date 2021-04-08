@@ -11,6 +11,7 @@
 #ifndef INVENTARIO_H
 #define INVENTARIO_H
 
+#include <stdbool.h>
 #include <stddef.h>
 
 // TODO: Guardar los productos, Editar productos(sudo), Eliminar producto(sudo)
@@ -26,6 +27,14 @@ struct products
     int available_quantity;
     bool full;
 };
+
+enum inventario_options
+{
+    _save_product,
+    _edit_product,
+    _report_inventory
+};
+
 
 // Consts
 extern const size_t MAX_PRODUCTS;
@@ -64,5 +73,14 @@ bool edit_product(const int product_id);
  * 
  */
 void report_inventory();
+
+/**
+ * @brief Mostrara el menu de invetario. Permitiendo al usuario elegir entre las
+ * opciones disponibles.
+ * 
+ * @return true El usuario no ha salido. Se ejectura.
+ * @return false El usuario salio. Se parara.
+ */
+bool inventory_menu();
 
 #endif //INVENTARIO_H

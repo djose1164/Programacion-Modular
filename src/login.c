@@ -59,20 +59,23 @@ int login_menu()
 	printf("\t2- Compras    \n");
 	printf("\t3- Ventas     \n");
 	printf("\t4- Contabilidad\n");
-	printf("\t5- tSalir \n"); // El usuario saldra cuando presione 5.
+	printf("\t5- Salir \n"); // El usuario saldra cuando presione 5.
 	scanf("%d", &options);
+	getchar();
 
 	// TODO: Mejorar con un for y un contador de intentos.
 	do
 	{
-		printf("Heyyy, debes eligir una opcion correcta!!!\n");
-		printf("\n\tSeleccione el modulo al que desea acceder:  \n");
-		printf("\n\t1- Inventario \n");
-		printf("\t2- Compras    \n");
-		printf("\t3- Ventas     \n");
-		printf("\t4- Contabilidad\n");
-		printf("\t5- Salir \n"); // El usuario saldra cuando presione 5.
-
+		system("cls||clear");
+		printf("Heyyy, debes eligir una opcion correcta!!!\n"
+			   "\n\tSeleccione el modulo al que desea acceder:  \n"
+			   "\n\t1- Inventario \n"
+			   "\t2- Compras    \n"
+			   "\t3- Ventas     \n"
+			   "\t4- Contabilidad\n"
+			   "\t5- Salir \n"); // El usuario saldra cuando presione 5.
+		scanf("%d", &options);
+		getchar();
 	} while (options < 0 || options > 5);
 
 	switch (options)

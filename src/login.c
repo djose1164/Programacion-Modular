@@ -128,6 +128,8 @@ int login_user()
 
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
+	printf("\n\\t\t\t\tHaz ingresado a la plataforma de Colmado Hacheando la NASA\n"
+	          "Si eres nuevo ingresa (1)\n Si ya estas registrado ingresa (2)");
 		printf("(1) Registrarse.\n"
 			   "(2) Logearse.\n"
 			   "Opcion: ");
@@ -135,7 +137,7 @@ int login_user()
 		getchar();
 		system("cls||clear");
 
-		/**Imprime al usuario q coga una opcion correta. */
+		/**Imprime al usuario q coga una opcion correcta. */
 		if (temp < 0 || temp > 2)
 			printf("Por favor elige una opcion correta.\n");
 	} while (temp < 0 || temp > 2);

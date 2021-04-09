@@ -46,6 +46,7 @@ extern char *errmsg;
 extern int conn;
 // El limite de usario que podran register por ejecucion del programa.
 extern const size_t MAX_USERS;
+extern const char *database_name;
 
 /**-*-*-*-*-*-*- Metodos internos, no deberian modificarse sin saber SQL.*-*-*-*-*-*-*- */
 /**

@@ -18,6 +18,7 @@ static short counter;
 sqlite3 *db;
 sqlite3_stmt *res;
 static bool temp = true;
+const char *database_name = "test.db";
 
 /**
  * @brief Habilita el suficiente espacion en memoria para los strings.
@@ -74,7 +75,7 @@ static int __init_database__(const char *database_name)
 void __create_table__(const char *query)
 {
 
-    __init_database__("test.db");
+    __init_database__(database_name);
 
     char *errmsg;
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
@@ -86,7 +87,7 @@ static int __validate__(const char *const username, const char *const password)
     char *errmsg;
     int conn;
 
-    __init_database__("test.db");
+    __init_database__(database_name);
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -240,6 +241,7 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
 
 void __make_query__(const char *query)
 {
+    __init_database__(database_name);
     char *errmsg;
     int callback(void *data, int column_count, char **columns, char **columns_names);
 

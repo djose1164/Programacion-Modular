@@ -107,13 +107,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/c,windows,linux,vscode
 
-overloading.c
-overloading
-venta.*
-compra.*
-contabilidad.*
-database.*
-hackingNasa.*
-*.db
-sqlite3.*
 test.*
+*.db

@@ -15,6 +15,7 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../include/database.h"
 #include "../include/inventario.h"
 #include "../include/login.h"

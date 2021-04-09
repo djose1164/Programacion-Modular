@@ -121,6 +121,8 @@ int login_user()
 	int is_admin;
 	/**Donde se guardara la opcion eligida por el usuario. */
 	unsigned temp = 0;
+	/** Cuenta las veces que intenta el usuario*/
+	int chances = 0;
 
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
@@ -143,16 +145,17 @@ int login_user()
 	switch (temp)
 	{
 	case 1: // Registrarse.
-		printf("Username: ");
+		printf("\a\t\t Para registrarse introduzca su username y su password: "
+			"\n\tUsername: ");
 		fgets(username, MAX_LETTERS, stdin);
 		// Cambiar \n con \0
 		username[strcspn(username, "\n")] = 0;
 
-		printf("Password: ");
+		printf("\tPassword: ");
 		fgets(password, MAX_LETTERS, stdin);
 		password[strcspn(password, "\n")] = 0;
 
-		printf("Es admin: ");
+		printf("Usted es admin: ");
 		scanf("%d", &is_admin);
 		getchar();
 
@@ -168,7 +171,8 @@ int login_user()
 
 	case 2: // Logearse.
 		// TODO: #13 falta un encabezado q le diga al usuario q hacer.
-		printf("Username: ");
+		printf("\a\tIngrese su Username y Password ya registradas\n"
+			"Username: ");
 		fgets(username, MAX_LETTERS, stdin);
 		// Cambiar \n con \0
 		username[strcspn(username, "\n")] = 0;
@@ -180,7 +184,9 @@ int login_user()
 		if (!validate(username, password))
 		// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado. 
 			return 0;
-		else
+		else 
+		printf("Usuario y/o claves incorrectas!!");
+		chances++;
 			return 1;
 	}
 

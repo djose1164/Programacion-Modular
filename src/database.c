@@ -195,7 +195,7 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
     else
     {
         query = "INSERT INTO products("
-                "id, product_name, sell_price, available_quantity) "
+                "id, nombre, precio, cantidad) "
                 "VALUES(NULL, ?, ?, ?);";
 
         // Cambiando estructura de datos.
@@ -315,9 +315,9 @@ bool __update__(const int id, const char *new_name,
         return false;
 
     sql = "UPDATE products "
-          "SET product_name = ?, "
-          "sell_price = ?, "
-          "available_quantity = ? "
+          "SET nombre = ?, "
+          "precio = ?, "
+          "cantidad = ? "
           "WHERE id = ?;";
 
     conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
@@ -339,28 +339,22 @@ bool __update__(const int id, const char *new_name,
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
 
-    for (int i = 0; i < column_count && temp; i++)
+    if(temp)
     {
 
-        if (i == column_count - 1)
-            printf("%s\n", columns_names[i]);
-        else
-        {
-            printf("%s\t|", columns_names[i]);
-        }
-    }
+       printf("*---------------*---------------*---------------*------------*\n"
+              "|\t%s\t|\t%s\t|\t%s\t|  %s  |\n", 
+              columns_names[0], columns_names[1], columns_names[2], 
+              columns_names[3]);
+    } //   
     temp = false;
 
-    for (size_t i = 0; i < column_count; i++)
-    {
+    
         fflush(stdout);
-        if (i == column_count - 1)
-            printf("%s\n", columns[i]);
-        else if (i == column_count - 2)
-            printf("%s\t\t|", columns[i]);
-        else
-            printf("%s\t|", columns[i]);
-    }
+        printf("*---------------*---------------*---------------*------------*\n"
+               "|      %2s      |      %2s      |      %2s      |   %2s      |\n", 
+               columns[0], columns[1], columns[2], columns[3]);
+    
 
     return false;
 }

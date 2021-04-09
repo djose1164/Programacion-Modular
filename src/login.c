@@ -198,7 +198,7 @@ int login_user()
 				printf("\nEfectivamente estas dentro!\n");
 #if defined(__linux__) //__linux__
 				sleep(2);
-#elif defines(__WIN32)
+#elif defined(__WIN32)
 				Sleep(2000);
 #endif //__linux__
 				for (; login_menu();)

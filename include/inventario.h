@@ -34,7 +34,7 @@ enum inventario_options
     _save_product = 1,
     _edit_product,
     _report_inventory,
-    salir
+    _salir
 };
 
 // Consts

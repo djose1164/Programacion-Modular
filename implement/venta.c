@@ -13,14 +13,20 @@ facturas Facturas[50];
 struct products;
 
 
-void vender() /*rellena la factura y calcula el total de la venta, resta 
-               los productos del inventario,*/
+/**
+ * @brief Rellena la factura y calcula el total por producto y de la venta en general
+ * resta los productos del inventario.
+ * @param precio 
+ * @param total 
+ * @param total_a_pagar 
+ * @return float 
+ */
+float vender (float precio, float total, float total_a_pagar)
 {
-
     system("cls");
 
-    printf("\t\t\t\t Modular Programming Ventas \n");
-    printf("Rellene con los datos  pedidos\n");
+    printf("\t\t\t\t Modular Programming Ventas \n"
+    "Rellene con los datos  pedidos\n");
     printf("\nNombre cliente:");
     fgets(Facturas->nombre_cliente,MAX_LETTERS,stdin);
     printf("\tAtendido por:\n");

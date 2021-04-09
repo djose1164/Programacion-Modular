@@ -23,10 +23,6 @@ int login_menu()
 	 */
 	unsigned options = 0;
 
-	// system("color 38"); //cambia el color, el numero cambia el fondo
-	// y la letra cambia el color de letra
-	// No funciona en Linux ^^^
-
 	// Para que no se sienta la espera.
 	printf("Empezando sistema de carga...\n");
 	for (size_t i = 0; i <= 100; i++)
@@ -58,10 +54,12 @@ int login_menu()
 	// TODO: #14 Mejorar con un for y un contador de intentos.
 	for (size_t i = 3; i > 0 || (options < 0 || options > 5); --i)
 	{
+		system("cls||clear");
 
 		if ((options <= 0 && i != 3) || options > 5)
 			printf("Heyyy, debes eligir una opcion correcta!!!\n"
-				   "Porque, pues te quedan %zu intentos.\n", i);
+				   "Porque, pues te quedan %zu intentos.\n",
+				   i);
 
 		printf("\n\tSeleccione el modulo al que desea acceder:  \n"
 			   "\n\t1- Inventario \n"
@@ -69,12 +67,12 @@ int login_menu()
 			   "\t3- Ventas     \n"
 			   "\t4- Contabilidad\n"
 			   "\t5- Salir \n"); // El usuario saldra cuando presione 5.
-		scanf("%d", &options);
+		scanf(" %d", &options);
 		getchar();
 
-		system("cls||clear");
-
-	} 
+		if (options >= inventario && options <= salir)
+			break;
+	}
 
 	switch (options)
 	{
@@ -99,7 +97,7 @@ int login_menu()
 						"envia un issue detallando el posible bug.\n");
 		break;
 	}
-	
+
 	return 0;
 }
 
@@ -130,7 +128,7 @@ int login_user()
 			   "(1) Registrarse.\n"
 			   "(2) Logearse.\n"
 			   "Opcion: ");
-		scanf("%d", &temp);
+		scanf(" %d", &temp);
 		getchar();
 		system("cls||clear");
 
@@ -153,7 +151,7 @@ int login_user()
 		password[strcspn(password, "\n")] = 0;
 
 		printf("Es admin: ");
-		scanf("%d", &is_admin);
+		scanf(" %d", &is_admin);
 		getchar();
 
 		system("clear||cls");
@@ -167,21 +165,50 @@ int login_user()
 		return 0;
 
 	case 2: // Logearse.
-		// TODO: #13 falta un encabezado q le diga al usuario q hacer.
-		printf("Username: ");
-		fgets(username, MAX_LETTERS, stdin);
-		// Cambiar \n con \0
-		username[strcspn(username, "\n")] = 0;
+		for (size_t i = 3; i > 0;)
+		{
+			// TODO: #13 falta un encabezado q le diga al usuario q hacer.
+			printf("\t\t\aHola! Estas actualmenteen en el login. Ingresa tus "
+				   "credenciales para poder ingresar al sistema!\n\n");
 
-		printf("Password: ");
-		fgets(password, MAX_LETTERS, stdin);
-		password[strcspn(password, "\n")] = 0;
+			if (i != 3 && i >= 1)
+				printf("\t\t\aUps! Tus credenciales no aparecen en la base de datos.\n"
+					   "\tAsegurate de haber ingresado tus datos correctament. "
+					   "Intentos restantes: %zu \n\n",
+					   i);
 
-		if (!validate(username, password))
-		// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado. 
-			return 0;
-		else
-			return 1;
+			printf("\t\aUsername: ");
+			fgets(username, MAX_LETTERS, stdin);
+			// Cambiar \n con \0
+			username[strcspn(username, "\n")] = 0;
+
+			printf("\t\aPassword: ");
+			fgets(password, MAX_LETTERS, stdin);
+			password[strcspn(password, "\n")] = 0;
+
+			if (!validate(username, password))
+			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.
+			{
+				// Quita el anterior mensaje para mostrar este printf y el sistema
+				// de carga.
+				system("cls||clear");
+				printf("\nEfectivamente estas dentro!\n");
+#if defined(__linux__) //__linux__
+				sleep(2);
+#elif defines(__WIN32)
+				Sleep(2000);
+#endif //__linux__
+				for (; login_menu();)
+					;
+				return 0;
+			}
+			else
+			{
+				--i;
+			}
+			// Limpia la pantalla para la segunda vuelta.
+			system("cls||clear");
+		}
 	}
 
 	return -1; // Error

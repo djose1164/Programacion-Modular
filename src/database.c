@@ -342,8 +342,8 @@ int callback(void *data, int column_count, char **columns, char **columns_names)
     if(temp)
     {
 
-       printf("*---------------*---------------*---------------*------------*\n"
-              "|\t%s\t|\t%s\t|\t%s\t|  %s  |\n", 
+       printf("*--------*--------------------*----------*----------*\n"
+              "|%-8s|%-20s|%-10s|%-10s|\n", 
               columns_names[0], columns_names[1], columns_names[2], 
               columns_names[3]);
     } //   
@@ -351,8 +351,8 @@ int callback(void *data, int column_count, char **columns, char **columns_names)
 
     
         fflush(stdout);
-        printf("*---------------*---------------*---------------*------------*\n"
-               "|      %2s      |      %2s      |      %2s      |   %2s      |\n", 
+        printf("*--------*--------------------*----------*----------*\n"
+               "|%-8s|%-20s|%-10s|%-10s|\n", 
                columns[0], columns[1], columns[2], columns[3]);
     
 

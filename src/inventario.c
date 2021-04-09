@@ -30,9 +30,9 @@ bool save_product(char const *product_name, unsigned int sell_price,
 
     char *sql = "Create Table If Not Exists products("
                 "id Integer Primary Key AutoIncrement, "
-                "product_name TEXT NOT NULL, "
-                "sell_price INT NOT NULL, "
-                "available_quantity INT NOT NULL);";
+                "nombre TEXT NOT NULL, "
+                "precio INT NOT NULL, "
+                "cantidad INT NOT NULL);";
     __create_table__(sql);
 #endif //CREATED
     static size_t counter = 1;
@@ -76,10 +76,16 @@ bool edit_product(const unsigned id, const char *new_name,
 
 bool inventory_menu()
 {
-    char _temp[1];
+    char _temp[sizeof(int) + sizeof(unsigned) ];
     short temp;
     bool flag = false;
+    char product_name[50];
+    unsigned price = 0;
+    unsigned available_quantity = 0; 
+    unsigned id = 0;
 
+    fflush(stdout);
+    system("cls||clear");
     /**El sistema de carga para entrar al modulo. */
     printf("Ingresando al modulo de inventario...\n");
     for (size_t i = 0; i <= 100; i++)
@@ -109,41 +115,80 @@ bool inventory_menu()
     do
     {
         if (flag)
-            printf("Hey!! Mano q haces? Elige una opcion correcta!\n");
+            printf("Hey!! Mano q haces? Elige una opcion correcta!\n\n");
         /**Aca empieza el menu. */
-        printf("Bienvenido al menu de Inventario!\n"
-               "Por favor elige una de las siguientes opciones:\n"
+        printf("\t\t\aBienvenido al menu de Inventario!\n\n"
+               "\tPor favor elige una de las siguientes opciones:\n\n"
                "1) Guardar producto.\n"
                "2) Editar producto.\n"
                "3) Reporte de inventario.\n"
-               "4) Salir.\n");
+               "4) Salir.\n"
+               "\aOpcion: "
+               );
         fgets(_temp, sizeof(_temp), stdin); // 4 bytes 8 bytes
         sscanf(_temp, "%hd", &temp);
-
-        switch (temp)
-        {
-        case _save_product:
-            //add_product();
-            break;
-        case _edit_product:
-            //edit_product();
-            break;
-        case _report_inventory:
-            report_inventory();
-            break;
-        case salir:
-            return false;
-        default:
-            fprintf(stderr, "Has introducido una opcion incorrecta!\n"
-                            "Si crees que es un bug manda una issue detallando el"
-                            "error!\n");
-            break;
-        }
 
         fflush(stdout);
         system("cls||clear");
 
         flag = true;
-    } while (temp <= 0 || temp > 3);
+    } while (temp <= 0 || temp > 4);
+
+    switch (temp)
+    {
+    case _save_product:
+        
+        fflush(stdout);
+        system("cls||clear");
+
+        printf("\t\t\aHola! Estas actualmente en guardar producto!\n\n"
+               "\a\tIngrese el nombre del producto a guardar: ");
+        fgets(product_name, sizeof(product_name) / sizeof(char), stdin);
+        product_name[strcspn(product_name, "\n")] = 0;
+
+        printf("\t\aIngrese el precio de venta: ");
+        //fflush(stdout);
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%u", &price);
+
+        printf("\t\aIngrese la cantidad: ");
+        //fflush(stdout);
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%u", &available_quantity);
+
+        save_product(product_name, price, available_quantity);
+        break;
+    case _edit_product:
+        printf("\t\t\aHola! Estas actualmente en editar producto!\n\n"
+               "Escribe el ID del producto: ");
+        fgets(_temp, sizeof(price), stdin);
+        sscanf(_temp, "%u", &price); 
+
+        printf("\t\aIngrese el nuevo nombre del producto: ");
+        fgets(product_name, sizeof(product_name) / sizeof(char), stdin);
+        product_name[strcspn(product_name, "\n")] = 0;
+
+        printf("\t\aIngrese el nuevo precio de venta: ");
+        fgets(_temp, sizeof(price), stdin);
+        sscanf(_temp, "%u", &price);
+
+        printf("\t\aIngrese la nueva cantidad: ");
+        fgets(_temp, sizeof(available_quantity), stdin);
+        sscanf(_temp, "%u", &available_quantity);
+       
+        edit_product(id, product_name, price, available_quantity);
+        break;
+    case _report_inventory:
+        report_inventory();
+        break;
+    case salir:
+        return false;
+    default:
+        fprintf(stderr, "Has introducido una opcion incorrecta!\n"
+                        "Si crees que es un bug manda una issue detallando el"
+                        "error!\n");
+        return false;
+        break;
+    }
     return true;
 }

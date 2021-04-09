@@ -86,10 +86,10 @@ void editar_pedido_sudo()
 }
 void eliminiar_pedido_sudo()
 {
-    /*
-TODO: permite editar cualquier factura, con la clave y usuario del admin 
-TODO: Introduciendo el nombre del cliente se elimina automaticamente la factura
-*/
+  
+//TODO: permite editar cualquier factura, con la clave y usuario del admin 
+//TODO: Introduciendo el nombre del cliente se elimina automaticamente la factura
+
 }
 void caja_registradora()
 { //Da el total de todas las Facturas realizadas
@@ -105,3 +105,4 @@ void salir()
 
     // TODO: Esta me permite salir del modulo ventas y volver al inicio_login
 }
+

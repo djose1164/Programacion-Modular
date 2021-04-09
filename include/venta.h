@@ -4,9 +4,12 @@
 //Librerias a usar:
 #include <stdio.h>
 #include <string.h>
-
 /**
- * @brief Estructura para llenar datos de la facturacion
+ * @brief Este modulo lo que hace es Vender, ver las ventas realizadas,
+ *  editar pedidos(sudo), eliminar pedidos(sudo) y caja registradora.
+ */
+/**
+ * @brief Estructura para llenar datos de la facturacion.
  * 
  */
 typedef struct IngresodeVentas

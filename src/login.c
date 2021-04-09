@@ -21,7 +21,7 @@ int login_menu()
 	/**Este es el inicio, luego de entrar al sistema
 	 * 
 	 */
-	unsigned options, tecla;
+	unsigned options = 0, tecla;
 	// system("color 38"); //cambia el color, el numero cambia el fondo
 	// y la letra cambia el color de letra
 	// No funciona en Linux ^^^
@@ -51,24 +51,17 @@ int login_menu()
 		sleep(1);
 #endif //__WIN32
 	}
-	system("cls||clear");
 
-	printf("\n\t\t\aBienvenido(a) a el:\tColmado jackeando la NASA\n");
-	printf("\n\tSeleccione el modulo al que desea acceder:  \n");
-	printf("\n\t1- Inventario \n");
-	printf("\t2- Compras    \n");
-	printf("\t3- Ventas     \n");
-	printf("\t4- Contabilidad\n");
-	printf("\t5- Salir \n"); // El usuario saldra cuando presione 5.
-	scanf("%d", &options);
-	getchar();
+	/**+-+-+-+-+-+-Empieza el menu+-+-+-+-+-+- */
 
 	// TODO: Mejorar con un for y un contador de intentos.
 	do
 	{
-		system("cls||clear");
-		printf("Heyyy, debes eligir una opcion correcta!!!\n"
-			   "\n\tSeleccione el modulo al que desea acceder:  \n"
+
+		if (options <= 0 || options > 5)
+			printf("Heyyy, debes eligir una opcion correcta!!!\n");
+
+		printf("\n\tSeleccione el modulo al que desea acceder:  \n"
 			   "\n\t1- Inventario \n"
 			   "\t2- Compras    \n"
 			   "\t3- Ventas     \n"
@@ -76,7 +69,10 @@ int login_menu()
 			   "\t5- Salir \n"); // El usuario saldra cuando presione 5.
 		scanf("%d", &options);
 		getchar();
-	} while (options < 0 || options > 5);
+
+		system("cls||clear");
+
+	} while (options <= 0 || options > 5);
 
 	switch (options)
 	{
@@ -97,14 +93,15 @@ int login_menu()
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
 		return 0;
 	default:
-		printf("Parece que hay un bug. Envia un issue detallando el bug.\n");
+		fprintf(stderr, "Verifica que hayas ingresado tus credenciales correctamente o "
+						"envia un issue detallando el posible bug.\n");
 		break;
 	}
 	//getch ();
 	/**
 	 * Si presiona la letra e, se borra todo en pantalla y se imprime despedida
 	 */
-	return -1; // Error
+	return 0;
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu de user *-*-*-*-*-*-*-*-*-*-*-*-
@@ -129,8 +126,8 @@ int login_user()
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
 		printf("\n\t\t\tHaz ingresado a la plataforma de Colmado Hacheando la NASA\n"
-			   "Si eres nuevo ingresa (1).\n" 
-			   "Si ya estas registrado ingresa (2)."
+			   "Si eres nuevo ingresa (1).\n"
+			   "Si ya estas registrado ingresa (2).\n"
 			   "(1) Registrarse.\n"
 			   "(2) Logearse.\n"
 			   "Opcion: ");

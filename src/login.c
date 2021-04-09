@@ -192,6 +192,7 @@ int login_user()
 		password[strcspn(password, "\n")] = 0;
 
 		if (!validate(username, password))
+		// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado. 
 			return 0;
 		else
 			return 1;

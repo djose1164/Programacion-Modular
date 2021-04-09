@@ -55,7 +55,17 @@ void editar_pedido_sudo();
 void eliminiar_pedido_sudo();
 
 /**
- * Da el total de todas las facturas/ventas realizadas al momento
+ * @brief Esta funcion devolvera lo que se venda para llevarlo a contabilidad
+ *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio)
+ * @param precio 
+ * @param cant 
+ * @return float 
+ */
+float venta_return_contabilidad(float precio, int cant);
+
+/**
+ * @brief Da el total de todas las facturas/ventas realizadas al momento
+ * 
  */
 void caja_registradora(Facturas);
 

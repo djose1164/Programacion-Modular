@@ -51,8 +51,22 @@ int login_menu()
 		sleep(1);
 #endif //__WIN32
 	}
+<<<<<<< HEAD
 
 	/**+-+-+-+-+-+-Empieza el menu+-+-+-+-+-+- */
+=======
+	system("cls||clear");
+
+	printf("\n\t\t\aBienvenido(a) a el:\tColmado jackeando la NASA\n"
+		   "\n\tSeleccione el modulo al que desea acceder:  \n"
+		   "\n\t1- Inventario \n"
+		   "\t2- Compras    \n"
+		   "\t3- Ventas     \n"
+		   "\t4- Contabilidad\n"
+		   "\t5- Salir \n"); // El usuario saldra cuando presione 5.
+	scanf("%d", &options);
+	getchar();
+>>>>>>> 879002a5f0c41c66981ee386c5f37e428eef287c
 
 	// TODO: Mejorar con un for y un contador de intentos.
 	do

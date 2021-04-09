@@ -128,9 +128,10 @@ int login_user()
 
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
-	printf("\n\\t\t\t\tHaz ingresado a la plataforma de Colmado Hacheando la NASA\n"
-	          "Si eres nuevo ingresa (1)\n Si ya estas registrado ingresa (2)");
-		printf("(1) Registrarse.\n"
+		printf("\n\t\t\tHaz ingresado a la plataforma de Colmado Hacheando la NASA\n"
+			   "Si eres nuevo ingresa (1).\n" 
+			   "Si ya estas registrado ingresa (2)."
+			   "(1) Registrarse.\n"
 			   "(2) Logearse.\n"
 			   "Opcion: ");
 		scanf("%d", &temp);

@@ -60,17 +60,21 @@ void check_error(int conn, sqlite3 *db)
 
 static int __init_database__(const char *database_name)
 {
+#ifndef CONNECTED
+#define CONNECTED
     int conn = sqlite3_open(database_name, &db);
     check_error(conn, db);
     return 0;
+#endif //CONNECTED
+
+    // Error
+    return -1;
 }
 
 void __create_table__(const char *query)
 {
-#ifndef CONNECTED
-#define CONNECTED
+
     __init_database__("test.db");
-#endif //CONNECTED
 
     char *errmsg;
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
@@ -81,6 +85,8 @@ static int __validate__(const char *const username, const char *const password)
 {
     char *errmsg;
     int conn;
+
+    __init_database__("test.db");
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -331,7 +337,7 @@ bool __update__(const int id, const char *new_name,
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
 
-        for (int i = 0; i < column_count && temp; i++)
+    for (int i = 0; i < column_count && temp; i++)
     {
 
         if (i == column_count - 1)

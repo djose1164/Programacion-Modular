@@ -131,7 +131,7 @@ bool inventory_menu()
         case _report_inventory:
             report_inventory();
             break;
-        case salir:
+        case _salir:
             return false;
         default:
             fprintf(stderr, "Has introducido una opcion incorrecta!\n"

@@ -21,7 +21,8 @@ int login_menu()
 	/**Este es el inicio, luego de entrar al sistema
 	 * 
 	 */
-	unsigned options = 0, tecla;
+	unsigned options = 0;
+
 	// system("color 38"); //cambia el color, el numero cambia el fondo
 	// y la letra cambia el color de letra
 	// No funciona en Linux ^^^
@@ -51,29 +52,16 @@ int login_menu()
 		sleep(1);
 #endif //__WIN32
 	}
-<<<<<<< HEAD
 
 	/**+-+-+-+-+-+-Empieza el menu+-+-+-+-+-+- */
-=======
-	system("cls||clear");
 
-	printf("\n\t\t\aBienvenido(a) a el:\tColmado jackeando la NASA\n"
-		   "\n\tSeleccione el modulo al que desea acceder:  \n"
-		   "\n\t1- Inventario \n"
-		   "\t2- Compras    \n"
-		   "\t3- Ventas     \n"
-		   "\t4- Contabilidad\n"
-		   "\t5- Salir \n"); // El usuario saldra cuando presione 5.
-	scanf("%d", &options);
-	getchar();
->>>>>>> 879002a5f0c41c66981ee386c5f37e428eef287c
-
-	// TODO: Mejorar con un for y un contador de intentos.
-	do
+	// TODO: #14 Mejorar con un for y un contador de intentos.
+	for (size_t i = 3; i > 0 || (options < 0 || options > 5); --i)
 	{
 
-		if (options <= 0 || options > 5)
-			printf("Heyyy, debes eligir una opcion correcta!!!\n");
+		if ((options <= 0 && i != 3) || options > 5)
+			printf("Heyyy, debes eligir una opcion correcta!!!\n"
+				   "Porque, pues te quedan %zu intentos.\n", i);
 
 		printf("\n\tSeleccione el modulo al que desea acceder:  \n"
 			   "\n\t1- Inventario \n"
@@ -86,7 +74,7 @@ int login_menu()
 
 		system("cls||clear");
 
-	} while (options <= 0 || options > 5);
+	} 
 
 	switch (options)
 	{
@@ -111,10 +99,7 @@ int login_menu()
 						"envia un issue detallando el posible bug.\n");
 		break;
 	}
-	//getch ();
-	/**
-	 * Si presiona la letra e, se borra todo en pantalla y se imprime despedida
-	 */
+	
 	return 0;
 }
 
@@ -182,6 +167,7 @@ int login_user()
 		return 0;
 
 	case 2: // Logearse.
+		// TODO: #13 falta un encabezado q le diga al usuario q hacer.
 		printf("Username: ");
 		fgets(username, MAX_LETTERS, stdin);
 		// Cambiar \n con \0

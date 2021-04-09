@@ -12,6 +12,16 @@
 #ifndef LOGIN_H //LOGIN_H
 #define LOGIN_H
 
+enum menu_option
+{
+    inventario = 1,
+    compras,
+    ventas, 
+    contabilidad,
+    salir
+    
+};
+
 /**
  * @brief Muestra el login principal donde se podra elegir la opcion para ingre-
  * sar a otro modulo

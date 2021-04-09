@@ -53,13 +53,13 @@ int login_menu()
 	}
 	system("cls||clear");
 
-	printf("\n\t\t\aBienvenido(a) a el:\tColmado jackeando la NASA\n");
-	printf("\n\tSeleccione el modulo al que desea acceder:  \n");
-	printf("\n\t1- Inventario \n");
-	printf("\t2- Compras    \n");
-	printf("\t3- Ventas     \n");
-	printf("\t4- Contabilidad\n");
-	printf("\t5- Salir \n"); // El usuario saldra cuando presione 5.
+	printf("\n\t\t\aBienvenido(a) a el:\tColmado jackeando la NASA\n"
+		   "\n\tSeleccione el modulo al que desea acceder:  \n"
+		   "\n\t1- Inventario \n"
+		   "\t2- Compras    \n"
+		   "\t3- Ventas     \n"
+		   "\t4- Contabilidad\n"
+		   "\t5- Salir \n"); // El usuario saldra cuando presione 5.
 	scanf("%d", &options);
 	getchar();
 
@@ -129,7 +129,7 @@ int login_user()
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
 		printf("\n\t\t\tHaz ingresado a la plataforma de Colmado Hacheando la NASA\n"
-			   "Si eres nuevo ingresa (1).\n" 
+			   "Si eres nuevo ingresa (1).\n"
 			   "Si ya estas registrado ingresa (2)."
 			   "(1) Registrarse.\n"
 			   "(2) Logearse.\n"

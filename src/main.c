@@ -44,26 +44,11 @@ int main(int argc, char *const argv[])
 	{
 	case admin:
 		printf("Eres admin.\n");
-		short temp = save_product("Lata de maiz", 35, 5);
-		temp = save_product("Lata de maiz2", 35, 5);
-		temp = save_product("Lata de maiz3", 35, 5);
-		temp = save_product("Lata de maiz4", 35, 5);
-		temp = save_product("Lata de maiz5", 35, 5);
-		if (temp)
-		{
-			printf("The product have been saved successfully!\n");
-			report_inventory();
-			edit_product(product.id, product.product_name, product.sell_price, 
-						 product.available_quantity);
-			printf("\n*-*-*-*-*-After Update.*-*-*-*-*-\n");
-			report_inventory();
-		}
-		else
-			printf("It looks like the product couldn't be saved. "
-				   "Send an issue about this bug.\n");
+		inventory_menu();
 		break;
 	case guest:
 		printf("Eres invitado.\n");
+		inventory_menu();
 		break;
 	case not_found:
 		printf("Verifica que hayas ingresado los datos correctamente.\n");

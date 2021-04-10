@@ -7,6 +7,21 @@
 #define CONTABILIDAD_H
 /* Prototipos y Declaraciones */
 
+
+/* Fichero a Usar */
+const char reg_contabilidad;
+
+/**
+ * @brief Esta funcion se encargara de crear el registro de contabilidad
+ * 
+ * @param reg_contabilidad nombre del archivo txt donde se guardara el regsitro
+ * @param reg_compras variable la cual se encargara de tomar del registro de compras
+ * la informacion requerida
+ * @param reg_ventas variable la cual se encargara de tomar del registro de ventas
+ * la informacion requerida
+ */
+void crear_registro (int reg_compras, int reg_ventas);
+
 /**
  * @brief Esta funcion mostrara una lista de los ingresos y pagos realizadas
  * 

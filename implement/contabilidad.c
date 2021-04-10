@@ -18,7 +18,7 @@ void crear_registro(int reg_compras, int reg_ventas)/* Creador del registro */
     fprintf(Contabilidad, "%d\n",reg_ventas);
 }
 
-void registro_contabilidad(int registro_compras, int registro_ventas) /* Muestra el Registro de Ingresos
+void registro_contabilidad(struct cont_reg *cont_reg) /* Muestra el Registro de Ingresos
                                                                       y Compras realizadas */
 {
     /* Lector del Registro */

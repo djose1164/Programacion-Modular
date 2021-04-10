@@ -11,20 +11,25 @@
 /* Fichero a Usar */
 const char reg_contabilidad;
 
+struct cont_reg
+{
+    /* escribe el nombre de la venta en el registro */
+    char reg_nom_ventas[50];
+    /* escribe la cantidad de la venta en el registro */
+    float reg_cant_ventas;
+    /* escribe el ingreso de la venta en el registro */
+    int reg_pre_ventas;
+    /* escribe el nombre de la compra en el registro */
+    char reg_nom_compras[50];
+    /* escribre la cantidad de la compra en el registro */
+    float reg_cant_compras;
+    /* escribe el pago de la compra en el registro */
+    int reg_pre_compras;
+};
 
 
-/**
- * @brief Esta funcion se encargara de crear el registro de contabilidad
- * 
- * @param reg_contabilidad nombre del archivo txt donde se guardara el regsitro
- * @param reg_compras variable la cual se encargara de tomar del registro de compras
- * la informacion requerida
- * @param reg_ventas variable la cual se encargara de tomar del registro de ventas
- * la informacion requerida
- * @param reg_nom_ventas
- * 
- */
-void crear_registro (int reg_compras, int reg_ventas);
+
+void crear_registro (struct cont_reg *cont_reg);
 
 /**
  * @brief Esta funcion mostrara una lista de los ingresos y pagos realizadas

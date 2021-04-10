@@ -17,6 +17,8 @@
 
 #define MAX_LETTERS 50
 
+const short time = 2;
+
 #ifdef __linux__
 static struct termios old, current;
 
@@ -85,29 +87,7 @@ int login_menu()
 
 	// Para que no se sienta la espera.
 	printf("Empezando sistema de carga...\n");
-	for (size_t i = 0; i <= 100; i++)
-	{
-
-		if (i % 25 == 0)
-		{
-			fflush(stdout);
-			printf("Hackeando a la NASA %zu%% completado.\r", i); /* Ahora hace 
-			esencia con el nombre, jajaja. */
-		}
-		else
-			continue;
-
-		if (i == 100)
-		{
-			fflush(stdout);
-			system("cls||clear");
-		}
-#ifdef __WIN32
-		Sleep(1000);
-#else
-		sleep(1);
-#endif //__WIN32
-	}
+	system_loading(time);
 
 	/**+-+-+-+-+-+-Empieza el menu+-+-+-+-+-+- */
 
@@ -134,22 +114,31 @@ int login_menu()
 			break;
 	}
 
+	fflush(stdout);
+	system("cls||clear");
 	switch (options)
 	{
 	case inventario:
-		//inventario();
+		printf("\aUps! En construccion!\n"
+			   "Presione cualquier tecla para finalizar la ejecucion...");
+		getch();
 		break;
 	case compras:
-		//compras();
+		printf("\aUps! En construccion!\n"
+			   "Presione cualquier tecla para finalizar la ejecucion...");
+		getch();
 		break;
 	case ventas:
-		//ventas();
+		printf("\aUps! En construccion!\n"
+			   "Presione cualquier tecla para finalizar la ejecucion...");
+		getch();
 		break;
 	case contabilidad:
-		//contabilidad();
+		printf("\aUps! En construccion!\n"
+			   "Presione cualquier tecla para finalizar la ejecucion...");
+		getch();
 		break;
 	case salir:
-		system("cls||clear");
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
 		return 0;
 	default:
@@ -157,7 +146,7 @@ int login_menu()
 						"envia un issue detallando el posible bug.\n");
 		break;
 	}
-
+	putchar('\n');
 	return 0;
 }
 
@@ -180,14 +169,17 @@ int login_user()
 	/**Donde se guardara la opcion eligida por el usuario. */
 	unsigned temp = 0;
 
+	// Para que no se sienta la espera.
+	printf("Empezando sistema de carga...\n");
+	system_loading(time);
 	do
 	{ /**Mientras el usuario no entre una opcion valida el loop se repetira. */
-		printf("\n\t\t\tHaz ingresado a la plataforma de Colmado Hacheando la NASA\n"
-			   "Si eres nuevo ingresa (1).\n"
-			   "Si ya estas registrado ingresa (2).\n"
-			   "(1) Registrarse.\n"
-			   "(2) Logearse.\n"
-			   "Opcion: ");
+		printf("\n\t\t\t\aHaz ingresado a la plataforma de Colmado Hackeando la NASA\n"
+			   "\tSi ya estas registrado ingresa (2).\n"
+			   "\tSi eres nuevo ingresa (1).\n"
+			   "\t(1) Registrarse.\n"
+			   "\t(2) Logearse.\n"
+			   "\tOpcion: ");
 		scanf(" %d", &temp);
 		getchar();
 		system("cls||clear");
@@ -234,7 +226,7 @@ int login_user()
 
 			if (i != 3 && i >= 1)
 				printf("\t\t\aUps! Tus credenciales no aparecen en la base de datos.\n"
-					   "\tAsegurate de haber ingresado tus datos correctament. "
+					   "\t\aAsegurate de haber ingresado tus datos correctament. "
 					   "Intentos restantes: %zu \n\n",
 					   i);
 
@@ -252,12 +244,8 @@ int login_user()
 				// Quita el anterior mensaje para mostrar este printf y el sistema
 				// de carga.
 				system("cls||clear");
-				printf("\nEfectivamente estas dentro!\n");
-#if defined(__linux__) //__linux__
-				sleep(2);
-#elif defined(__WIN32)
-				Sleep(2000);
-#endif //__linux__
+				printf("\n\t\t\aEfectivamente estas dentro!\n");
+
 				for (; login_menu();)
 					;
 				return 0;
@@ -272,4 +260,34 @@ int login_user()
 	}
 
 	return -1; // Error
+}
+
+void system_loading(int time)
+{
+#ifdef __WIN32
+	time += time * 1000
+#endif //__WIN32
+
+			for (size_t i = 0; i <= 100; i++)
+	{
+		if (i % 25 == 0)
+		{
+			fflush(stdout);
+			printf("Hackeando a la NASA %zu%% completado.\r", i); /* Ahora hace 
+			esencia con el nombre, jajaja. */
+		}
+		else
+			continue;
+
+		if (i == 100)
+		{
+			fflush(stdout);
+			system("cls||clear");
+		};
+#ifdef __WIN32
+		Sleep(time);
+#else
+		sleep(time);
+#endif //__WIN32
+	}
 }

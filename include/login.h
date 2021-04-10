@@ -49,4 +49,11 @@ int login_user();
  */
 char *get_password(char *const password);
 
+/**
+ * @brief Mostrara en pantalla q el sistema esta cargando.
+ * 
+ * @param time El tiempo q durara el copilador parado.
+ */
+void system_loading(int time);
+
 #endif //LOGIN_H

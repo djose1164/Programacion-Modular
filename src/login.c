@@ -4,15 +4,75 @@
 //#include <stdint.h>
 #ifdef __WIN32
 #include <windows.h> /* Windows dectetado. */
+#include <conio.h>
 #elif __linux__
 #include <unistd.h> /* Linux detectado. */
-#endif				//__WIN32
+#include <sys/ioctl.h>
+#include <termios.h>
+#endif //__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/inventario.h"
 //#include"inventario.h"
 
 #define MAX_LETTERS 50
+
+#ifdef __linux__
+static struct termios old, current;
+
+/* Initialize new terminal i/o settings */
+void initTermios(int echo)
+{
+	tcgetattr(0, &old);			/* grab old terminal i/o settings */
+	current = old;				/* make new settings same as old settings */
+	current.c_lflag &= ~ICANON; /* disable buffered i/o */
+	if (echo)
+		current.c_lflag |= ECHO; /* set echo mode */
+
+	else
+		current.c_lflag &= ~ECHO; /* set no echo mode */
+
+	tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+}
+
+/* Restore old terminal i/o settings */
+void resetTermios(void)
+{
+	tcsetattr(0, TCSANOW, &old);
+}
+
+/* Read 1 character - echo defines echo mode */
+char getch_(int echo)
+{
+	char ch;
+	initTermios(echo);
+	ch = getchar();
+	resetTermios();
+	return ch;
+}
+
+/* Read 1 character without echo */
+char getch(void)
+{
+	return getch_(0);
+}
+#endif // __linux__
+
+char *get_password(char *const password)
+{
+	char c;
+	for (size_t i = 0; (c = getch()) != EOF || (c = getch()) != '\n'; ++i)
+	{
+		if (c == '\n')
+		{
+			password[i] = '\0';
+			break;
+		}
+		else
+			password[i] = c;
+	}
+	return password;
+}
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-
 
@@ -141,16 +201,17 @@ int login_user()
 	switch (temp)
 	{
 	case 1: // Registrarse.
-		printf("Username: ");
+
+		printf("\t\t\aHola! Aca podras registrarte. Por favor llena los siguientes campos.\n"
+			   "Username: ");
 		fgets(username, MAX_LETTERS, stdin);
 		// Cambiar \n con \0
 		username[strcspn(username, "\n")] = 0;
 
 		printf("Password: ");
-		fgets(password, MAX_LETTERS, stdin);
-		password[strcspn(password, "\n")] = 0;
+		strcpy(password, get_password(password));
 
-		printf("Es admin: ");
+		printf("\nEs admin: ");
 		scanf(" %d", &is_admin);
 		getchar();
 
@@ -183,8 +244,7 @@ int login_user()
 			username[strcspn(username, "\n")] = 0;
 
 			printf("\t\aPassword: ");
-			fgets(password, MAX_LETTERS, stdin);
-			password[strcspn(password, "\n")] = 0;
+			strcpy(password, get_password(password));
 
 			if (!validate(username, password))
 			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.

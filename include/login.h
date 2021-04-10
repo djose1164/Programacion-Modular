@@ -40,4 +40,13 @@ int login_menu();
  */
 int login_user();
 
+/**
+ * @brief Obtiene la contraseña escrita por el usuario. Desactivando el ECHO
+ * para que no sea vea la misma.
+ * 
+ * @param password Donde se guardara la contraseña.
+ * @return char* Devuelve la contraseña del usuario.
+ */
+char *get_password(char *const password);
+
 #endif //LOGIN_H

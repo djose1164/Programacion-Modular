@@ -15,7 +15,7 @@
  * @param registro_ventas llevara a cabo una lista de las cuentas por cobrar
  * (Es decir, mencionar la cantidad de productos que se retiro y la cantidad de ingresos)
  */
-void lista_contabilidad (int registro_compras, int registro_ventas);
+void registro_contabilidad (int registro_compras, int registro_ventas);
 
 /**
  * @brief Esta funcion se encargara de llevar el total de dinero que posee

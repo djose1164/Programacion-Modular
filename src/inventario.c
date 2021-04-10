@@ -71,7 +71,6 @@ bool edit_product(const unsigned id, const char *new_name,
                   const unsigned new_sellPrice, const unsigned new_availableQuantity)
 {
     return __update__(id, new_name, new_sellPrice, new_availableQuantity);
-   
 }
 
 bool ask_to_edit()
@@ -127,45 +126,45 @@ bool ask_to_save()
     unsigned price = 0;
     unsigned available_quantity = 0;
     unsigned id = 0;
-    do
+    char c;
+
+    fflush(stdout);
+    system("cls||clear");
+
+    printf("\t\t\aHola! Estas actualmente en guardar producto!\n\n"
+           "\a\tIngrese el nombre del producto a guardar: ");
+    fgets(product_name, sizeof(product_name) / sizeof(char), stdin);
+    product_name[strcspn(product_name, "\n")] = 0;
+
+    printf("\t\aIngrese el precio de venta: ");
+    //fflush(stdout);
+    fgets(_temp, sizeof(_temp), stdin);
+    sscanf(_temp, "%u", &price);
+
+    printf("\t\aIngrese la cantidad: ");
+    //fflush(stdout);
+    fgets(_temp, sizeof(_temp), stdin);
+    sscanf(_temp, "%u", &available_quantity);
+
+    if (save_product(product_name, price, available_quantity))
     {
         fflush(stdout);
         system("cls||clear");
+        printf("\t\t\aEl producto se ha guardado sastifactoriamente.\n\n"
+               "\tPara ver todos tus productos guardados vuelve al menu de Inventario.\n\n");
+    }
+    else
+        fprintf(stderr, "\a\tUps! Esto luce como un bug. Postea un issue!\n");
 
-        printf("\t\t\aHola! Estas actualmente en guardar producto!\n\n"
-               "\a\tIngrese el nombre del producto a guardar: ");
-        fgets(product_name, sizeof(product_name) / sizeof(char), stdin);
-        product_name[strcspn(product_name, "\n")] = 0;
-
-        printf("\t\aIngrese el precio de venta: ");
-        //fflush(stdout);
-        fgets(_temp, sizeof(_temp), stdin);
-        sscanf(_temp, "%u", &price);
-
-        printf("\t\aIngrese la cantidad: ");
-        //fflush(stdout);
-        fgets(_temp, sizeof(_temp), stdin);
-        sscanf(_temp, "%u", &available_quantity);
-
-        if (save_product(product_name, price, available_quantity))
-        {
-            fflush(stdout);
-            system("cls||clear");
-            printf("\t\t\aEl producto se ha guardado sastifactoriamente.\n\n"
-                   "\tPara ver todos tus productos guardados vuelve al menu de Inventario.\n");
-        }
-        else
-            fprintf(stderr, "\a\tUps! Esto luce como un bug. Postea un issue!\n");
-
-        printf("\tQuieres anadir algun otro producto?\n"
-               "\tEscribe 's' para si, escribe 'n' para no (volveras al menu de Inventario).\n"
-               "\t\aOpcion: ");
-        if (getchar() == 'S' || getchar() == 's')
-            return true;
-        else
-            return false;
-
-    } while (getchar() == 'S' || getchar() == 's');
+    printf("\tQuieres anadir algun otro producto?\n"
+           "\tEscribe 's' para si, cualquier tecla para no (volveras al menu de Inventario).\n"
+           "\t\aOpcion: ");
+    scanf("%c", &c);
+    getchar();
+    if (c == 'S' || c == 's')
+        return true;
+    else
+        return false;
 }
 
 bool inventory_menu()
@@ -228,6 +227,7 @@ bool inventory_menu()
     switch (temp)
     {
     case _save_product:
+        // TODO: #16 Reparar bug: cuando se presiona s no pregunta para guardar otro producto.
         for (; ask_to_save();)
             ;
         return inventory_menu();
@@ -242,15 +242,13 @@ bool inventory_menu()
         printf("\n\n\aPresiona 'i' para volver al menu de Inventario; "
                "'p' para volver al menu principal.\n"
                "Opcion: ");
-        for (; (c = getchar()) != 'p' || (c = getchar()) != 'P' ||
-               (c = getchar()) != 'i' || (c = getchar()) != 'I';)
+        for (; (c = getchar());)
         {
-            if (c == 'p' || c == 'P')
+            if (c == 'p' || c == 'P' && c != '\n')
                 return 0; //return login_menu();
-            else if (c == 'i' || c == 'I')
+            else if (c == 'i' || c == 'I' && c != '\n')
                 return inventory_menu();
         }
-        break;
     case salir:
         return false;
     default:

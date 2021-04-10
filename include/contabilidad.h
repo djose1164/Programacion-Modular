@@ -11,6 +11,8 @@
 /* Fichero a Usar */
 const char reg_contabilidad;
 
+
+
 /**
  * @brief Esta funcion se encargara de crear el registro de contabilidad
  * 
@@ -19,6 +21,8 @@ const char reg_contabilidad;
  * la informacion requerida
  * @param reg_ventas variable la cual se encargara de tomar del registro de ventas
  * la informacion requerida
+ * @param reg_nom_ventas
+ * 
  */
 void crear_registro (int reg_compras, int reg_ventas);
 

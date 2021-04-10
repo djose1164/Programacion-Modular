@@ -27,8 +27,12 @@ struct cont_reg
     int reg_pre_compras;
 };
 
-
-
+/**
+ * @brief Esta funcion se encargara de escribir el registro de contabilidad 
+ * en base a las compras y ventas realizadas
+ * 
+ * @param cont_reg 
+ */
 void crear_registro (struct cont_reg *cont_reg);
 
 /**

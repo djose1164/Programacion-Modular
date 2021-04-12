@@ -11,6 +11,7 @@
 
 #include "../include/database.h"
 #include "../include/inventario.h"
+#include "../include/login.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -181,29 +182,7 @@ bool inventory_menu()
     system("cls||clear");
     /**El sistema de carga para entrar al modulo. */
     printf("Ingresando al modulo de inventario...\n");
-    for (size_t i = 0; i <= 100; i++)
-    {
-
-        if (i % 25 == 0)
-        {
-            fflush(stdout);
-            printf("Hackeando a la NASA %zu%% completado.\a\r", i); /* Ahora hace 
-			esencia con el nombre, jajaja. */
-        }
-        else
-            continue;
-
-        if (i == 100)
-        {
-            fflush(stdout);
-            system("cls||clear");
-        }
-#ifdef __WIN32
-        Sleep(1000);
-#else
-        sleep(1);
-#endif //__WIN32
-    }
+    system_loading(2);
 
     do
     {
@@ -237,20 +216,30 @@ bool inventory_menu()
 
         case _report_inventory:
             report_inventory();
-            printf("\n\n\aPresiona 'i' para volver al menu de Inventario; "
-                   "'p' para volver al menu principal.\n"
-                   "Opcion: ");
-            for (; (c = getchar());)
+            for (size_t i = 0;; ++i)
             {
-                if (c == 'p' || c == 'P' && c != '\n')
-                    return 0; //return login_menu();
-                else if (c == 'i' || c == 'I' && c != '\n')
+                if (i != 0)
+                {
+                    fflush(stdout);
+                    system("cls||clear");
+                    printf("\t\aElige una opcion valida!\n");
+                }
+                printf("\n\n\aPresiona 'i' para volver al menu de Inventario; "
+                       "'p' para volver al menu principal.\n"
+                       "Opcion: ");
+                fgets(_temp, sizeof(_temp), stdin);
+                sscanf(_temp, "%c", &c);
+                if (c == 'i' || c == 'I')
                     return inventory_menu();
+                else if (c == 'p' || c == 'P')
+                {
+                    return 0;
+                }
             }
         case _menu_principal:
             return true;
         case _salir:
-            return false;
+            exit(EXIT_SUCCESS);
         default:
             fprintf(stderr, "Has introducido una opcion incorrecta!\n"
                             "Si crees que es un bug manda una issue detallando el"

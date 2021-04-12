@@ -32,6 +32,7 @@ int main(int argc, char *const argv[])
 						// y la letra cambia el color de letra
 						// https://www.geeksforgeeks.org/how-to-print-colored-text-in-c/
 #endif // __linux__
+	system("cls||clear");
 	/**
 	 * TODO: Hacer algo.
 	 */

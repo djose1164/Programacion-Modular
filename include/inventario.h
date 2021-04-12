@@ -96,4 +96,6 @@ void report_inventory();
  */
 bool inventory_menu();
 
+bool ask_to_save();
+
 #endif //INVENTARIO_H

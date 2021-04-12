@@ -16,10 +16,9 @@ enum menu_option
 {
     inventario = 1,
     compras,
-    ventas, 
+    ventas,
     contabilidad,
-    salir
-    
+    _salir
 };
 
 /**
@@ -39,5 +38,28 @@ int login_menu();
  * @return int Mientras sea 1 se ejectura, y si es 0 se parara.
  */
 int login_user();
+
+/**
+ * @brief Obtiene la contraseña escrita por el usuario. Desactivando el ECHO
+ * para que no sea vea la misma.
+ * 
+ * @param password Donde se guardara la contraseña.
+ * @return char* Devuelve la contraseña del usuario.
+ */
+char *get_password(char *const password);
+
+/**
+ * @brief Mostrara en pantalla q el sistema esta cargando.
+ * 
+ * @param time El tiempo q durara el copilador parado.
+ */
+void system_loading(int time);
+
+/**
+ * @brief Devuelve el usario actual que esta ejecutando el programa.
+ * 
+ * @return char* La direccion de memoria donde se encutra el nombre.
+ */
+char *get_username(const char *const __actual_user);
 
 #endif //LOGIN_H

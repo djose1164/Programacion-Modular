@@ -18,7 +18,7 @@ enum menu_option
     compras,
     ventas,
     contabilidad,
-    _salir
+    salir
 };
 
 /**

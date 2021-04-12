@@ -138,7 +138,7 @@ int login_menu()
 			   "Presione cualquier tecla para finalizar la ejecucion...");
 		getch();
 		break;
-	case _salir:
+	case salir:
 
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
 		return 0;
@@ -204,7 +204,6 @@ int login_user()
 		printf("Password: ");
 		strcpy(password, get_password(password));
 		get_username(username);
-
 
 		printf("\nEs admin: ");
 		scanf(" %d", &is_admin);

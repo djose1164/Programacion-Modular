@@ -220,6 +220,26 @@ bool inventory_menu()
         fgets(_temp, sizeof(_temp), stdin); // 4 bytes 8 bytes
         sscanf(_temp, "%hd", &temp);
 
+        switch (temp)
+        {
+        case _save_product:
+            //add_product();
+            break;
+        case _edit_product:
+            //edit_product();
+            break;
+        case _report_inventory:
+            report_inventory();
+            break;
+        case _salir:
+            return false;
+        default:
+            fprintf(stderr, "Has introducido una opcion incorrecta!\n"
+                            "Si crees que es un bug manda una issue detallando el"
+                            "error!\n");
+            break;
+        }
+
         fflush(stdout);
         system("cls||clear");
     } while (temp <= 0 || temp > 4);

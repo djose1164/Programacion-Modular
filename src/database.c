@@ -74,8 +74,8 @@ static int __init_database__(const char *database_name)
 
 void __create_table__(const char *query)
 {
-
     __init_database__(database_name);
+
 
     char *errmsg;
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
@@ -86,8 +86,8 @@ static int __validate__(const char *const username, const char *const password)
 {
     char *errmsg;
     int conn;
-
     __init_database__(database_name);
+
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -337,12 +337,12 @@ bool __update__(const int id, const char *new_name,
 
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
-
     if (temp)
         printf("*--------*--------------------*----------*----------*\n"
                "|%-8s|%-20s|%-10s|%-10s|\n",
                columns_names[0], columns_names[1], columns_names[2],
                columns_names[3]);
+
     temp = false;
 
     fflush(stdout);

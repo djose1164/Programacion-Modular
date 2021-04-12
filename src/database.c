@@ -74,8 +74,8 @@ static int __init_database__(const char *database_name)
 
 void __create_table__(const char *query)
 {
-
     __init_database__(database_name);
+
 
     char *errmsg;
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
@@ -86,8 +86,8 @@ static int __validate__(const char *const username, const char *const password)
 {
     char *errmsg;
     int conn;
-
     __init_database__(database_name);
+
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -220,33 +220,30 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
             check_error(conn, db);
         }
 
-        int step = sqlite3_step(res);
-        sqlite3_finalize(res);
+        sqlite3_step(res);
 
+        sqlite3_finalize(res);
         free(products);
         free(data);
         return true;
     }
-    sqlite3_finalize(res);
 
+    sqlite3_finalize(res);
     free(data);
     return false;
-
-    free(data);
-    sqlite3_finalize(res);
-
-    // error
-    return -1;
 }
 
 void __make_query__(const char *query)
 {
     __init_database__(database_name);
     char *errmsg;
+
     int callback(void *data, int column_count, char **columns, char **columns_names);
 
     int conn = sqlite3_exec(db, query, callback, NULL, &errmsg);
     check_error(conn, db);
+    // Para la ultima linea de la tabla.
+    printf("*--------*--------------------*----------*----------*\n");
 }
 
 void add_user(const char *username, const char *password, int is_admin)
@@ -308,6 +305,8 @@ bool __update__(const int id, const char *new_name,
     char *errmsg;
     char *sql;
 
+    __init_database__(database_name);
+
     // Para imprimir los nombre de las columnas.
     temp = true;
 
@@ -330,31 +329,26 @@ bool __update__(const int id, const char *new_name,
     check_error(conn, db);
     conn = sqlite3_bind_int(res, 4, id);
     check_error(conn, db);
+    sqlite3_step(res);
 
-    int step = sqlite3_step(res);
     sqlite3_finalize(res);
     return true;
 }
 
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
+    if (temp)
+        printf("*--------*--------------------*----------*----------*\n"
+               "|%-8s|%-20s|%-10s|%-10s|\n",
+               columns_names[0], columns_names[1], columns_names[2],
+               columns_names[3]);
 
-    if(temp)
-    {
-
-       printf("*--------*--------------------*----------*----------*\n"
-              "|%-8s|%-20s|%-10s|%-10s|\n", 
-              columns_names[0], columns_names[1], columns_names[2], 
-              columns_names[3]);
-    } //   
     temp = false;
 
-    
-        fflush(stdout);
-        printf("*--------*--------------------*----------*----------*\n"
-               "|%-8s|%-20s|%-10s|%-10s|\n", 
-               columns[0], columns[1], columns[2], columns[3]);
-    
+    fflush(stdout);
+    printf("*--------*--------------------*----------*----------*\n"
+           "|%-8s|%-20s|%-10s|%-10s|\n",
+           columns[0], columns[1], columns[2], columns[3]);
 
-    return false;
+    return 0;
 }

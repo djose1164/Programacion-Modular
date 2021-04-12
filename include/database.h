@@ -45,11 +45,11 @@ enum return_validate
 // Variables para el manejo de la base de datos.
 extern sqlite3 *db;
 extern sqlite3_stmt *res;
-extern char *errmsg;
-extern int conn;
+extern const char *database_name;
+static char *errmsg;
+static int conn;
 // El limite de usario que podran register por ejecucion del programa.
 extern const size_t MAX_USERS;
-extern const char *database_name;
 
 /**-*-*-*-*-*-*- Metodos internos, no deberian modificarse sin saber SQL.*-*-*-*-*-*-*- */
 /**

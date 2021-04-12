@@ -85,6 +85,9 @@ int login_menu()
 	 */
 	unsigned options = 0;
 
+	fflush(stdout);
+	system("cls||clear");
+
 	// Para que no se sienta la espera.
 	printf("Empezando sistema de carga...\n");
 	system_loading(time);
@@ -114,15 +117,11 @@ int login_menu()
 			break;
 	}
 
-	fflush(stdout);
-	system("cls||clear");
 	switch (options)
 	{
 	case inventario:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+		if (inventory_menu())
+			return login_menu();
 	case compras:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");
@@ -139,9 +138,10 @@ int login_menu()
 		getch();
 		break;
 	case salir:
-
+		fflush(stdout);
+		system("cls||clear");
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
-		return 0;
+		exit(0);
 	default:
 		fprintf(stderr, "Verifica que hayas ingresado tus credenciales correctamente o "
 						"envia un issue detallando el posible bug.\n");

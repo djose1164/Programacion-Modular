@@ -215,28 +215,47 @@ bool inventory_menu()
                "1) Guardar producto.\n"
                "2) Editar producto.\n"
                "3) Reporte de inventario.\n"
-               "4) Salir.\n"
+               "4) Volver al menu principal.\n"
+               "5) Salir.\n"
                "\aOpcion: ");
         fgets(_temp, sizeof(_temp), stdin); // 4 bytes 8 bytes
         sscanf(_temp, "%hd", &temp);
 
+        // Se comprueba a donde el usuario quiere ir.
         switch (temp)
         {
         case _save_product:
-            //add_product();
-            break;
+            // TODO: #16 Reparar bug: cuando se presiona s no pregunta para guardar otro producto.
+            for (; ask_to_save();)
+                ;
+            return inventory_menu();
+
         case _edit_product:
-            //edit_product();
-            break;
+            for (; ask_to_edit();)
+                ;
+            return inventory_menu();
+
         case _report_inventory:
             report_inventory();
-            break;
+            printf("\n\n\aPresiona 'i' para volver al menu de Inventario; "
+                   "'p' para volver al menu principal.\n"
+                   "Opcion: ");
+            for (; (c = getchar());)
+            {
+                if (c == 'p' || c == 'P' && c != '\n')
+                    return 0; //return login_menu();
+                else if (c == 'i' || c == 'I' && c != '\n')
+                    return inventory_menu();
+            }
+        case _menu_principal:
+            return true;
         case _salir:
             return false;
         default:
             fprintf(stderr, "Has introducido una opcion incorrecta!\n"
                             "Si crees que es un bug manda una issue detallando el"
                             "error!\n");
+            return false;
             break;
         }
 
@@ -244,39 +263,5 @@ bool inventory_menu()
         system("cls||clear");
     } while (temp <= 0 || temp > 4);
 
-    switch (temp)
-    {
-    case _save_product:
-        // TODO: #16 Reparar bug: cuando se presiona s no pregunta para guardar otro producto.
-        for (; ask_to_save();)
-            ;
-        return inventory_menu();
-
-    case _edit_product:
-        for (; ask_to_edit();)
-            ;
-        return inventory_menu();
-
-    case _report_inventory:
-        report_inventory();
-        printf("\n\n\aPresiona 'i' para volver al menu de Inventario; "
-               "'p' para volver al menu principal.\n"
-               "Opcion: ");
-        for (; (c = getchar());)
-        {
-            if (c == 'p' || c == 'P' && c != '\n')
-                return 0; //return login_menu();
-            else if (c == 'i' || c == 'I' && c != '\n')
-                return inventory_menu();
-        }
-    case salir:
-        return false;
-    default:
-        fprintf(stderr, "Has introducido una opcion incorrecta!\n"
-                        "Si crees que es un bug manda una issue detallando el"
-                        "error!\n");
-        return false;
-        break;
-    }
     return true;
 }

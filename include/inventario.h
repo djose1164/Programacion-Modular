@@ -45,6 +45,12 @@ enum __request_value
     get_quantity
 };
 
+enum set_new_value
+{
+    new_name = 1,
+    new_price,
+    new_quantity
+};
 
 // Consts
 extern const size_t MAX_PRODUCTS;
@@ -70,25 +76,15 @@ bool save_product(char const *product_name, unsigned int sell_price,
                   unsigned int available_quantity);
 
 /**
- * @brief Actualiza un valor. Ej: id = 10, new_value = 50, is_int = true;
- * Como new_value es un string, y queremos guardar un int debemos pasar is_int = true.
- * El producto con el id = 10 sele asiganara un nuevo valor (50).
+ * @brief Muestra un menu para actualizar un producto por su ID.
  * 
- * IMPORTANT: Si no vas a actualizar algun parametro pasa Null. Ej. 5, NULL...
  * 
  * TODO: Abstracion para users.
  * 
- * @param id Identificador exclusivo (no se puede repetir, y se genera 
- * automaticamente) para cada producto. NO puede ser NULL.
- * @param new_name Nuevo nombre para el producto con el id suministrado.
- * @param new_sellPrice Nuevo sell_price para el producto con el id suministrado.
- * @param new_availableQuantity Nuevo available_quantity para el producto con el
- * id suministrado.
  * @return true Se han asignado los nuevos valores succesfully!
  * @return false No se han podido asignar los nuevos valores.
  */
-bool edit_product(const unsigned id, const char *new_name,
-                  const unsigned new_sellPrice, const unsigned new_availableQuantity);
+bool edit_product();
 
 /**
  * @brief Impre en pantalla el estado actual del inventario (database).
@@ -121,7 +117,7 @@ bool ask_to_save();
  * @param quantity La cantidad que sera sumada o restada.
  * @param id ID del producto a modificar.
  * @return true Se ha podido establecer la nueva cantidad.
- * @return false No se ha pdoido establecer la nueva cantidad.
+ * @return false No se ha podido establecer la nueva cantidad.
  */
 bool edit_availableQuantity(const unsigned id, const int quantity);
 

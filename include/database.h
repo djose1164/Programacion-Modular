@@ -11,7 +11,11 @@
 #define DATABASE_H
 
 // Librerias necesarias.
+#ifdef __WIN32
+#include "../include/sqlite3.h"
+#else
 #include <sqlite3.h>
+#endif //! __WIN32
 #include <stdbool.h>
 #include <stddef.h>
 #include "../include/inventario.h"
@@ -38,12 +42,12 @@ enum return_validate
     not_found
 };
 
-
 // Variables para el manejo de la base de datos.
 extern sqlite3 *db;
 extern sqlite3_stmt *res;
-extern char *errmsg;
-extern int conn;
+extern const char *database_name;
+static char *errmsg;
+static int conn;
 // El limite de usario que podran register por ejecucion del programa.
 extern const size_t MAX_USERS;
 
@@ -128,7 +132,7 @@ void __make_query__(const char *query);
  * @return false No se han podido asignar los nuevos valores.
  */
 bool __update__(const int id, const char *new_name,
-                       const int new_sellPrice, const int new_availableQuantity);
+                const int new_sellPrice, const int new_availableQuantity);
 
 /**
  * @brief Para uso interno.

@@ -16,10 +16,9 @@ enum menu_option
 {
     inventario = 1,
     compras,
-    ventas, 
+    ventas,
     contabilidad,
-    salir
-    
+    _salir
 };
 
 /**
@@ -55,5 +54,12 @@ char *get_password(char *const password);
  * @param time El tiempo q durara el copilador parado.
  */
 void system_loading(int time);
+
+/**
+ * @brief Devuelve el usario actual que esta ejecutando el programa.
+ * 
+ * @return char* La direccion de memoria donde se encutra el nombre.
+ */
+char *get_username(const char *const __actual_user);
 
 #endif //LOGIN_H

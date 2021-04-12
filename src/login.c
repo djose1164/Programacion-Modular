@@ -138,7 +138,8 @@ int login_menu()
 			   "Presione cualquier tecla para finalizar la ejecucion...");
 		getch();
 		break;
-	case salir:
+	case _salir:
+
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
 		return 0;
 	default:
@@ -202,6 +203,8 @@ int login_user()
 
 		printf("Password: ");
 		strcpy(password, get_password(password));
+		get_username(username);
+
 
 		printf("\nEs admin: ");
 		scanf(" %d", &is_admin);
@@ -237,6 +240,7 @@ int login_user()
 
 			printf("\t\aPassword: ");
 			strcpy(password, get_password(password));
+			get_username(password);
 
 			if (!validate(username, password))
 			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.
@@ -290,4 +294,9 @@ void system_loading(int time)
 		sleep(time);
 #endif //__WIN32
 	}
+}
+
+char *get_username(const char *const __actual_user)
+{
+	return (char *)__actual_user;
 }

@@ -149,6 +149,16 @@ void check_alloc(void *ptr);
  */
 char *allocate_str(int len);
 
+/**
+ * @brief Devolvera el valor de una columna. El retorna debe ser casteado con el
+ * tipo de dato q desea.
+ * 
+ * @param id Obtendra el valor deseado del producto q tenga este ID.
+ * @param __request_value Pasarse una opcion del enum __request_value
+ * @return void* Un objeto q puede ser casteado a cualquier data type.
+ */
+void* __get_column_value__(const unsigned id, const unsigned __request_value);
+
 /**-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- */
 /**
  * @brief Anade a un nuevo usario a la database.

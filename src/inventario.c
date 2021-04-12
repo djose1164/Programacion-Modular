@@ -254,3 +254,9 @@ bool inventory_menu()
 
     return true;
 }
+
+bool edit_availableQuantity(const unsigned id, const int quantity)
+{
+    
+    return false;
+}

@@ -38,6 +38,14 @@ enum inventario_options
     _salir
 };
 
+enum __request_value
+{
+    get_productName,
+    get_price,
+    get_quantity
+};
+
+
 // Consts
 extern const size_t MAX_PRODUCTS;
 /**
@@ -97,6 +105,24 @@ void report_inventory();
  */
 bool inventory_menu();
 
+/**
+ * @brief Muestra el menu de guardar producto.
+ * 
+ * @return true El usuario desea guardar otro producto.
+ * @return false El usuario no desea guardar otro producto.
+ */
 bool ask_to_save();
+
+/**
+ * @brief Permite modificar la cantidad almacena de un producto por su ID. Ya sea
+ * para restarle cantidad o sumarle. Si quieres anadir deberas pasar un numero
+ * negativo; para sumar un positivo.
+ * 
+ * @param quantity La cantidad que sera sumada o restada.
+ * @param id ID del producto a modificar.
+ * @return true Se ha podido establecer la nueva cantidad.
+ * @return false No se ha pdoido establecer la nueva cantidad.
+ */
+bool edit_availableQuantity(const unsigned id, const int quantity);
 
 #endif //INVENTARIO_H

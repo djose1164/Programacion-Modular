@@ -59,9 +59,12 @@ int agregar_mas_articulos(int *total_pagar);
 void see_orders();
 
 /**
- * Permite editar cualquier factura, con la clave y usuario del admin
+ * @brief Permite editar cualquier factura, con la clave y usuario del admin
+ * 
+ * @param total_pagar 
+ * @return int 
  */
-void edit_orders();
+int edit_orders(int total_pagar);
 
 /**
  * Permite editar cualquier factura, con la clave y usuario del admin 
@@ -74,9 +77,9 @@ void delete_orders();
  *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio)
  * @param precio 
  * @param cant 
- * @return unsigned 
+ * @return int 
  */
-unsigned venta_return_contabilidad(unsigned precio, int cant);
+unsigned venta_return_contabilidad(unsigned precio, unsigned cant);
 
 /**
  * @brief Da el total de todas las facturas/ventas realizadas al momento

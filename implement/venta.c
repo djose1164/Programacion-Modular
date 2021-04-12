@@ -22,13 +22,32 @@ unsigned cantidad;//Esta va a ingresar las cantidades de productos a vender
                    //TODO para que le pase cantidad a Facturas.cantidad y asi poder 
                    //TODO pasarselo a venta_return_contabilidad.
 
+/**
+ * @brief Permite editar cualquier factura, con la clave y usuario del admin
+ * 
+ * @param total_pagar 
+ * @return int 
+ */
+int edit_orders(int total_pagar)
+{
+    
+    void add_user();//ver si es admin o no, si es puede editar, sino sale error
+    do
+    {
+        printf("\n\aEstas ahora en el editor de pedidos\n"
+        "\nPor favor edite la factura\n");
+
+    } while (add_user);
+    return false;
+    
+}
 
 /**
  * @brief Esta funcion devolvera lo que se venda para llevarlo a contabilidad
- *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio)
+ *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio) 
  * @param precio 
  * @param cantidad 
- * @return unsigned 
+ * @return int 
  */
 unsigned venta_return_contabilidad(unsigned precio, unsigned cantidad)
 {
@@ -36,21 +55,18 @@ unsigned venta_return_contabilidad(unsigned precio, unsigned cantidad)
 }
 
 /**
- * @brief  Permite ver todas las Facturas realizadas de acuerdo al nombre del cliente
+ * @brief  Permite ver todas las Facturas realizadas de acuerdo al nombre del cliente logeado
+ *  y como solo sera un cliente solo se vera una unica factura
  * 
  */
 void see_orders()
 {
-    char get_username[sizeof(char)];
-    char nombre_cliente;
-
+   //TODO Chequear si se puede solo copiar lo que imprima sell_products
+    
     system("cls || clear");
     printf("\a\n\tElegiste la opcion Ver ventas\n"
-           "Ingrese el nombre del cliente a eliminar: "
-           "\t%s",Facturas->nombre_cliente); //Imprimira todas las facturas que se hayan hecho
-    fgets(get_username, sizeof(char), stdin);
-    sscanf(get_username, "%s", &nombre_cliente);//Va a tomar el nombre del cliente y buscar su factura
-
+           "\n\t%s\n",Facturas); //Imprimira la factura que se haya hecho
+    
 }
 
 /**

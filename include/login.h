@@ -19,7 +19,6 @@ enum menu_option
     ventas,
     contabilidad,
     _salir
-
 };
 
 /**

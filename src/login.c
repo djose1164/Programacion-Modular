@@ -139,6 +139,7 @@ int login_menu()
 		getch();
 		break;
 	case _salir:
+
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
 		return 0;
 	default:
@@ -203,6 +204,7 @@ int login_user()
 		printf("Password: ");
 		strcpy(password, get_password(password));
 		get_username(username);
+
 
 		printf("\nEs admin: ");
 		scanf(" %d", &is_admin);

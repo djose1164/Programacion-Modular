@@ -68,55 +68,89 @@ void report_inventory()
     __make_query__("SELECT * FROM products;");
 }
 
-bool edit_product(const unsigned id, const char *new_name,
-                  const unsigned new_sellPrice, const unsigned new_availableQuantity)
-{
-    return __update__(id, new_name, new_sellPrice, new_availableQuantity);
-}
-
-bool ask_to_edit()
+bool edit_product()
 {
     char _temp[sizeof(int) + sizeof(unsigned)];
+    unsigned temp = 0;
     char product_name[50];
     unsigned price = 0;
-    unsigned available_quantity = 0;
+    int available_quantity = 0;
     unsigned id = 0;
     char c;
+    bool flag;
 
-    fflush(stdout);
-    system("cls||clear");
-
-    printf("\t\t\aHola! Estas actualmente en editar producto!\n\n"
-           "\tEscribe el ID del producto: ");
-    fgets(_temp, sizeof(id), stdin);
-    sscanf(_temp, "%u", &id);
-
-    printf("\t\aIngrese el nuevo nombre del producto: ");
-    fgets(product_name, sizeof(product_name) / sizeof(char), stdin);
-    product_name[strcspn(product_name, "\n")] = 0;
-
-    printf("\t\aIngrese el nuevo precio de venta: ");
-    fgets(_temp, sizeof(price), stdin);
-    sscanf(_temp, "%u", &price);
-
-    printf("\t\aIngrese la nueva cantidad: ");
-    fgets(_temp, sizeof(available_quantity), stdin);
-    sscanf(_temp, "%u", &available_quantity);
-
-    fflush(stdout);
-    system("cls||clear");
-    if (edit_product(id, product_name, price, available_quantity))
+    for (short i = 0; temp <= 0 || temp > 4; ++i)
     {
-        printf("\t\aEl producto se ha editado correctamente!\n"
-               "Para editar otro producto escribe 's'; para volver al "
-               "menu Inventario 'n'.\n"
+        fflush(stdout);
+        system("cls||clear");
+
+        if (i != 0)
+            printf("\a\tPor favor elige una opcion correcta!\n\n");
+
+        printf("\t\t\aHola! Estas actualmente en editar producto!\n\n"
+               "\tQue quieres actualizar?\n\n"
+               "1) Nombre del producto.\n"
+               "2) Precio del producto.\n"
+               "3) Cantidad del producto.\n"
                "Opcion: ");
-        scanf("%c", &c);
-        getchar();
-        if (c == 'S' || c == 's')
-            return true;
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%u", &temp);
     }
 
+    fflush(stdout);
+    system("cls||clear");
+
+    printf("\t\aIngrese el id: ");
+    fgets(_temp, sizeof(_temp), stdin);
+    sscanf(_temp, "%u", &id);
+
+    switch (temp)
+    {
+    case new_name:
+        printf("\t\aIngrese el nuevo nombre del producto: ");
+        fgets(product_name, sizeof(product_name) / sizeof(char), stdin);
+        product_name[strcspn(product_name, "\n")] = 0;
+        flag = update(id, product_name, NULL, NULL);
+        break;
+    case new_price:
+        printf("\t\aIngrese el nuevo precio de venta: ");
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%u", &price);
+        flag = update(id, NULL, &price, NULL);
+        break;
+    case new_quantity:
+        printf("\t\aIngrese la cantidad (positivo para suma, negativo para resta): ");
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%d", &available_quantity);
+        flag = update(id, NULL, NULL, &available_quantity);
+        break;
+    default:
+        fprintf(stderr, "\aEsto luce como un bug in edit_product().\n");
+        break;
+    }
+
+    fflush(stdout);
+    system("cls||clear");
+
+    if (flag)
+    {
+
+        printf("\t\t\aEl producto fue modificado exitosamente!\n\n"
+               "\tPresiona 'i' para volver al inventario; cualquier otra tecla "
+               "para salir.\n");
+        while ((c = getchar()) != '\n')
+            if (c == 'i')
+                return true;
+            else
+                exit(0);
+    }
+    else
+    {
+        printf("\a\tEl producto que has intentado actualizar no existe.\n"
+               "\tVerifica que hayas ingresado un id existe.\n"
+               "Presione cualquier tecla para volver a menu Inventario...");
+        getch();
+    }
     return false;
 }
 
@@ -182,7 +216,7 @@ bool inventory_menu()
     system("cls||clear");
     /**El sistema de carga para entrar al modulo. */
     printf("Ingresando al modulo de inventario...\n");
-    system_loading(2);
+    system_loading(1);
 
     do
     {
@@ -210,7 +244,7 @@ bool inventory_menu()
             return inventory_menu();
 
         case _edit_product:
-            for (; ask_to_edit();)
+            for (; edit_product();)
                 ;
             return inventory_menu();
 
@@ -253,4 +287,9 @@ bool inventory_menu()
     } while (temp <= 0 || temp > 4);
 
     return true;
+}
+
+bool edit_availableQuantity(const unsigned id, const int quantity)
+{
+    return update(id, NULL, NULL, &quantity);
 }

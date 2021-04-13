@@ -22,6 +22,21 @@ enum menu_option
 };
 
 /**
+ * @brief struct donde se guardara el actual usuario. Si se loguea se cargaron los 
+ * datos q coincidan en la database.
+ * 
+ */
+struct actual_user
+{
+    /**Almacena el nombre del usuario a registrar. */
+	char username[50];
+	/**Almacena el password del usuario a registrar. */
+	char password[50];
+    bool is_admin;
+};
+
+
+/**
  * @brief Muestra el login principal donde se podra elegir la opcion para ingre-
  * sar a otro modulo
  * 
@@ -60,6 +75,6 @@ void system_loading(int time);
  * 
  * @return char* La direccion de memoria donde se encutra el nombre.
  */
-char *get_username(const char *const __actual_user);
+char *get_username();
 
 #endif //LOGIN_H

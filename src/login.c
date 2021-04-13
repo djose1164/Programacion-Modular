@@ -14,8 +14,10 @@
 #include "../include/inventario.h"
 //#include"inventario.h"
 
-#define MAX_LETTERS 50
+// Usuario actual que esta ejecutando el programa.
+static struct actual_user actual_user;
 
+// Tiempo que durara el copilador parado.
 const short time = 2;
 
 char *get_password(char *const password)
@@ -114,17 +116,7 @@ int login_menu()
 
 int login_user()
 {
-	// TODO: Imprimir mas informacion.
-	// Por ejemplo, en printf("(1) Registrarse.\n"
-	//		   				  "(2) Logearse.\n");
-	// Deberia mostromar mas informacion y encabezado.
 
-	/**Almacena el nombre del usuario a registrar. */
-	char username[MAX_LETTERS];
-	/**Almacena el password del usuario a registrar. */
-	char password[MAX_LETTERS];
-	/**Es admin? Si lo es 1, si no lo es 0. */
-	int is_admin;
 	/**Donde se guardara la opcion eligida por el usuario. */
 	unsigned temp = 0;
 
@@ -154,22 +146,21 @@ int login_user()
 	case 1: // Registrarse.
 
 		printf("\t\t\aHola! Aca podras registrarte. Por favor llena los siguientes campos.\n"
-			   "Username: ");
-		fgets(username, MAX_LETTERS, stdin);
+			   "actual_user.Username: ");
+		fgets(actual_user.username, sizeof(actual_user.username), stdin);
 		// Cambiar \n con \0
-		username[strcspn(username, "\n")] = 0;
+		actual_user.username[strcspn(actual_user.username, "\n")] = 0;
 
 		printf("Password: ");
-		strcpy(password, get_password(password));
-		get_username(username);
+		strcpy(actual_user.password, get_password(actual_user.password));
 
 		printf("\nEs admin: ");
-		scanf(" %d", &is_admin);
+		scanf(" %d", &actual_user.is_admin);
 		getchar();
 
 		system("clear||cls");
 		// Anade al usuario.
-		add_user(username, password, is_admin);
+		add_user(actual_user.username, actual_user.password, actual_user.is_admin);
 
 		// Luego entra en un blucle hasta que presione la letra de salir.
 		for (; login_menu();)
@@ -190,16 +181,15 @@ int login_user()
 					   "Intentos restantes: %zu \n\n",
 					   i);
 
-			printf("\t\aUsername: ");
-			fgets(username, MAX_LETTERS, stdin);
+			printf("\t\actual_user.aUsername: ");
+			fgets(actual_user.username, sizeof(actual_user.username), stdin);
 			// Cambiar \n con \0
-			username[strcspn(username, "\n")] = 0;
+			actual_user.username[strcspn(actual_user.username, "\n")] = 0;
 
 			printf("\t\aPassword: ");
-			strcpy(password, get_password(password));
-			get_username(password);
+			strcpy(actual_user.password, get_password(actual_user.password));
 
-			if (!validate(username, password))
+			if (!validate(actual_user.username, actual_user.password))
 			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.
 			{
 				// Quita el anterior mensaje para mostrar este printf y el sistema
@@ -253,7 +243,7 @@ void system_loading(int time)
 	}
 }
 
-char *get_username(const char *const __actual_user)
+char *get_username()
 {
-	return (char *)__actual_user;
+	return actual_user.username;
 }

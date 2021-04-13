@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#if defined(__WIN32) // Windows fue dectatado.
+#ifdef __WIN32 // Windows fue dectatado.
 #include <windows.h>
 #include <conio.h>
 #elif defined(__linux__) // Linux fue dectado.

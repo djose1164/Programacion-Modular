@@ -268,10 +268,10 @@ int login_user()
 void system_loading(int time)
 {
 #ifdef __WIN32
-	time += time * 1000
+	time += time * 1000;
 #endif //__WIN32
 
-			for (size_t i = 0; i <= 100; i++)
+	for (size_t i = 0; i <= 100; i++)
 	{
 		if (i % 25 == 0)
 		{

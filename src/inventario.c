@@ -12,12 +12,12 @@
 #include "../include/database.h"
 #include "../include/inventario.h"
 #include "../include/login.h"
+#include "../include/getch.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #ifdef __WIN32 // Windows fue dectatado.
 #include <windows.h>
-#include <conio.h>
 #elif defined(__linux__) // Linux fue dectado.
 #include <unistd.h>
 #endif

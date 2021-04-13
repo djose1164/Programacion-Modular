@@ -20,20 +20,19 @@ static struct actual_user actual_user;
 // Tiempo que durara el copilador parado.
 const short time = 2;
 
-char *get_password(char *const password)
+void set_password(char *const password)
 {
 	char c;
-	for (size_t i = 0; (c = getch()) != EOF || (c = getch()) != '\n'; ++i)
+	for (size_t i = 0; (c = getch()); ++i)
 	{
-		if (c == '\n')
+		if (c == '\n' || c == '\r')
 		{
 			password[i] = '\0';
-			break;
+			return;
 		}
 		else
 			password[i] = c;
 	}
-	return password;
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-
@@ -55,7 +54,7 @@ int login_menu()
 	/**+-+-+-+-+-+-Empieza el menu+-+-+-+-+-+- */
 
 	// TODO: #14 Mejorar con un for y un contador de intentos.
-	for (size_t i = 3; i > 0 || (options < 0 || options > 5); --i)
+	for (size_t i = 3; i > 0 || options > 5; --i)
 	{
 		system("cls||clear");
 
@@ -136,9 +135,9 @@ int login_user()
 		system("cls||clear");
 
 		/**Imprime al usuario q coga una opcion correcta. */
-		if (temp < 0 || temp > 2)
+		if ( temp > 2)
 			printf("Por favor elige una opcion correta.\n");
-	} while (temp < 0 || temp > 2);
+	} while ( temp > 2);
 
 	/**Dependiendo del valor en temp, el usuario se logeara o registrara. */
 	switch (temp)
@@ -152,7 +151,7 @@ int login_user()
 		actual_user.username[strcspn(actual_user.username, "\n")] = 0;
 		(void)get_username();
 		printf("Password: ");
-		strcpy(actual_user.password, get_password(actual_user.password));
+		set_password(actual_user.password);
 
 		printf("\nEs admin: ");
 		scanf(" %d", &actual_user.is_admin);
@@ -187,7 +186,7 @@ int login_user()
 			actual_user.username[strcspn(actual_user.username, "\n")] = 0;
 
 			printf("\t\aPassword: ");
-			strcpy(actual_user.password, get_password(actual_user.password));
+			set_password(actual_user.password);
 
 			if (!validate(actual_user.username, actual_user.password))
 			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.

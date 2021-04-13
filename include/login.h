@@ -61,7 +61,7 @@ int login_user();
  * @param password Donde se guardara la contraseña.
  * @return char* Devuelve la contraseña del usuario.
  */
-char *get_password(char *const password);
+void set_password(char *const password);
 
 /**
  * @brief Mostrara en pantalla q el sistema esta cargando.

@@ -76,7 +76,6 @@ void __create_table__(const char *query)
 {
     __init_database__(database_name);
 
-
     char *errmsg;
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
     check_error(conn, db);
@@ -87,7 +86,6 @@ static int __validate__(const char *const username, const char *const password)
     char *errmsg;
     int conn;
     __init_database__(database_name);
-
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -298,39 +296,96 @@ void add_user(const char *username, const char *password, int is_admin)
     }
 }
 
-bool __update__(const int id, const char *new_name,
-                const int new_sellPrice, const int new_availableQuantity)
+//!-*-*-*-*-*-* Actualizar los datos -*-*-*-*-*-*
+
+bool update(const unsigned id, const char *new_name,
+            const unsigned *new_sellPrice, const int *new_availableQuantity)
+{
+    if (id <= 0)
+        return false;
+
+    if (new_name)
+        return __update_name__(id, new_name);
+    else if (new_sellPrice)
+        return __update_price__(id, *new_sellPrice);
+    else if (new_availableQuantity)
+        return __update_quantity__(id, *new_availableQuantity);
+
+    return false;
+}
+
+static bool __update_name__(const unsigned id, const char *new_name)
 {
     int conn;
     char *errmsg;
-    char *sql;
-
     __init_database__(database_name);
 
-    // Para imprimir los nombre de las columnas.
-    temp = true;
-
-    if (!id)
+    if (new_name == NULL)
         return false;
 
-    sql = "UPDATE products "
-          "SET nombre = ?, "
-          "precio = ?, "
-          "cantidad = ? "
-          "WHERE id = ?;";
+    char *sql = "UPDATE products "
+                "SET nombre = ?"
+                "WHERE id = ?";
 
     conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
     check_error(conn, db);
+
     conn = sqlite3_bind_text(res, 1, new_name, -1, NULL);
     check_error(conn, db);
-    conn = sqlite3_bind_int(res, 2, new_sellPrice);
-    check_error(conn, db);
-    conn = sqlite3_bind_int(res, 3, new_availableQuantity);
-    check_error(conn, db);
-    conn = sqlite3_bind_int(res, 4, id);
-    check_error(conn, db);
-    sqlite3_step(res);
 
+    conn = sqlite3_bind_int(res, 2, id);
+    check_error(conn, db);
+
+    sqlite3_step(res);
+    sqlite3_finalize(res);
+    return true;
+}
+
+static bool __update_quantity__(const unsigned id, const int quantity)
+{
+    int conn;
+    char *errmsg;
+    __init_database__(database_name);
+
+    char *sql = "UPDATE products "
+                "SET cantidad = cantidad + ?"
+                "WHERE id = ?";
+
+    conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 1, quantity);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 2, id);
+    check_error(conn, db);
+
+    conn = sqlite3_step(res);
+    sqlite3_finalize(res);
+
+    return conn == SQLITE_OK;
+}
+
+static bool __update_price__(const unsigned id, const unsigned new_price)
+{
+    int conn;
+    char *errmsg;
+    __init_database__(database_name);
+
+    char *sql = "UPDATE products "
+                "SET precio = ? "
+                "WHERE id = ?";
+
+    conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 1, new_price);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 2, id);
+    check_error(conn, db);
+
+    sqlite3_step(res);
     sqlite3_finalize(res);
     return true;
 }

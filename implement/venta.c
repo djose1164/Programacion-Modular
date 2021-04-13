@@ -17,7 +17,7 @@
 facturas Facturas[50];
 #define MAX_LETTERS 50
 struct products;
-unsigned cantidad;//Esta va a ingresar las cantidades de productos a vender 
+unsigned *cantidad;//Esta va a ingresar las cantidades de productos a vender 
                     //TODO Preguntar si puedo en este caso usar la estructura
                    //TODO para que le pase cantidad a Facturas.cantidad y asi poder 
                    //TODO pasarselo a venta_return_contabilidad.
@@ -51,7 +51,7 @@ int edit_orders(int total_pagar)
  */
 unsigned venta_return_contabilidad(unsigned precio, unsigned cantidad)
 {
-
+    return Facturas->Cantidad, Facturas->Precio;
 }
 
 /**
@@ -81,12 +81,14 @@ int agregar_mas_articulos(int *total_pagar)
 #define IMPRESO
     void print_encabezado_factura();
 #endif IMPRESO // IMPRESO
-       
+    //TODO Revisar esto
+    strcpy(Facturas->Cantidad,&cantidad);
+    strcpy(Facturas->Precio,get_precio_by_id(id));   
 
     /* Imprimira cada factura hecha por cada llamada. */
     printf("%s\t%s\t%s\t%s\t%s\t%s\n\n\n\n\n\n\n",
-           get_username(), get_product(id), cantidad, get_precio_by_id(id),
-           edit_available_quantity(-3), get_precio_by_id(id) * get_cantidad());
+           get_username(),/* get_product(id)*/, cantidad, /*get_precio_by_id(id)*/,
+           /*edit_available_quantity(-3)*/, get_precio_by_id(id) * get_cantidad());
            scanf("%u",&cantidad);
            getchar();
     return 0;
@@ -117,8 +119,8 @@ int sell_products(int total_pagar)
     unsigned id = 0;
     unsigned precio = 0;
 
-     total_pagar = precio * cantidad;
-
+     total_pagar = precio * (*cantidad);
+    
     fflush(stdout);
     system("cls||clear");
     for (;;)
@@ -201,7 +203,7 @@ bool ventas_menu()
                 break;
 
             case _see_orders:
-
+            
                 break;
 
             case _edit_orders:

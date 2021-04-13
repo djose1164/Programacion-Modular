@@ -109,3 +109,5 @@ $RECYCLE.BIN/
 
 test.*
 *.db
+output/main
+sqlite3.*

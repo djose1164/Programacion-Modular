@@ -18,6 +18,7 @@ static short counter;
 sqlite3 *db;
 sqlite3_stmt *res;
 static bool temp = true;
+const char *database_name = "test.db";
 
 /**
  * @brief Habilita el suficiente espacion en memoria para los strings.
@@ -60,17 +61,20 @@ void check_error(int conn, sqlite3 *db)
 
 static int __init_database__(const char *database_name)
 {
+#ifndef CONNECTED
+#define CONNECTED
     int conn = sqlite3_open(database_name, &db);
     check_error(conn, db);
     return 0;
+#endif //CONNECTED
+
+    // Error
+    return -1;
 }
 
 void __create_table__(const char *query)
 {
-#ifndef CONNECTED
-#define CONNECTED
-    __init_database__("test.db");
-#endif //CONNECTED
+    __init_database__(database_name);
 
     char *errmsg;
     int conn = sqlite3_exec(db, query, 0, 0, &errmsg);
@@ -81,6 +85,7 @@ static int __validate__(const char *const username, const char *const password)
 {
     char *errmsg;
     int conn;
+    __init_database__(database_name);
 
     // Array de punteros a los datos a validar.
     const char *to_validate[] = {
@@ -188,7 +193,7 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
     else
     {
         query = "INSERT INTO products("
-                "id, product_name, sell_price, available_quantity) "
+                "id, nombre, precio, cantidad) "
                 "VALUES(NULL, ?, ?, ?);";
 
         // Cambiando estructura de datos.
@@ -213,32 +218,30 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
             check_error(conn, db);
         }
 
-        int step = sqlite3_step(res);
-        sqlite3_finalize(res);
+        sqlite3_step(res);
 
+        sqlite3_finalize(res);
         free(products);
         free(data);
         return true;
     }
-    sqlite3_finalize(res);
 
+    sqlite3_finalize(res);
     free(data);
     return false;
-
-    free(data);
-    sqlite3_finalize(res);
-
-    // error
-    return -1;
 }
 
 void __make_query__(const char *query)
 {
+    __init_database__(database_name);
     char *errmsg;
+
     int callback(void *data, int column_count, char **columns, char **columns_names);
 
     int conn = sqlite3_exec(db, query, callback, NULL, &errmsg);
     check_error(conn, db);
+    // Para la ultima linea de la tabla.
+    printf("*--------*--------------------*----------*----------*\n");
 }
 
 void add_user(const char *username, const char *password, int is_admin)
@@ -255,12 +258,14 @@ void add_user(const char *username, const char *password, int is_admin)
                          "is_admin INT);"};
     __create_table__(table_query);
 
+    // Coloca memoria para la primera dimension del array.
     struct users_to_insert **users_to_insert = malloc(sizeof(struct users_to_insert) * MAX_USERS);
     if (!users_to_insert)
         exit(-1);
     // Pone todas las structs a vacia.
     for (size_t i = 0; i < MAX_USERS; i++)
     {
+        // Coloca memoria para la segunda dimension del array.
         users_to_insert[i] = malloc(sizeof(users_to_insert[0]));
         if (!users_to_insert[i])
             exit(-1);
@@ -291,66 +296,114 @@ void add_user(const char *username, const char *password, int is_admin)
     }
 }
 
-bool __update__(const int id, const char *new_name,
-                const int new_sellPrice, const int new_availableQuantity)
+//!-*-*-*-*-*-* Actualizar los datos -*-*-*-*-*-*
+
+bool update(const unsigned id, const char *new_name,
+            const unsigned *new_sellPrice, const int *new_availableQuantity)
+{
+    if (id <= 0)
+        return false;
+
+    if (new_name)
+        return __update_name__(id, new_name);
+    else if (new_sellPrice)
+        return __update_price__(id, *new_sellPrice);
+    else if (new_availableQuantity)
+        return __update_quantity__(id, *new_availableQuantity);
+
+    return false;
+}
+
+static bool __update_name__(const unsigned id, const char *new_name)
 {
     int conn;
     char *errmsg;
-    char *sql;
+    __init_database__(database_name);
 
-    // Para imprimir los nombre de las columnas.
-    temp = true;
-
-    if (!id)
+    if (new_name == NULL)
         return false;
 
-    sql = "UPDATE products "
-          "SET product_name = ?, "
-          "sell_price = ?, "
-          "available_quantity = ? "
-          "WHERE id = ?;";
+    char *sql = "UPDATE products "
+                "SET nombre = ?"
+                "WHERE id = ?";
 
     conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
     check_error(conn, db);
+
     conn = sqlite3_bind_text(res, 1, new_name, -1, NULL);
     check_error(conn, db);
-    conn = sqlite3_bind_int(res, 2, new_sellPrice);
-    check_error(conn, db);
-    conn = sqlite3_bind_int(res, 3, new_availableQuantity);
-    check_error(conn, db);
-    conn = sqlite3_bind_int(res, 4, id);
+
+    conn = sqlite3_bind_int(res, 2, id);
     check_error(conn, db);
 
-    int step = sqlite3_step(res);
+    sqlite3_step(res);
+    sqlite3_finalize(res);
+    return true;
+}
+
+static bool __update_quantity__(const unsigned id, const int quantity)
+{
+    int conn;
+    char *errmsg;
+    __init_database__(database_name);
+
+    char *sql = "UPDATE products "
+                "SET cantidad = cantidad + ?"
+                "WHERE id = ?";
+
+    conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 1, quantity);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 2, id);
+    check_error(conn, db);
+
+    conn = sqlite3_step(res);
+    sqlite3_finalize(res);
+
+    return conn == SQLITE_OK;
+}
+
+static bool __update_price__(const unsigned id, const unsigned new_price)
+{
+    int conn;
+    char *errmsg;
+    __init_database__(database_name);
+
+    char *sql = "UPDATE products "
+                "SET precio = ? "
+                "WHERE id = ?";
+
+    conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 1, new_price);
+    check_error(conn, db);
+
+    sqlite3_bind_int(res, 2, id);
+    check_error(conn, db);
+
+    sqlite3_step(res);
     sqlite3_finalize(res);
     return true;
 }
 
 int callback(void *data, int column_count, char **columns, char **columns_names)
 {
+    if (temp)
+        printf("*--------*--------------------*----------*----------*\n"
+               "|%-8s|%-20s|%-10s|%-10s|\n",
+               columns_names[0], columns_names[1], columns_names[2],
+               columns_names[3]);
 
-        for (int i = 0; i < column_count && temp; i++)
-    {
-
-        if (i == column_count - 1)
-            printf("%s\n", columns_names[i]);
-        else
-        {
-            printf("%s\t|", columns_names[i]);
-        }
-    }
     temp = false;
 
-    for (size_t i = 0; i < column_count; i++)
-    {
-        fflush(stdout);
-        if (i == column_count - 1)
-            printf("%s\n", columns[i]);
-        else if (i == column_count - 2)
-            printf("%s\t\t|", columns[i]);
-        else
-            printf("%s\t|", columns[i]);
-    }
+    fflush(stdout);
+    printf("*--------*--------------------*----------*----------*\n"
+           "|%-8s|%-20s|%-10s|%-10s|\n",
+           columns[0], columns[1], columns[2], columns[3]);
 
-    return false;
+    return 0;
 }

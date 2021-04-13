@@ -15,13 +15,24 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "../include/database.h"
 #include "../include/inventario.h"
+#include "../include/login.h"
 
 typedef struct products Product;
 
 int main(int argc, char *const argv[])
 {
+#ifdef __linux__
+	printf("\033[34m"); // Cambia el color de la letra en linux.
+						// Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
+#else
+	system("color 34"); //cambia el color, el numero cambia el fondo
+						// y la letra cambia el color de letra
+						// https://www.geeksforgeeks.org/how-to-print-colored-text-in-c/
+#endif // __linux__
+	system("cls||clear");
 	/**
 	 * TODO: Hacer algo.
 	 */
@@ -38,6 +49,9 @@ int main(int argc, char *const argv[])
 
 	printf("El programa esta en: %s\n", argv[0]);
 
+	login_user();
+
+#if 0  //COMMENTED
 	add_user("djose1164", "1234", 1);
 	int status = validate("djose1164", "1234");
 	switch (status)
@@ -72,6 +86,7 @@ int main(int argc, char *const argv[])
 		printf("Error! Put a issue well explained about this bug.\n");
 		break;
 	}
+#endif //COMMENTED
 
 	return 0;
 }

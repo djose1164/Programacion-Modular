@@ -11,6 +11,7 @@
 #ifndef INVENTARIO_H
 #define INVENTARIO_H
 
+#include <stdbool.h>
 #include <stddef.h>
 
 // TODO: Guardar los productos, Editar productos(sudo), Eliminar producto(sudo)
@@ -26,6 +27,29 @@ struct products
     int sell_price;
     int available_quantity;
     bool full;
+};
+
+enum inventario_options
+{
+    _save_product = 1,
+    _edit_product,
+    _report_inventory,
+    _menu_principal,
+    _salir
+};
+
+enum __request_value
+{
+    get_productName,
+    get_price,
+    get_quantity
+};
+
+enum set_new_value
+{
+    new_name = 1,
+    new_price,
+    new_quantity
 };
 
 // Consts
@@ -52,30 +76,49 @@ bool save_product(char const *product_name, unsigned int sell_price,
                   unsigned int available_quantity);
 
 /**
- * @brief Actualiza un valor. Ej: id = 10, new_value = 50, is_int = true;
- * Como new_value es un string, y queremos guardar un int debemos pasar is_int = true.
- * El producto con el id = 10 sele asiganara un nuevo valor (50).
+ * @brief Muestra un menu para actualizar un producto por su ID.
  * 
- * IMPORTANT: Si no vas a actualizar algun parametro pasa Null. Ej. 5, NULL...
  * 
  * TODO: Abstracion para users.
  * 
- * @param id Identificador exclusivo (no se puede repetir, y se genera 
- * automaticamente) para cada producto. NO puede ser NULL.
- * @param new_name Nuevo nombre para el producto con el id suministrado.
- * @param new_sellPrice Nuevo sell_price para el producto con el id suministrado.
- * @param new_availableQuantity Nuevo available_quantity para el producto con el
- * id suministrado.
  * @return true Se han asignado los nuevos valores succesfully!
  * @return false No se han podido asignar los nuevos valores.
  */
-bool edit_product(const unsigned id, const char *new_name,
-                  const unsigned new_sellPrice, const unsigned new_availableQuantity);
+bool edit_product();
 
 /**
  * @brief Impre en pantalla el estado actual del inventario (database).
  * 
  */
 void report_inventory();
+
+/**
+ * @brief Mostrara el menu de invetario. Permitiendo al usuario elegir entre las
+ * opciones disponibles.
+ * 
+ * @return true El usuario no ha salido. Se ejectura.
+ * @return false El usuario salio. Se parara.
+ */
+bool inventory_menu();
+
+/**
+ * @brief Muestra el menu de guardar producto.
+ * 
+ * @return true El usuario desea guardar otro producto.
+ * @return false El usuario no desea guardar otro producto.
+ */
+bool ask_to_save();
+
+/**
+ * @brief Permite modificar la cantidad almacena de un producto por su ID. Ya sea
+ * para restarle cantidad o sumarle. Si quieres anadir deberas pasar un numero
+ * negativo; para sumar un positivo.
+ * 
+ * @param quantity La cantidad que sera sumada o restada.
+ * @param id ID del producto a modificar.
+ * @return true Se ha podido establecer la nueva cantidad.
+ * @return false No se ha podido establecer la nueva cantidad.
+ */
+bool edit_availableQuantity(const unsigned id, const int quantity);
 
 #endif //INVENTARIO_H

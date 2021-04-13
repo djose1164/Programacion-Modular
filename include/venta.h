@@ -15,9 +15,9 @@
  */
 typedef struct IngresodeVentas
 {
-    char nombre_cliente[50];
-    char empleado_en_turno[50];
-    char nombre_producto[50];
+    char nombre_cliente[100];
+    char empleado_en_turno[100];
+    char nombre_producto[100];
     unsigned Cantidad;
     unsigned Precio;
     unsigned Total;
@@ -73,13 +73,12 @@ int edit_orders(int total_pagar);
 void delete_orders();
 
 /**
- * @brief Esta funcion devolvera lo que se venda para llevarlo a contabilidad
+ * @brief  Esta funcion devolvera lo que se venda para llevarlo a contabilidad
  *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio)
- * @param precio 
- * @param cant 
- * @return int 
+ * 
+ * @return unsigned 
  */
-unsigned venta_return_contabilidad(unsigned precio, unsigned cant);
+unsigned venta_return_contabilidad();
 
 /**
  * @brief Da el total de todas las facturas/ventas realizadas al momento

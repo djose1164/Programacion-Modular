@@ -17,10 +17,49 @@
 facturas Facturas[50];
 #define MAX_LETTERS 50
 struct products;
-unsigned *cantidad;//Esta va a ingresar las cantidades de productos a vender 
+//unsigned *cantidad;//Esta va a ingresar las cantidades de productos a vender 
                     //TODO Preguntar si puedo en este caso usar la estructura
                    //TODO para que le pase cantidad a Facturas.cantidad y asi poder 
                    //TODO pasarselo a venta_return_contabilidad.
+
+
+/**
+ * @brief Regresa al usuario a lo que es el menu de inicio de los modulos
+ * 
+ * @return true El usuario ha salido del modulo y se va al menu inicial del programa
+ * @return false No se ejecutara la funcion
+ */
+bool salir()
+{
+    if (salir)
+    {
+        fflush(stdout);
+		system("cls||clear");
+		printf("Hackear a la NASA dejo de ser un sueno.\n");
+		exit(0);
+    }
+    return false;
+}
+
+/**
+ * @brief Da el total de todas las facturas/ventas realizadas al momento
+ * 
+ */
+void cash_register(Facturas)
+{
+   printf("%d");//Quiero imprimir todos los totales de las facturas para el reporte de caja
+    return facturas Facturas[50];
+}
+
+/**
+ * @brief Esta funcion eliminara totalmente las ventas hechas 
+ * Permite editar cualquier factura, con la clave y usuario del admin
+ * Introduciendo el nombre del cliente se elimina automaticamente la factura
+ */
+void delete_orders(Facturas)
+{
+
+}
 
 /**
  * @brief Permite editar cualquier factura, con la clave y usuario del admin
@@ -49,7 +88,7 @@ int edit_orders(int total_pagar)
  * @param cantidad 
  * @return int 
  */
-unsigned venta_return_contabilidad(unsigned precio, unsigned cantidad)
+unsigned venta_return_contabilidad()//TODO REVISAR
 {
     return Facturas->Cantidad, Facturas->Precio;
 }
@@ -66,7 +105,7 @@ void see_orders()
     system("cls || clear");
     printf("\a\n\tElegiste la opcion Ver ventas\n"
            "\n\t%s\n",Facturas); //Imprimira la factura que se haya hecho
-    
+    return Facturas;
 }
 
 /**
@@ -82,14 +121,13 @@ int agregar_mas_articulos(int *total_pagar)
     void print_encabezado_factura();
 #endif IMPRESO // IMPRESO
     //TODO Revisar esto
-    strcpy(Facturas->Cantidad,&cantidad);
     strcpy(Facturas->Precio,get_precio_by_id(id));   
 
     /* Imprimira cada factura hecha por cada llamada. */
     printf("%s\t%s\t%s\t%s\t%s\t%s\n\n\n\n\n\n\n",
-           get_username(),/* get_product(id)*/, cantidad, /*get_precio_by_id(id)*/,
+           get_username(),/* get_product(id)*/,Facturas->Cantidad, /*get_precio_by_id(id)*/,
            /*edit_available_quantity(-3)*/, get_precio_by_id(id) * get_cantidad());
-           scanf("%u",&cantidad);
+           scanf("%u",&Facturas->Cantidad);//Ver si esta bien hacerlo con las estructuras o si debo crear variable
            getchar();
     return 0;
 }
@@ -117,9 +155,9 @@ int sell_products(int total_pagar)
     unsigned _temp = 0;
     unsigned total_pagar = 0;
     unsigned id = 0;
-    unsigned precio = 0;
+  
 
-     total_pagar = precio * (*cantidad);
+     total_pagar = Facturas->Precio * Facturas->Cantidad;
     
     fflush(stdout);
     system("cls||clear");
@@ -203,7 +241,7 @@ bool ventas_menu()
                 break;
 
             case _see_orders:
-            
+
                 break;
 
             case _edit_orders:

@@ -146,11 +146,11 @@ int login_user()
 	case 1: // Registrarse.
 
 		printf("\t\t\aHola! Aca podras registrarte. Por favor llena los siguientes campos.\n"
-			   "actual_user.Username: ");
+			   "Username: ");
 		fgets(actual_user.username, sizeof(actual_user.username), stdin);
 		// Cambiar \n con \0
 		actual_user.username[strcspn(actual_user.username, "\n")] = 0;
-
+		(void)get_username();
 		printf("Password: ");
 		strcpy(actual_user.password, get_password(actual_user.password));
 
@@ -181,7 +181,7 @@ int login_user()
 					   "Intentos restantes: %zu \n\n",
 					   i);
 
-			printf("\t\actual_user.aUsername: ");
+			printf("\t\aUsername: ");
 			fgets(actual_user.username, sizeof(actual_user.username), stdin);
 			// Cambiar \n con \0
 			actual_user.username[strcspn(actual_user.username, "\n")] = 0;

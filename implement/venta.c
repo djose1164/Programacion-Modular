@@ -125,8 +125,8 @@ int agregar_mas_articulos(int *total_pagar)
 
     /* Imprimira cada factura hecha por cada llamada. */
     printf("%s\t%s\t%s\t%s\t%s\t%s\n\n\n\n\n\n\n",
-           get_username(),/* get_product(id)*/,Facturas->Cantidad, /*get_precio_by_id(id)*/,
-           /*edit_available_quantity(-3)*/, get_precio_by_id(id) * get_cantidad());
+           get_username(), get_product(id),Facturas->Cantidad, get_precio_by_id(id),
+           edit_available_quantity(), get_precio_by_id(id) * get_cantidad());
            scanf("%u",&Facturas->Cantidad);//Ver si esta bien hacerlo con las estructuras o si debo crear variable
            getchar();
     return 0;

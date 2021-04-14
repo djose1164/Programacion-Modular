@@ -219,7 +219,6 @@ bool inventory_menu()
 
     do
     {
-        (void)get_price_by_id(1);
         if (temp != 0)
             printf("Hey!! Mano q haces? Elige una opcion correcta!\n\n");
         /**Aca empieza el menu. */
@@ -298,6 +297,12 @@ int get_price_by_id(const unsigned id)
 {
     // Castea de void* a int* y obtiene su valor en temp.
     int temp = *((int *)get_column_value(id, PRICE));
-    printf("Precio: %d", temp);
-    return temp > 0 ? temp : 0;
+    return temp;
+}
+
+char *get_name_by_id(const unsigned id)
+{
+    char *str = (char *)get_column_value(id, NAME);
+    printf("Name: %s\n", str);
+    return str;
 }

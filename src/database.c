@@ -7,6 +7,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "../include/database.h"
 //#include "../include/users.h" Para proxima actualizacion.
 #include <string.h>
@@ -396,20 +397,22 @@ void *get_column_value(const unsigned id, const unsigned __request_value)
         return NULL;
 
     if (__request_value == NAME)
-        return (void *)__get_name__(id);
+    {
+        sqlite3_finalize(res);
+        return __get_name__(id);
+    }
     else if (__request_value == PRICE)
-        return (void *)__get_price__(id);
+        return __get_price__(id);
     //else if (__request_value == QUANTITY)
-    //    return (void *)__get_quantity__(id);
+    //    return __get_quantity__(id);
     else
         return (void *)-1;
 }
 
-static void* __get_name__(const unsigned id)
+static void *__get_name__(const unsigned id)
 {
     int conn;
     char *str;
-    unsigned column_index = 1;
     char *sql = "SELECT nombre "
                 "FROM products "
                 "WHERE id = ?;";
@@ -417,16 +420,17 @@ static void* __get_name__(const unsigned id)
     check_error(conn, db);
     conn = sqlite3_bind_int(res, 1, id);
     check_error(conn, db);
+    conn = sqlite3_step(res);
 
-    str = sqlite3_step(res) == SQLITE_ROW ? (char *)sqlite3_column_text(res, column_index) : NULL;
-    sqlite3_finalize(res);
-    return (void *)str;
+    str = conn == SQLITE_ROW ? (char *)sqlite3_column_text(res, 0) : NULL;
+    void *temp = (void *)str;
+    return temp;
 }
 
-static void* __get_price__(const unsigned id)
+static void *__get_price__(const unsigned id)
 {
     int conn;
-   static unsigned price;
+    static unsigned price;
     char *sql = "SELECT precio "
                 "FROM products "
                 "WHERE id = ?;";
@@ -436,8 +440,8 @@ static void* __get_price__(const unsigned id)
     conn = sqlite3_bind_int(res, 1, id);
     check_error(conn, db);
     conn = sqlite3_step(res);
-    
-    price = conn == SQLITE_ROW ? sqlite3_column_int(res, 0) : 0;
+
+    price = conn == SQLITE_ROW ? sqlite3_column_int(res, 0) : -1;
     sqlite3_finalize(res);
     return (void *)&price;
 }

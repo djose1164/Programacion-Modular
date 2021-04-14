@@ -25,10 +25,10 @@ typedef struct products Product;
 int main(int argc, char *const argv[])
 {
 #ifdef __linux__
-	printf("\033[34m"); // Cambia el color de la letra en linux.
+	printf("\034[47m"); // Cambia el color de la letra en linux.
 						// Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
 #else
-	system("color 34"); //cambia el color, el numero cambia el fondo
+	system("color 8B"); //cambia el color, el numero cambia el fondo
 						// y la letra cambia el color de letra
 						// https://www.geeksforgeeks.org/how-to-print-colored-text-in-c/
 #endif // __linux__

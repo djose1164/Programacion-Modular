@@ -118,6 +118,8 @@ int login_user()
 
 	/**Donde se guardara la opcion eligida por el usuario. */
 	unsigned temp = 0;
+	/** Cuenta las veces que intenta el usuario*/
+	int chances = 0;
 
 	// Para que no se sienta la espera.
 	printf("Empezando sistema de carga...\n");

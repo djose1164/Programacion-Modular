@@ -27,28 +27,26 @@
 bool save_product(char const *product_name, unsigned int sell_price,
                   unsigned int available_quantity)
 {
-#ifndef CREATED
-#define CREATED
-
-    char *sql = "Create Table If Not Exists products("
-                "id Integer Primary Key AutoIncrement, "
-                "nombre TEXT NOT NULL, "
-                "precio INT NOT NULL, "
-                "cantidad INT NOT NULL);";
-    __create_table__(sql);
-#endif //CREATED
     static size_t counter = 1;
 
     struct products **const product = malloc(sizeof(struct products) * counter);
-    check_alloc((struct products *)product);
+    if (!product)
+    {
+        fprintf(stderr, "No se ha podido alocar memoria. Reinicia tu pc xD!\n");
+        exit(-1);
+    };
     for (size_t i = 0; i < counter; i++)
     {
         // Colocacion de memoria.
         product[i] = malloc(sizeof(struct products) * counter);
-        check_alloc((struct products *)product[i]);
+
         // Dar memoria para los strings.
         product[i]->product_name = malloc(strlen(product_name) + 1);
-
+        if (!product)
+        {
+            fprintf(stderr, "No se ha podido alocar memoria. Reinicia tu pc xD!\n");
+            exit(-1);
+        };
         // Insertacion de datos.
         product[i]->id = i + 1;
         strcpy(product[i]->product_name, product_name);
@@ -293,4 +291,18 @@ bool inventory_menu()
 bool edit_availableQuantity(const unsigned id, const int quantity)
 {
     return update(id, NULL, NULL, &quantity);
+}
+
+int get_price_by_id(const unsigned id)
+{
+    // Castea de void* a int* y obtiene su valor en temp.
+    int temp = *((int *)get_column_value(id, PRICE));
+    return temp;
+}
+
+char *get_name_by_id(const unsigned id)
+{
+    char *str = (char *)get_column_value(id, NAME);
+    printf("Name: %s\n", str);
+    return str;
 }

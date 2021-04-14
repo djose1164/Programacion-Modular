@@ -69,16 +69,46 @@ void delete_orders(Facturas)
  */
 int edit_orders(int total_pagar)
 {
+    int available_quantity = 0;
+    unsigned id = 0;
+    char c;
+    bool flag;
+    char _temp[sizeof(int) + sizeof(unsigned)];
+    unsigned temp = 0;
     
-    void add_user();//ver si es admin o no, si es puede editar, sino sale error
-    do
+    if (add_user) //ver si es admin o no, si es puede editar, sino sale error
     {
         printf("\n\aEstas ahora en el editor de pedidos\n"
-        "\nPor favor edite la factura\n");
+        "\nSolo podras editar las cantidades de productos a vender\n"
+        "\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%d", &available_quantity);
+        flag = update(id, NULL, NULL, &available_quantity);
+    }
+     fflush(stdout);
+    system("cls||clear");
 
-    } while (add_user);
+    if (flag)
+    {
+
+        printf("\t\t\aHa modificado la cantidad del producto\n\n"
+               "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
+               "\tpara salir.\n");
+        while ((c = getchar()) != '\n')
+            if (c == 'i')
+                return true;
+            else
+                exit(0);
+    }
+   /* else
+    {
+        printf("\a\tEl producto que has intentado actualizar no existe.\n"
+               "\tVerifica que hayas ingresado un id existe.\n"
+               "Presione cualquier tecla para volver a menu Inventario...");
+        getch();
+    }*/
     return false;
-    
+  
 }
 
 /**
@@ -121,12 +151,12 @@ int agregar_mas_articulos(int *total_pagar)
     void print_encabezado_factura();
 #endif IMPRESO // IMPRESO
     //TODO Revisar esto
-    strcpy(Facturas->Precio,get_precio_by_id(id));   
+    strcpy(Facturas->Precio,get_price_by_id);   
 
     /* Imprimira cada factura hecha por cada llamada. */
     printf("%s\t%s\t%s\t%s\t%s\t%s\n\n\n\n\n\n\n",
-           get_username(), get_product(id),Facturas->Cantidad, get_precio_by_id(id),
-           edit_available_quantity(), get_precio_by_id(id) * get_cantidad());
+           get_username(),get_name_by_id,Facturas->Cantidad, get_price_by_id,
+           edit_available_quantity(), get_price_by_id * Facturas->Cantidad);
            scanf("%u",&Facturas->Cantidad);//Ver si esta bien hacerlo con las estructuras o si debo crear variable
            getchar();
     return 0;
@@ -235,7 +265,8 @@ bool ventas_menu()
             switch (temp)
             {
             case _sell_products:
-                //void print_encabezado_factura();
+                /*void print_encabezado_factura();//ver si es necesario agregarla o si solo se puede llamar a 
+                agregar_mas_articulos*/
                 int agregar_mas_articulos(int *total_pagar);
 
                 break;

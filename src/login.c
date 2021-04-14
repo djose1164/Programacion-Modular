@@ -72,31 +72,31 @@ int login_menu()
 		scanf(" %d", &options);
 		getchar();
 
-		if (options >= inventario && options <= salir)
+		if (options >= INVENTARIO && options <= SALIR)
 			break;
 	}
 
 	switch (options)
 	{
-	case inventario:
+	case INVENTARIO:
 		if (inventory_menu())
 			return login_menu();
-	case compras:
+	case COMPRAS:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");
 		getch();
 		break;
-	case ventas:
+	case VENTAS:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");
 		getch();
 		break;
-	case contabilidad:
+	case CONTABILIDAD:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");
 		getch();
 		break;
-	case salir:
+	case SALIR:
 		fflush(stdout);
 		system("cls||clear");
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
@@ -137,9 +137,9 @@ int login_user()
 		system("cls||clear");
 
 		/**Imprime al usuario q coga una opcion correcta. */
-		if ( temp > 2)
+		if (temp > 2)
 			printf("Por favor elige una opcion correta.\n");
-	} while ( temp > 2);
+	} while (temp > 2);
 
 	/**Dependiendo del valor en temp, el usuario se logeara o registrara. */
 	switch (temp)

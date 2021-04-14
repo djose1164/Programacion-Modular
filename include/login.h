@@ -14,11 +14,11 @@
 
 enum menu_option
 {
-    inventario = 1,
-    compras,
-    ventas,
-    contabilidad,
-    salir
+    INVENTARIO = 1,
+    COMPRAS,
+    VENTAS,
+    CONTABILIDAD,
+    SALIR
 };
 
 /**
@@ -29,12 +29,11 @@ enum menu_option
 struct actual_user
 {
     /**Almacena el nombre del usuario a registrar. */
-	char username[50];
-	/**Almacena el password del usuario a registrar. */
-	char password[50];
+    char username[50];
+    /**Almacena el password del usuario a registrar. */
+    char password[50];
     bool is_admin;
 };
-
 
 /**
  * @brief Muestra el login principal donde se podra elegir la opcion para ingre-

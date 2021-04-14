@@ -40,9 +40,9 @@ enum inventario_options
 
 enum __request_value
 {
-    get_productName,
-    get_price,
-    get_quantity
+    NAME = 2,
+    PRICE,
+    QUANTITY 
 };
 
 enum set_new_value
@@ -84,13 +84,13 @@ bool save_product(char const *product_name, unsigned int sell_price,
  * @return true Se han asignado los nuevos valores succesfully!
  * @return false No se han podido asignar los nuevos valores.
  */
-bool edit_product();
+bool edit_product(void);
 
 /**
  * @brief Impre en pantalla el estado actual del inventario (database).
  * 
  */
-void report_inventory();
+void report_inventory(void);
 
 /**
  * @brief Mostrara el menu de invetario. Permitiendo al usuario elegir entre las
@@ -99,7 +99,7 @@ void report_inventory();
  * @return true El usuario no ha salido. Se ejectura.
  * @return false El usuario salio. Se parara.
  */
-bool inventory_menu();
+bool inventory_menu(void);
 
 /**
  * @brief Muestra el menu de guardar producto.
@@ -107,7 +107,7 @@ bool inventory_menu();
  * @return true El usuario desea guardar otro producto.
  * @return false El usuario no desea guardar otro producto.
  */
-bool ask_to_save();
+bool ask_to_save(void);
 
 /**
  * @brief Permite modificar la cantidad almacena de un producto por su ID. Ya sea
@@ -120,5 +120,13 @@ bool ask_to_save();
  * @return false No se ha podido establecer la nueva cantidad.
  */
 bool edit_availableQuantity(const unsigned id, const int quantity);
+
+/**
+ * @brief Devuelve el precio por id.
+ * 
+ * @param id ID del producto.
+ * @return int El precio del producto. -1 en caso de error.
+ */
+int get_price_by_id(const unsigned id);
 
 #endif //INVENTARIO_H

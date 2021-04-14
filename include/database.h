@@ -91,7 +91,7 @@ static int __init_database__(const char *database_name);
  * @return true Si fue exitoso.
  * @return false Si fallo.
  */
-void __create_table__(const char *query);
+static void __create_table__(const char *query);
 
 /**
  * IMPORTANT: Para uso interno.
@@ -115,27 +115,36 @@ void __make_query__(const char *query);
 /**
  * @brief Para uso interno.
  * 
- * @param ptr 
- */
-void check_alloc(void *ptr);
-
-/**
- * @brief Para uso interno.
- * 
  * @param len 
  * @return char* 
  */
-char *allocate_str(int len);
+static char *allocate_str(int len);
 
 /**
- * @brief Devolvera el valor de una columna. El retorna debe ser casteado con el
- * tipo de dato q desea.
+ * @brief Devuelve el nombre del producto por su ID.
  * 
- * @param id Obtendra el valor deseado del producto q tenga este ID.
- * @param __request_value Pasarse una opcion del enum __request_value
- * @return void* Un objeto q puede ser casteado a cualquier data type.
+ * IMPORTANT: Solo get_column_value debe retornar esta funcion.
+ * 
+ * @param id ID del producto.
+ * @return char* Devuelve un string si se pudo encontrar. NULL de lo contrario.
  */
-void *__get_column_value__(const unsigned id, const unsigned __request_value);
+static void *__get_name__(const unsigned id);
+
+/**
+ * @brief Devuelve el precio del producto.
+ * 
+ * @param id ID del producto.
+ * @return int El precio del producto.
+ */
+static void *__get_price__(const unsigned id);
+
+/**
+ * @brief Devuelve la cantidad actual del producto en inventario.
+ * 
+ * @param id ID del producto.
+ * @return int Cantidad disponible.
+ */
+static void *__get_quantity__(const unsigned id);
 
 /**
  * @brief update devuelve esta funcion.
@@ -217,6 +226,16 @@ extern char *search_product_by_id(const int id);
  */
 bool update(const unsigned id, const char *new_name,
             const unsigned *new_sellPrice, const int *new_availableQuantity);
+
+/**
+ * @brief Devolvera el valor de una columna. El retorna debe ser casteado con el
+ * tipo de dato q desea.
+ * 
+ * @param id Obtendra el valor deseado del producto q tenga este ID.
+ * @param __request_value Pasarse una opcion del enum __request_value
+ * @return void* Un objeto q puede ser casteado a cualquier data type.
+ */
+void *get_column_value(const unsigned id, const unsigned __request_value);
 
 /** 
  * TODO: Si crees que faltan alguna funcion, anadale en forma de comentario. Y explicacion de lo q hace.

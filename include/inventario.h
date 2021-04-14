@@ -42,7 +42,7 @@ enum __request_value
 {
     NAME = 2,
     PRICE,
-    QUANTITY 
+    QUANTITY
 };
 
 enum set_new_value
@@ -128,5 +128,13 @@ bool edit_availableQuantity(const unsigned id, const int quantity);
  * @return int El precio del producto. -1 en caso de error.
  */
 int get_price_by_id(const unsigned id);
+
+/**
+ * @brief Devuelve el nombre por id.
+ * 
+ * @param id ID del producto.
+ * @return char* El nombre del producto. NULL en caso de error.
+ */
+char *get_name_by_id(const unsigned id);
 
 #endif //INVENTARIO_H

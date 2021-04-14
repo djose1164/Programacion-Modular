@@ -5,75 +5,34 @@
 #ifdef __WIN32
 #include <windows.h> /* Windows dectetado. */
 #include <conio.h>
-#elif __linux__
-#include <unistd.h> /* Linux detectado. */
-#include <sys/ioctl.h>
-#include <termios.h>
+#elif __linux__ /* Linux detectado. */
+#include "../include/getch.h"
+#include <unistd.h>
 #endif //__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/inventario.h"
 //#include"inventario.h"
 
-#define MAX_LETTERS 50
+// Usuario actual que esta ejecutando el programa.
+static struct actual_user actual_user;
 
+// Tiempo que durara el copilador parado.
 const short time = 2;
 
-#ifdef __linux__
-static struct termios old, current;
-
-/* Initialize new terminal i/o settings */
-void initTermios(int echo)
-{
-	tcgetattr(0, &old);			/* grab old terminal i/o settings */
-	current = old;				/* make new settings same as old settings */
-	current.c_lflag &= ~ICANON; /* disable buffered i/o */
-	if (echo)
-		current.c_lflag |= ECHO; /* set echo mode */
-
-	else
-		current.c_lflag &= ~ECHO; /* set no echo mode */
-
-	tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
-}
-
-/* Restore old terminal i/o settings */
-void resetTermios(void)
-{
-	tcsetattr(0, TCSANOW, &old);
-}
-
-/* Read 1 character - echo defines echo mode */
-char getch_(int echo)
-{
-	char ch;
-	initTermios(echo);
-	ch = getchar();
-	resetTermios();
-	return ch;
-}
-
-/* Read 1 character without echo */
-char getch(void)
-{
-	return getch_(0);
-}
-#endif // __linux__
-
-char *get_password(char *const password)
+void set_password(char *const password)
 {
 	char c;
-	for (size_t i = 0; (c = getch()) != EOF || (c = getch()) != '\n'; ++i)
+	for (size_t i = 0; (c = getch()); ++i)
 	{
-		if (c == '\n')
+		if (c == '\n' || c == '\r')
 		{
 			password[i] = '\0';
-			break;
+			return;
 		}
 		else
 			password[i] = c;
 	}
-	return password;
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-
@@ -85,6 +44,9 @@ int login_menu()
 	 */
 	unsigned options = 0;
 
+	fflush(stdout);
+	system("cls||clear");
+
 	// Para que no se sienta la espera.
 	printf("Empezando sistema de carga...\n");
 	system_loading(time);
@@ -92,7 +54,7 @@ int login_menu()
 	/**+-+-+-+-+-+-Empieza el menu+-+-+-+-+-+- */
 
 	// TODO: #14 Mejorar con un for y un contador de intentos.
-	for (size_t i = 3; i > 0 || (options < 0 || options > 5); --i)
+	for (size_t i = 3; i > 0 || options > 5; --i)
 	{
 		system("cls||clear");
 
@@ -114,15 +76,11 @@ int login_menu()
 			break;
 	}
 
-	fflush(stdout);
-	system("cls||clear");
 	switch (options)
 	{
 	case inventario:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+		if (inventory_menu())
+			return login_menu();
 	case compras:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");
@@ -138,10 +96,11 @@ int login_menu()
 			   "Presione cualquier tecla para finalizar la ejecucion...");
 		getch();
 		break;
-	case _salir:
-
+	case salir:
+		fflush(stdout);
+		system("cls||clear");
 		printf("Hackear a la NASA dejo de ser un sueno.\n");
-		return 0;
+		exit(0);
 	default:
 		fprintf(stderr, "Verifica que hayas ingresado tus credenciales correctamente o "
 						"envia un issue detallando el posible bug.\n");
@@ -156,17 +115,7 @@ int login_menu()
 
 int login_user()
 {
-	// TODO: Imprimir mas informacion.
-	// Por ejemplo, en printf("(1) Registrarse.\n"
-	//		   				  "(2) Logearse.\n");
-	// Deberia mostromar mas informacion y encabezado.
 
-	/**Almacena el nombre del usuario a registrar. */
-	char username[MAX_LETTERS];
-	/**Almacena el password del usuario a registrar. */
-	char password[MAX_LETTERS];
-	/**Es admin? Si lo es 1, si no lo es 0. */
-	int is_admin;
 	/**Donde se guardara la opcion eligida por el usuario. */
 	unsigned temp = 0;
 	/** Cuenta las veces que intenta el usuario*/
@@ -188,9 +137,9 @@ int login_user()
 		system("cls||clear");
 
 		/**Imprime al usuario q coga una opcion correcta. */
-		if (temp < 0 || temp > 2)
+		if ( temp > 2)
 			printf("Por favor elige una opcion correta.\n");
-	} while (temp < 0 || temp > 2);
+	} while ( temp > 2);
 
 	/**Dependiendo del valor en temp, el usuario se logeara o registrara. */
 	switch (temp)
@@ -199,22 +148,20 @@ int login_user()
 
 		printf("\t\t\aHola! Aca podras registrarte. Por favor llena los siguientes campos.\n"
 			   "Username: ");
-		fgets(username, MAX_LETTERS, stdin);
+		fgets(actual_user.username, sizeof(actual_user.username), stdin);
 		// Cambiar \n con \0
-		username[strcspn(username, "\n")] = 0;
-
+		actual_user.username[strcspn(actual_user.username, "\n")] = 0;
+		(void)get_username();
 		printf("Password: ");
-		strcpy(password, get_password(password));
-		get_username(username);
-
+		set_password(actual_user.password);
 
 		printf("\nEs admin: ");
-		scanf(" %d", &is_admin);
+		scanf(" %d", &actual_user.is_admin);
 		getchar();
 
 		system("clear||cls");
 		// Anade al usuario.
-		add_user(username, password, is_admin);
+		add_user(actual_user.username, actual_user.password, actual_user.is_admin);
 
 		// Luego entra en un blucle hasta que presione la letra de salir.
 		for (; login_menu();)
@@ -236,15 +183,14 @@ int login_user()
 					   i);
 
 			printf("\t\aUsername: ");
-			fgets(username, MAX_LETTERS, stdin);
+			fgets(actual_user.username, sizeof(actual_user.username), stdin);
 			// Cambiar \n con \0
-			username[strcspn(username, "\n")] = 0;
+			actual_user.username[strcspn(actual_user.username, "\n")] = 0;
 
 			printf("\t\aPassword: ");
-			strcpy(password, get_password(password));
-			get_username(password);
+			set_password(actual_user.password);
 
-			if (!validate(username, password))
+			if (!validate(actual_user.username, actual_user.password))
 			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.
 			{
 				// Quita el anterior mensaje para mostrar este printf y el sistema
@@ -271,10 +217,10 @@ int login_user()
 void system_loading(int time)
 {
 #ifdef __WIN32
-	time += time * 1000
+	time += time * 1000;
 #endif //__WIN32
 
-			for (size_t i = 0; i <= 100; i++)
+	for (size_t i = 0; i <= 100; i++)
 	{
 		if (i % 25 == 0)
 		{
@@ -298,7 +244,7 @@ void system_loading(int time)
 	}
 }
 
-char *get_username(const char *const __actual_user)
+char *get_username()
 {
-	return (char *)__actual_user;
+	return actual_user.username;
 }

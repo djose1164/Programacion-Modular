@@ -91,7 +91,7 @@ static int __init_database__(const char *database_name);
  * @return true Si fue exitoso.
  * @return false Si fallo.
  */
-void __create_table__(const char *query);
+static void __create_table__(const char *query);
 
 /**
  * IMPORTANT: Para uso interno.
@@ -113,41 +113,68 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
 void __make_query__(const char *query);
 
 /**
- * @brief Actualiza un valor. Ej: id = 10, new_value = 50, is_int = true;
- * Como new_value es un string, y queremos guardar un int debemos pasar is_int = true.
- * El producto con el id = 10 sele asiganara un nuevo valor (50).
- * 
- * IMPORTANT: Para uso interno.
- * IMPORTANT: Si no vas a actualizar algun parametro pasa Null. Ej. 5, NULL...
- * 
- * TODO: Abstracion para users.
- * 
- * @param id Identificador exclusivo (no se puede repetir, y se genera 
- * automaticamente) para cada producto. NO puede ser NULL.
- * @param new_name Nuevo nombre para el producto con el id suministrado.
- * @param new_sellPrice Nuevo sell_price para el producto con el id suministrado.
- * @param new_availableQuantity Nuevo available_quantity para el producto con el
- * id suministrado.
- * @return true Se han asignado los nuevos valores succesfully!
- * @return false No se han podido asignar los nuevos valores.
- */
-bool __update__(const int id, const char *new_name,
-                const int new_sellPrice, const int new_availableQuantity);
-
-/**
- * @brief Para uso interno.
- * 
- * @param ptr 
- */
-void check_alloc(void *ptr);
-
-/**
  * @brief Para uso interno.
  * 
  * @param len 
  * @return char* 
  */
-char *allocate_str(int len);
+static char *allocate_str(int len);
+
+/**
+ * @brief Devuelve el nombre del producto por su ID.
+ * 
+ * IMPORTANT: Solo get_column_value debe retornar esta funcion.
+ * 
+ * @param id ID del producto.
+ * @return char* Devuelve un string si se pudo encontrar. NULL de lo contrario.
+ */
+static void *__get_name__(const unsigned id);
+
+/**
+ * @brief Devuelve el precio del producto.
+ * 
+ * @param id ID del producto.
+ * @return int El precio del producto.
+ */
+static void *__get_price__(const unsigned id);
+
+/**
+ * @brief Devuelve la cantidad actual del producto en inventario.
+ * 
+ * @param id ID del producto.
+ * @return int Cantidad disponible.
+ */
+static void *__get_quantity__(const unsigned id);
+
+/**
+ * @brief update devuelve esta funcion.
+ * 
+ * @param id ID del producto a modificar.
+ * @param new_name El nuevo nombre que se le pondra al producto.
+ * @return true La modificacion fue un exito.
+ * @return false Fallo al modificar.
+ */
+static bool __update_name__(const unsigned id, const char *new_name);
+
+/**
+ * @brief update devuelve esta funcion.
+ * 
+ * @param id ID del producto a editar.
+ * @param quantity Cantidad que sera sumanda o restada.
+ * @return true La modificacion fue un exito.
+ * @return false La modifiacion fallo.
+ */
+static bool __update_quantity__(const unsigned id, const int quantity);
+
+/**
+ * @brief update devuelve esta funcion.
+ * 
+ * @param id ID del producto a modificar.
+ * @param new_price El nuevo precio del producto.
+ * @return true La modificacion fue un exito.
+ * @return false La modifiacion fallo. 
+ */
+static bool __update_price__(const unsigned id, const unsigned new_price);
 
 /**-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- */
 /**
@@ -177,6 +204,38 @@ extern int validate(const char *const username, const char *const password);
  * @return char* Devuelve la informacion recolectada.
  */
 extern char *search_product_by_id(const int id);
+
+/**
+ * @brief Actualiza un valor. Ej: id = 10, new_value = 50, is_int = true;
+ * Como new_value es un string, y queremos guardar un int debemos pasar is_int = true.
+ * El producto con el id = 10 sele asiganara un nuevo valor (50).
+ * 
+ * IMPORTANT: Para uso interno.
+ * IMPORTANT: Si no vas a actualizar algun parametro pasa Null. Ej. 5, NULL...
+ * 
+ * TODO: Abstracion para users.
+ * 
+ * @param id Identificador exclusivo (no se puede repetir, y se genera 
+ * automaticamente) para cada producto. NO puede ser NULL.
+ * @param new_name Nuevo nombre para el producto con el id suministrado.
+ * @param new_sellPrice Nuevo sell_price para el producto con el id suministrado.
+ * @param new_availableQuantity Nuevo available_quantity para el producto con el
+ * id suministrado.
+ * @return true Se han asignado los nuevos valores succesfully!
+ * @return false No se han podido asignar los nuevos valores.
+ */
+bool update(const unsigned id, const char *new_name,
+            const unsigned *new_sellPrice, const int *new_availableQuantity);
+
+/**
+ * @brief Devolvera el valor de una columna. El retorna debe ser casteado con el
+ * tipo de dato q desea.
+ * 
+ * @param id Obtendra el valor deseado del producto q tenga este ID.
+ * @param __request_value Pasarse una opcion del enum __request_value
+ * @return void* Un objeto q puede ser casteado a cualquier data type.
+ */
+void *get_column_value(const unsigned id, const unsigned __request_value);
 
 /** 
  * TODO: Si crees que faltan alguna funcion, anadale en forma de comentario. Y explicacion de lo q hace.

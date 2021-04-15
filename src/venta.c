@@ -278,7 +278,7 @@ bool ventas_menu()
     case _SELL_PRODUCTS:
         /*void print_encabezado_factura();//ver si es necesario agregarla o si solo se puede llamar a 
                 agregar_mas_articulos*/
-        agregar_mas_articulos();
+        sell_products();
 
         break;
 

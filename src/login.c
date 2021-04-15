@@ -89,7 +89,7 @@ int login_menu()
 		break;
 	case ventas:
 		ventas_menu();
-		return ventas_menu();
+		return ventas;
 	case contabilidad:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");

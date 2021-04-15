@@ -25,8 +25,9 @@ typedef struct products Product;
 int main(int argc, char *const argv[])
 {
 #ifdef __linux__
-	printf("\034[47m"); // Cambia el color de la letra en linux.
-						// Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
+	printf("\033[100m"
+		   "\033[34m"); // Cambia el color de la letra en linux.
+						 // Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
 #else
 	system("color 8B"); //cambia el color, el numero cambia el fondo
 						// y la letra cambia el color de letra
@@ -50,8 +51,6 @@ int main(int argc, char *const argv[])
 	};
 
 	printf("El programa esta en: %s\n", argv[0]);
-
-	
 
 #if 0  //COMMENTED
 	add_user("djose1164", "1234", 1);

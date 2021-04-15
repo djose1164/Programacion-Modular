@@ -1,7 +1,18 @@
 #ifndef COMPRA_H
 #define COMPRA_H
-#include <stddef.h>
+#include <stdlib.h>
+
+enum opciones_conpras_menu
+{
+    COMPRAR_PRODUCTOS = 1,
+    CREAR_PRODUCTOS ,
+    ELIMINAR_EDITAR ,
+    HISTORIAL_DEL_PRODUCTO,
+    SALIR_COMPRA
+};
+
 /**
+ * 
  * @brief estructuras de comprar producto
  * me servira para organizar la opcion de compras 
  * 
@@ -37,6 +48,7 @@ bool conpras_menu();
  * @return false no se pudo comprar el productointente otra vez.
  */
 bool compar_productos(); 
+
 
 
 

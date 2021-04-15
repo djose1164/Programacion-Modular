@@ -17,6 +17,7 @@ void inicia_producto(struct compra *comprar_producto)
         }
 }
 
+
 bool compras_menu()
 {   
     
@@ -59,30 +60,26 @@ bool compras_menu()
            "1) Comprar productos\n"
            "2) crear produtos\n"
            "3) Eliminar/Editar\n"
-           "4) compras realizadas\n"
-           "5) Historial de producto\n"
-           "6) Salir.\n");
+           "4) Historial de producto\n"
+           "5) Salir.\n");
     fgets(_temp, sizeof(_temp), stdin); // \n
     sscanf(_temp "%hd",&temp);
         switch (_temp)
         {
-        case 1 _comprar_producto:
-            /* code */
+        case COMPRA_PRODUCTOS:
             break;
-        case 2 crear_productos:
-            /* code */
+
+        case CREAR_PRODUCTOS:
             break;
-        case 3 Eliminar_ / Editar:
-            /* code */
+
+        case ELIMINAR_EDITAR:
             break;
-        case 4 compras_Realizadas:
-            /* code */
+
+        case HISTORIAL_DEL_PRODUCTO:
             break;
-        case 5 Historial_de_producto:
-            /* code */
-            break;
-        case 6 Salir:
-            /* code */
+
+        case SALIR_COMPRA:
+
         return false;
         default:
             fprintf(stderr, "Has introducido una funcion incorrecta!"

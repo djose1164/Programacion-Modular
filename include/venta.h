@@ -95,7 +95,7 @@ unsigned venta_return_contabilidad();
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-void cash_register(Facturas);
+void cash_register(facturas Facturas);
 
 /**
  * @brief Regresa al usuario a lo que es el menu de inicio de los modulos

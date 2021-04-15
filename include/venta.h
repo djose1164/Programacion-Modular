@@ -16,42 +16,54 @@
 typedef struct IngresodeVentas
 {
     char nombre_cliente[100];
-    char empleado_en_turno[100];
     char nombre_producto[100];
     unsigned Cantidad;
     unsigned Precio;
     unsigned Total;
     float TotalaPagar;
-
+    bool full;
+    unsigned id_producto_deseado; //guarda el id que el user ingreso
+    
 } facturas;
 
 
 enum options_modulo_ventas
 {
-    _sell_products = 1,
-    _see_orders,
-    _edit_orders,
-    _delete_orders,
-    _cash_register,
-    _salir 
+    _SELL_PRODUCTS = 1,
+    _SEE_ORDERS,
+    _EDIT_ORDERS,
+    _DELETE_ORDERS,
+    _CASH_REGISTER,
+    _GO_BACK_OUT_VENTAS
 
 };
+
+/**
+ * @brief Se van a llenar las estructuras vacias con las funciones get_price...
+ * 
+ */
+void llenar_facturas();
+
+/**
+ * @brief Esto va a inicializar las facturas para cuando se desee imprimirlas
+ * 
+ */
+void inicializar_facturas();
+
 /**
  * @brief Pregunta si va a agregar articulos,
  * solo si presiona el numero 1, si presiona el 0 entonces le da el total a pagar
- * @param total_pagar 
  * @return int 
  */
-int sell_products(int total_pagar);
+int sell_products();
 
 /**
  * @brief Esta funcion permite agregar otros articulos al usuario, los entra y los imprime 
  * cada vez que el usuario desee agregar algo mas 
  * 
- * @param total_pagar 
  * @return int 
  */
-int agregar_mas_articulos(int *total_pagar);
+int agregar_mas_articulos();
 
 /**
  * Permite ver todas las Facturas realizadas de acuerdo al nombre del cliente
@@ -61,10 +73,9 @@ void see_orders();
 /**
  * @brief Permite editar cualquier factura, con la clave y usuario del admin
  * 
- * @param total_pagar 
  * @return int 
  */
-int edit_orders(int total_pagar);
+int edit_orders();
 
 /**
  * Permite editar cualquier factura, con la clave y usuario del admin 
@@ -92,12 +103,12 @@ void cash_register(Facturas);
  * @return true el usuario ha salido del modulo y se va al menu inicial del programa
  * @return false no se ejecutara la funcion
  */
-bool salir();//TODO ver si esto funcionara o solo dejar el menu
+bool go_back();//TODO ver si esto funcionara o solo dejar el menu
 
 /**
  * @brief 
  * 
- * @return true El usuario no salio y se imprime el menu
+ * @return true El usuario no salio y se imprime el menuj
  * @return false El usuario salio, no se ejecutara
  */
 bool ventas_menu();

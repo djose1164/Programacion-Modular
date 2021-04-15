@@ -275,36 +275,36 @@ bool ventas_menu()
 
     switch (temp)
     {
-    case _SELL_PRODUCTS:
+    case SELL_PRODUCTS:
         /*void print_encabezado_factura();//ver si es necesario agregarla o si solo se puede llamar a 
                 agregar_mas_articulos*/
         sell_products();
 
         break;
 
-        /*case _SEE_ORDERS:
+        /*case SEE_ORDERS:
                 for (; see_orders(Facturas);)
                     ;
                 return ventas_menu();
 
                 break;
 
-            case _EDIT_ORDERS:
+            case EDIT_ORDERS:
                 for (; edit_orders();)
                     ;
                 return ventas_menu();
 
                 break;
 
-            case _DELETE_ORDERS:
+            case DELETE_ORDERS:
 
                 break;
 
-            case _CASH_REGISTER:
+            case CASH_REGISTER:
 
                 break;*/
 
-    case _GO_BACK_OUT_VENTAS:
+    case GO_BACK_OUT_VENTAS:
 
         go_back();
         return false;

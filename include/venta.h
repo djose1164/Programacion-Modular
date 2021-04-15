@@ -29,12 +29,12 @@ typedef struct IngresodeVentas
 
 enum options_modulo_ventas
 {
-    _SELL_PRODUCTS = 1,
-    _SEE_ORDERS,
-    _EDIT_ORDERS,
-    _DELETE_ORDERS,
-    _CASH_REGISTER,
-    _GO_BACK_OUT_VENTAS
+    SELL_PRODUCTS = 1,
+    SEE_ORDERS,
+    EDIT_ORDERS,
+    DELETE_ORDERS,
+    CASH_REGISTER,
+    GO_BACK_OUT_VENTAS
 
 };
 

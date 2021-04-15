@@ -12,6 +12,7 @@
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/inventario.h"
+#include"../include/venta.h"
 //#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
@@ -87,10 +88,8 @@ int login_menu()
 		getch();
 		break;
 	case ventas:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+		ventas_menu();
+		return ventas_menu();
 	case contabilidad:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");

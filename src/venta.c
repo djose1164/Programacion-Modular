@@ -81,7 +81,7 @@ bool go_back()
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-/*facturas cash_register(Facturas)
+/*facturas cash_register(facturas Facturas)
 {
     printf("%d"); //Quiero imprimir todos los totales de las facturas para el reporte de caja
     return Facturas[50];
@@ -99,10 +99,9 @@ bool go_back()
 /**
  * @brief Permite editar cualquier factura, con la clave y usuario del admin
  * 
- * @param total_pagar 
  * @return int 
  */
-int edit_orders(int total_pagar)
+int edit_orders()
 {
     int available_quantity = 0;
     unsigned id = 0;
@@ -161,21 +160,17 @@ int edit_orders(int total_pagar)
  * @brief  Permite ver todas las Facturas realizadas de acuerdo al nombre del cliente logeado
  *  y como solo sera un cliente solo se vera una unica factura
  * 
- */
-void see_orders(facturas Facturas)
-{
-    //TODO Chequear si se puede solo copiar lo que imprima sell_products
-
-    system("cls || clear");
+ *
+    
     printf("\a\n\tElegiste la opcion Ver ventas\n"
-           "\n\t%s\n",
-           Facturas); //Imprimira la factura que se haya hecho
-}
+           "\n\t%s\n",Facturas); //Imprimira la factura que se haya hecho
+        print_encabezado_factura();
+    return Facturas;
+}*/
 
 /**
  * @brief Esta funcion permite agregar otros articulos al usuario, los entra y los imprime 
  * cada vez que el usuario desee agregar algo mas  
- * @param total_pagar 
  * @return int 
  */
 int agregar_mas_articulos()
@@ -184,8 +179,8 @@ int agregar_mas_articulos()
 #define IMPRESO
     void print_encabezado_factura();
 #endif // IMPRESO          \
-               //TODO Revisar esto \
-               //TODO llamar a reporte inventario
+       //TODO Revisar esto \
+       //TODO llamar a reporte inventario
 
     /* Imprimira cada factura hecha por cada llamada. */
     /* for (size_t i = 0; i < MAX_FACTURAS; i++)
@@ -227,10 +222,7 @@ int sell_products()
         printf("\t\t\tDesea agregar algo mas: ");
         fgets(temp, sizeof(unsigned), stdin);
         sscanf(temp, "%u", &_temp);
-        /* 
-			scanf("%u", temp);
-			getchar();
-			*/
+
         if (!temp)
             break;
         else
@@ -277,6 +269,7 @@ bool ventas_menu()
                "\t6) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);
         sscanf(_temp, "%hd", &temp);
+        flag = true;
 
     } while (temp < 0 || temp > 6);
 
@@ -324,8 +317,6 @@ bool ventas_menu()
 
     fflush(stdout);
     system("cls || clear");
-
-    flag = true;
 
     return true;
 }

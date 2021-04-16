@@ -38,9 +38,6 @@ void llenar_facturas(unsigned id, unsigned cantidad)
             Facturas[i].full = true;
             strcpy(Facturas[i].nombre_cliente, get_username());
             strcpy(Facturas[i].nombre_producto, get_name_by_id(id));
-            printf("En llenar factura: %s\n%s\n", Facturas[i].nombre_cliente, Facturas[i].nombre_producto);
-            //fflush(stdout);
-            //getchar();
             Facturas[i].id_producto_deseado = id;
             Facturas[i].Cantidad = cantidad;
 
@@ -173,13 +170,14 @@ int edit_orders()
 void print_factura()
 {
     clear_screen();
-    printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n"
-           "Nombre cliente:\tProducto:\tCantidad:\tPrecio:\tTotal:\n");
+    printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
+           "%-20s%-20s%-20s%-20s%-20s\n",
+           "Nombre cliente:", "Producto:", "Cantidad:", "Precio:", "Total:");
 
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
         if (Facturas[i].full)
-            printf("%s\t%s\t%u\t%u\t%u",
+            printf("%-20s%-20s%-20u%-20u%-20u\n",
                    Facturas[i].nombre_cliente, Facturas[i].nombre_producto,
                    Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total);
     }

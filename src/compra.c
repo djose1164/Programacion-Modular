@@ -10,7 +10,7 @@
 struct compra comprar_producto[MAX_COMPRAS];
 struct Proveedor suplir_producto[MAX_COMPRAS];
 
-int obtener_suplidor_soma()
+int obtener_suplidor_suma()
 {
     int sum = 0;
     for (size_t i = 0; i < MAX_COMPRAS; i++)

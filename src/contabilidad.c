@@ -28,7 +28,7 @@ void registro_ventas() /* Muestra el Registro de Ventas realizadas */
 
 void dinero_total (int compra_total, int venta_total)
 {
-    int compra_total;
+    
 }
 
 bool contabilidad_menu()

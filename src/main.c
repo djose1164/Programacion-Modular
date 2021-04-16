@@ -25,10 +25,11 @@ typedef struct products Product;
 int main(int argc, char *const argv[])
 {
 #ifdef __linux__
-	printf("\033[34m"); // Cambia el color de la letra en linux.
-						// Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
+	printf("\033[100m"
+		   "\033[34m"); // Cambia el color de la letra en linux.
+						 // Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
 #else
-	system("color 34"); //cambia el color, el numero cambia el fondo
+	system("color 8B"); //cambia el color, el numero cambia el fondo
 						// y la letra cambia el color de letra
 						// https://www.geeksforgeeks.org/how-to-print-colored-text-in-c/
 #endif // __linux__
@@ -37,7 +38,9 @@ int main(int argc, char *const argv[])
 	 * TODO: Hacer algo.
 	 */
 	if (argv[1] ? !strcmp(argv[1], "1234") : 0)
-		printf("Welcome back, master.\n");
+		login_menu();
+	else
+		login_user();
 
 	Product product = {
 		.id = 1,
@@ -48,8 +51,6 @@ int main(int argc, char *const argv[])
 	};
 
 	printf("El programa esta en: %s\n", argv[0]);
-
-	login_user();
 
 #if 0  //COMMENTED
 	add_user("djose1164", "1234", 1);

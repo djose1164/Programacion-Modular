@@ -14,11 +14,25 @@
 
 enum menu_option
 {
-    inventario = 1,
-    compras,
-    ventas,
-    contabilidad,
-    salir
+    INVENTARIO = 1,
+    COMPRAS,
+    VENTAS,
+    CONTABILIDAD,
+    SALIR
+};
+
+/**
+ * @brief struct donde se guardara el actual usuario. Si se loguea se cargaron los 
+ * datos q coincidan en la database.
+ * 
+ */
+struct actual_user
+{
+    /**Almacena el nombre del usuario a registrar. */
+    char username[50];
+    /**Almacena el password del usuario a registrar. */
+    char password[50];
+    bool is_admin;
 };
 
 /**
@@ -46,7 +60,7 @@ int login_user();
  * @param password Donde se guardara la contraseña.
  * @return char* Devuelve la contraseña del usuario.
  */
-char *get_password(char *const password);
+void set_password(char *const password);
 
 /**
  * @brief Mostrara en pantalla q el sistema esta cargando.
@@ -60,6 +74,6 @@ void system_loading(int time);
  * 
  * @return char* La direccion de memoria donde se encutra el nombre.
  */
-char *get_username(const char *const __actual_user);
+char *get_username();
 
 #endif //LOGIN_H

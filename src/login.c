@@ -12,6 +12,7 @@
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/inventario.h"
+#include "../include/contabilidad.h"
 //#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
@@ -92,10 +93,8 @@ int login_menu()
 		getch();
 		break;
 	case CONTABILIDAD:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+		return contabilidad_menu();
+		
 	case SALIR:
 		fflush(stdout);
 		system("cls||clear");

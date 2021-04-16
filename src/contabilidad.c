@@ -8,11 +8,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include "../include/login.h"
 
 void crear_registro(struct cont_reg *cont_reg) /* Creador del registro */
 {
     /* Archivo donde se guardara el registro de contabilidad */
-    const char reg_contabilidad = {"contabilidad.txt"};
+    const char *reg_contabilidad = {"contabilidad.txt"};
     FILE *Contabilidad = fopen(reg_contabilidad, "a+");
 
     if (Contabilidad == NULL) /*Verificador del archivo*/
@@ -45,7 +46,7 @@ void registro_contabilidad(int registro_compras, int registro_ventas) /* Muestra
                                                                       y Compras realizadas */
 {
     /* Lector del Registro */
-    const char reg_contabilidad = {"contabilidad.txt"};
+    const char *reg_contabilidad = {"contabilidad.txt"};
     FILE *Contabilidad = fopen(reg_contabilidad, "r");
 
     if (Contabilidad == NULL) /*Verificador del archivo*/
@@ -94,21 +95,15 @@ bool contabilidad_menu()
     switch (temp)
     {
     case _REG:
-        /* Funcion de Mostrar Registro de Contabilidad */
-        if (sell_products())
-            return sell_products();
-        else
-            return ventas_menu();
+        printf("Vuelva mas Tarde");
+        break;
 
     case _DT:
-        print_factura();
-        getchar();
+        printf("Vuelva mas Tarde");
         break;
 
     case _REG_ING:
-        for (; edit_orders();)
-            ;
-        return ventas_menu();
+        printf("Vuelva mas Tarde");
 
         break;
 
@@ -118,8 +113,7 @@ bool contabilidad_menu()
 
     case _BACK_MENU:
 
-        go_back();
-        return false;
+        printf("Vuelva mas Tarde");
         break;
 
     default:

@@ -49,8 +49,37 @@ bool conpras_menu();
  */
 bool compar_productos(); 
 
+/**
+ * @brief esta funcion me permitira crear los productos.  
+ * 
+ * @return true se ha creado el producto.
+ * @return false no se ha podido crear. 
+ */
+bool crear_productos();
 
+/**
+ * @brief esta funcion me permitira editar y eliminar los prductos.
+ * 
+ * @return true si el producto se ha podido editar.
+ * @return false si el producto no se pudo editar. 
+ */
+bool editar();
 
+/**
+ * @brief Aqui podre ver las busquedas realizadas.
+ * 
+ * @return true si se pudo se mostrara.
+ * @return false de lo contrario no se mostrara.
+ */
+bool historial_de_produc();
+
+/**
+ * @brief que vueelve a la interfaz inicial del programa.
+ * 
+ * @return true si seleciona te redirecciona al inicio del programa.
+ * @return false siendo los opuesto no se podra salir de la opcion de compras.
+ */
+bool salir();
 
 
 #endif //COMPRA_H

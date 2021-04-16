@@ -79,7 +79,7 @@ static int __validate__(const char *const username, const char *const password)
     int conn;
     __init_database__(database_name);
 
-    // Array de punteros a los datos a validar.
+    // Array de punteros a los datos a validar.2
     const char *to_validate[] = {
         username,
         password};
@@ -93,6 +93,8 @@ static int __validate__(const char *const username, const char *const password)
 
     // Prepara la coneccion.
     conn = sqlite3_prepare_v2(db, queries, -1, &res, NULL);
+    if (conn == SQLITE_ERROR)
+        return -1;
     check_error(conn, db);
 
     for (size_t i = 0; i <= (sizeof *queries) / (sizeof queries[0]); i++)

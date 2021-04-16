@@ -27,12 +27,6 @@
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
 # Executables
 *.exe
 *.out
@@ -107,5 +101,7 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/c,windows,linux,vscode
 
-overloading.c
-overloading
+test.*
+*.db
+output/main
+sqlite3.*

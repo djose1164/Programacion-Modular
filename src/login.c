@@ -21,6 +21,8 @@ static struct actual_user actual_user;
 // Tiempo que durara el copilador parado.
 const short time = 2;
 
+#define LONGITUD 50 
+
 void set_password(char *const password)
 {
 	char c;
@@ -31,9 +33,21 @@ void set_password(char *const password)
 			password[i] = '\0';
 			return;
 		}
-		else
-			password[i] = c;
-	}
+		else if (c == 8)
+            {
+                if (i > 0)
+                {
+                    printf("\b \b"); //mueve el cursor hacia la izquierda
+                }
+            }
+            else if (i < LONGITUD)
+                        
+                {
+                    printf("*");
+                    password[i] = c;
+                   
+                }
+    }
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-

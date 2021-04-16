@@ -17,7 +17,7 @@
 // Variables globales.
 facturas Facturas[MAX_FACTURAS];
 struct products;
-//unsigned *cantidad;//Esta va a ingresar las cantidades de productos a vender
+
 //TODO Preguntar si puedo en este caso usar la estructura
 //TODO para que le pase cantidad a Facturas.cantidad y asi poder
 //TODO pasarselo a venta_return_contabilidad.
@@ -63,13 +63,12 @@ void inicializar_facturas()
  */
 bool go_back()
 {
-    /*if (salir)
+    if (GO_BACK_OUT_VENTAS)
     {
         clear_screen();
-        
-        printf("Hackear a la NASA dejo de ser un sueno.\n");
-        exit(0);
-    }*/
+
+        login_menu();
+    }
     return false;
 }
 
@@ -77,11 +76,11 @@ bool go_back()
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-/*facturas cash_register(facturas Facturas)
+facturas cash_register(facturas Facturas)
 {
     printf("%d"); //Quiero imprimir todos los totales de las facturas para el reporte de caja
     return Facturas[50];
-}*/
+}
 
 /**
  * @brief Esta funcion eliminara totalmente las ventas hechas 
@@ -106,20 +105,27 @@ int edit_orders()
     char _temp[sizeof(int) + sizeof(unsigned)];
     unsigned temp = 0;
 
-    if (add_user) //ver si es admin o no, si es puede editar, sino sale error
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
-        printf("\n\aEstas ahora en el editor de pedidos\n"
-               "\nSolo podras editar las cantidades de productos a vender\n"
-               "\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
-        fgets(_temp, sizeof(_temp), stdin);
-        sscanf(_temp, "%d", &available_quantity);
-        flag = update(id, NULL, NULL, &available_quantity);
+        if (add_user) //ver si es admin o no, si es puede editar, sino sale error
+        {
+            printf("\n\aEstas ahora en el editor de pedidos\n"
+                   "\nSolo podras editar las cantidades de productos a vender\n"
+                   "\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
+            fgets(_temp, sizeof(_temp), stdin);
+            sscanf(_temp, "%d", &Facturas[i].Cantidad);
+            flag = update(id, NULL, NULL, &Facturas[i].Cantidad);
+        }
+        else
+        {
+            printf("No puede acceder a esta opcion porque no es Admin");
+            getchar();
+        }
+        clear_screen();
     }
-    clear_screen();
 
     if (flag)
     {
-
         printf("\t\t\aHa modificado la cantidad del producto\n\n"
                "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
                "\tpara salir.\n");
@@ -129,7 +135,7 @@ int edit_orders()
             else
                 exit(0);
     }
-     else
+    else
     {
         printf("\a\tEl producto que has intentado modificar no existe.\n"
                "\tVerifica que hayas ingresado un id existente.\n"
@@ -142,8 +148,6 @@ int edit_orders()
 /**
  * @brief Esta funcion devolvera lo que se venda para llevarlo a contabilidad
  *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio) 
- * @param precio 
- * @param cantidad 
  * @return int 
  */
 unsigned venta_return_contabilidad() //TODO REVISAR
@@ -156,7 +160,7 @@ unsigned venta_return_contabilidad() //TODO REVISAR
         for (size_t i = 0; i < MAX_FACTURAS; i++)
         {
             if (Facturas[i].full)
-                printf("-20u%-20u%-20u\n",
+                printf("%-20u%-20u%-20u\n",
                        Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].TotalaPagar);
         }
     }
@@ -276,7 +280,9 @@ bool ventas_menu()
         break;
 
     case DELETE_ORDERS:
-
+    for (;venta_return_contabilidad();)
+        ;
+        return ventas_menu();
         break;
 
     case CASH_REGISTER:

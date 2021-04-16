@@ -106,7 +106,7 @@ void cash_register(facturas Facturas);
 bool go_back();//TODO ver si esto funcionara o solo dejar el menu
 
 /**
- * @brief 
+ * @brief Imprime las opciones del usuario
  * 
  * @return true El usuario no salio y se imprime el menuj
  * @return false El usuario salio, no se ejecutara

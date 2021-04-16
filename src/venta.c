@@ -129,13 +129,13 @@ int edit_orders()
             else
                 exit(0);
     }
-    /* else
+     else
     {
-        printf("\a\tEl producto que has intentado actualizar no existe.\n"
-               "\tVerifica que hayas ingresado un id existe.\n"
+        printf("\a\tEl producto que has intentado modificar no existe.\n"
+               "\tVerifica que hayas ingresado un id existente.\n"
                "Presione cualquier tecla para volver a menu Inventario...");
         getch();
-    }*/
+    }
     return false;
 }
 
@@ -146,22 +146,23 @@ int edit_orders()
  * @param cantidad 
  * @return int 
  */
-/*unsigned venta_return_contabilidad() //TODO REVISAR
+unsigned venta_return_contabilidad() //TODO REVISAR
 {
-    return Facturas.Cantidad, Facturas.Precio;
-}*/
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    {
+        clear_screen();
+        printf("\a\n\t*************Estos son los ingresos para Contabilidad*************\n\n");
 
-/**
- * @brief  Permite ver todas las Facturas realizadas de acuerdo al nombre del cliente logeado
- *  y como solo sera un cliente solo se vera una unica factura
- * 
- *
-    
-    printf("\a\n\tElegiste la opcion Ver ventas\n"
-           "\n\t%s\n",Facturas); //Imprimira la factura que se haya hecho
-        print_encabezado_factura();
-    return Facturas;
-}*/
+        for (size_t i = 0; i < MAX_FACTURAS; i++)
+        {
+            if (Facturas[i].full)
+                printf("-20u%-20u%-20u\n",
+                       Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].TotalaPagar);
+        }
+    }
+
+    return 0;
+}
 
 /**
  * @brief Imprime el encabezado del modulo ventas opcion 1

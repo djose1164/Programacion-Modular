@@ -51,7 +51,7 @@ static int conn;
 // El limite de usario que podran register por ejecucion del programa.
 extern const size_t MAX_USERS;
 
-/**-*-*-*-*-*-*- Metodos internos, no deberian modificarse sin saber SQL.*-*-*-*-*-*-*- */
+//! *-*-*-*-*-*-*- Metodos internos, no deberian modificarse sin saber SQL.*-*-*-*-*-*-*- 
 /**
  * @brief Verifica que no haya error en la query.
  * En caso de lo que haya informara de ello y acabara la
@@ -110,7 +110,7 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
  * 
  * @param query Codigo SQL.
  */
-void __make_query__(const char *query);
+bool __make_query__(const char *query);
 
 /**
  * @brief Para uso interno.
@@ -176,7 +176,7 @@ static bool __update_quantity__(const unsigned id, const int quantity);
  */
 static bool __update_price__(const unsigned id, const unsigned new_price);
 
-/**-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- */
+//! *-*-*-*-*-*-*- Metodos externos, pueden usarse sin problemas.*-*-*-*-*-*-*- 
 /**
  * @brief Anade a un nuevo usario a la database.
  * 

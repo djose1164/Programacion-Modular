@@ -242,7 +242,7 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
 
 //! Realizar una consulta.
 
-void __make_query__(const char *query)
+bool __make_query__(const char *query)
 {
     __init_database__(database_name);
     char *errmsg;
@@ -250,9 +250,12 @@ void __make_query__(const char *query)
     int callback(void *data, int column_count, char **columns, char **columns_names);
 
     int conn = sqlite3_exec(db, query, callback, NULL, &errmsg);
+    if (conn == SQLITE_ERROR)
+        return false;
     check_error(conn, db);
     // Para la ultima linea de la tabla.
     printf("*--------*--------------------*----------*----------*\n");
+    return true;
 }
 
 //! Anandir nuevo usuario a la database.

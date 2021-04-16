@@ -1,3 +1,4 @@
+#if 0 // COMMENTED
 #ifndef VENTA_H
 #define VENTA_H
 
@@ -121,3 +122,4 @@ bool ventas_menu();
 void print_factura();
 
 #endif //VENTA_H
+#endif // COMMENTED

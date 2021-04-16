@@ -16,7 +16,7 @@
 //#include"inventario.h"
 
 #define MAX_LETTERS 50
-
+#define LONGITUD 50
 const short time = 2;
 
 #ifdef __linux__
@@ -60,20 +60,31 @@ char getch(void)
 }
 #endif // __linux__
 
-char *get_password(char *const password)
+void set_password(char *const password)
 {
 	char c;
-	for (size_t i = 0; (c = getch()) != EOF || (c = getch()) != '\n'; ++i)
+	for (size_t i = 0; (c = getch()); ++i)
 	{
-		if (c == '\n')
+		if (c == '\n' || c == '\r')
 		{
 			password[i] = '\0';
-			break;
+			return;
 		}
-		else
-			password[i] = c;
-	}
-	return password;
+		else if (c == 8)
+            {
+                if (i > 0)
+                {
+                    printf("\b \b"); //mueve el cursor hacia la izquierda
+                }
+            }
+            else if (i < LONGITUD)
+                        
+                {
+                    printf("*");
+                    password[i] = c;
+                   
+                }
+    }
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-

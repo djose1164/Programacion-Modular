@@ -24,13 +24,11 @@ void registro_ventas ();
  * @brief Esta funcion se encargara de llevar el total de dinero que posee
  * la tienda en base a las compras y ventas realizadas
  * 
- * @param compra_total cantidad de dinero utilizado en inversiones
- * @param venta_total ingresos totales de ventas realizadas
  */
 void dinero_total ();
 
 /**
- * @brief 
+ * @brief Menu de Opciones de Contabilidad
  * 
  * @return true 
  * @return false 

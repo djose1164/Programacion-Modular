@@ -186,6 +186,13 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
     }
     else
     {
+        query = "CREATE TABLE IF NOT EXISTS products( "
+                "id INT AUTO_INCREMENT PRIMARY KEY, "
+                "nombre TEXT, "
+                "precio INT, "
+                "cantidad INT);";
+
+        __create_table__(query);
         query = "INSERT INTO products("
                 "id, nombre, precio, cantidad) "
                 "VALUES(NULL, ?, ?, ?);";
@@ -359,7 +366,7 @@ static bool __update_quantity__(const unsigned id, const int quantity)
     check_error(conn, db);
 
     conn = sqlite3_step(res);
-   // if (conn ==)
+    // if (conn ==)
     sqlite3_finalize(res);
 
     return conn == SQLITE_DONE;

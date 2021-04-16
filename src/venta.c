@@ -22,32 +22,31 @@ struct products;
 //TODO para que le pase cantidad a Facturas.cantidad y asi poder
 //TODO pasarselo a venta_return_contabilidad.
 
-void llenar_facturas()
+void llenar_facturas(unsigned id, unsigned cantidad)
 {
-    unsigned id, cantidad;
-    report_inventory();
-    printf("Ingrese el id del producto que desea comprar");
-    scanf("%u", &id);
-    getchar();
-    printf("Ingrese la cantidad que desea comprar");
-    scanf("%u", &cantidad);
-    getchar();
-    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    bool temp = true;
+
+    for (size_t i = 0; i < MAX_FACTURAS && temp; i++)
     {
         if (!Facturas[i].full)
         {
-            if (Facturas[i].Precio = get_price_by_id(id) == -1)
+            if ((Facturas[i].Precio = get_price_by_id(id)) == -1)
             {
                 printf("No se pudo obtener el precio deseado");
                 return;
             }
             Facturas[i].full = true;
             strcpy(Facturas[i].nombre_cliente, get_username());
+            strcpy(Facturas[i].nombre_producto, get_name_by_id(id));
+            printf("En llenar factura: %s\n%s\n", Facturas[i].nombre_cliente, Facturas[i].nombre_producto);
+            //fflush(stdout);
+            //getchar();
             Facturas[i].id_producto_deseado = id;
             Facturas[i].Cantidad = cantidad;
 
             Facturas[i].Total = Facturas[i].Precio * Facturas[i].Cantidad;
             Facturas[i].TotalaPagar += Facturas[i].Total;
+            temp = false;
         }
     }
 }
@@ -69,8 +68,8 @@ bool go_back()
 {
     /*if (salir)
     {
-        fflush(stdout);
-        system("cls||clear");
+        clear_screen();
+        
         printf("Hackear a la NASA dejo de ser un sueno.\n");
         exit(0);
     }*/
@@ -119,8 +118,7 @@ int edit_orders()
         sscanf(_temp, "%d", &available_quantity);
         flag = update(id, NULL, NULL, &available_quantity);
     }
-    fflush(stdout);
-    system("cls||clear");
+    clear_screen();
 
     if (flag)
     {
@@ -169,39 +167,24 @@ int edit_orders()
 }*/
 
 /**
- * @brief Esta funcion permite agregar otros articulos al usuario, los entra y los imprime 
- * cada vez que el usuario desee agregar algo mas  
- * @return int 
- */
-int agregar_mas_articulos()
-{
-#ifndef IMPRESO
-#define IMPRESO
-    void print_encabezado_factura();
-#endif // IMPRESO          \
-       //TODO Revisar esto \
-       //TODO llamar a reporte inventario
-
-    /* Imprimira cada factura hecha por cada llamada. */
-    /* for (size_t i = 0; i < MAX_FACTURAS; i++)
-    {
-        printf("%s\t%s\t%s\t%s\t%s\t%s\n\n\n\n\n\n\n",
-               Facturas[i].nombre_cliente, Facturas[i].nombre_cliente, Facturas[i].Cantidad, Facturas[i].Precio,
-               edit_availableQuantity(1, 5), Facturas[i].Total);
-    }*/
-
-    return 0;
-}
-
-/**
  * @brief Imprime el encabezado del modulo ventas opcion 1
  * 
  */
-void print_encabezado_factura()
+void print_factura()
 {
+    clear_screen();
     printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n"
-           "\t\tIngrese los datos que se le piden:\n\n"
-           "Nombre cliente:\tProducto:\t Cantidad:\tPrecio:\tTotal:\t\n");
+           "Nombre cliente:\tProducto:\tCantidad:\tPrecio:\tTotal:\n");
+
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    {
+        if (Facturas[i].full)
+            printf("%s\t%s\t%u\t%u\t%u",
+                   Facturas[i].nombre_cliente, Facturas[i].nombre_producto,
+                   Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total);
+    }
+
+    getchar();
 }
 
 /**
@@ -209,32 +192,32 @@ void print_encabezado_factura()
  * 
  * @return int 
  */
-int sell_products()
+bool sell_products()
 {
-    char temp[sizeof(unsigned)];
-    unsigned _temp = 0;
+    char c;
+    unsigned id, cantidad;
 
-    fflush(stdout);
-    system("cls||clear");
-    for (size_t i = 0; i < MAX_FACTURAS; i++)
-    {
-        agregar_mas_articulos();
-        printf("\t\t\tDesea agregar algo mas: ");
-        fgets(temp, sizeof(unsigned), stdin);
-        sscanf(temp, "%u", &_temp);
+    clear_screen();
 
-        if (!temp)
-            break;
+    printf("Estas en comprar producto.\n");
+    report_inventory();
+    putchar('\n');
+    printf("Ingrese el id del producto que desea comprar");
+    scanf("%u", &id);
+    getchar();
+    printf("Ingrese la cantidad que desea comprar");
+    scanf("%u", &cantidad);
+    getchar();
+
+    llenar_facturas(id, cantidad);
+    printf("Continuar\n");
+    for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
+        if (c == 's' || c == 'S')
+            return true;
         else
-        {
-            printf("\t\t\tTotal a pagar: %u", Facturas[i].TotalaPagar);
-            printf("Presiona cualquier tecla para volver al menu de ventas");
-            getchar();
-            ventas_menu();
-        }
-    }
+            break;
 
-    return 0;
+    return false;
 }
 
 /**
@@ -248,10 +231,10 @@ bool ventas_menu()
     char _temp[sizeof(short)];
     short temp;
     bool flag = false;
-    int time = 2;
+    int time = 1;
     /**Sistema de carga para ingresar al modulo */
-    fflush(stdout);
-    system("cls||clear");
+    clear_screen();
+
     printf("Ingresando al Modulo Ventas...\n");
     system_loading(time);
     do
@@ -278,31 +261,30 @@ bool ventas_menu()
     case SELL_PRODUCTS:
         /*void print_encabezado_factura();//ver si es necesario agregarla o si solo se puede llamar a 
                 agregar_mas_articulos*/
-        agregar_mas_articulos();
+        if (sell_products())
+            return sell_products();
+        else
+            return ventas_menu();
+
+    case SEE_ORDERS:
+        print_factura();
+        getchar();
+        break;
+
+    case EDIT_ORDERS:
+        for (; edit_orders();)
+            ;
+        return ventas_menu();
 
         break;
 
-        /*case SEE_ORDERS:
-                for (; see_orders(Facturas);)
-                    ;
-                return ventas_menu();
+    case DELETE_ORDERS:
 
-                break;
+        break;
 
-            case EDIT_ORDERS:
-                for (; edit_orders();)
-                    ;
-                return ventas_menu();
+    case CASH_REGISTER:
 
-                break;
-
-            case DELETE_ORDERS:
-
-                break;
-
-            case CASH_REGISTER:
-
-                break;*/
+        break;
 
     case GO_BACK_OUT_VENTAS:
 
@@ -314,9 +296,6 @@ bool ventas_menu()
         fprintf(stderr, "\n\aHaz elegido una opcion incorrecta\n");
         break;
     }
-
-    fflush(stdout);
-    system("cls || clear");
 
     return true;
 }

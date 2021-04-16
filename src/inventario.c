@@ -303,6 +303,5 @@ int get_price_by_id(const unsigned id)
 char *get_name_by_id(const unsigned id)
 {
     char *str = (char *)get_column_value(id, NAME);
-    printf("Name: %s\n", str);
     return str;
 }

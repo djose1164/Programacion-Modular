@@ -55,7 +55,7 @@ void inicializar_facturas();
  * solo si presiona el numero 1, si presiona el 0 entonces le da el total a pagar
  * @return int 
  */
-int sell_products();
+bool sell_products();
 
 /**
  * @brief Esta funcion permite agregar otros articulos al usuario, los entra y los imprime 
@@ -118,6 +118,6 @@ bool ventas_menu();
  * @brief Imprime el encabezado del modulo ventas opcion 1
  * 
  */
-void print_encabezado_factura();
+void print_factura();
 
 #endif //VENTA_H

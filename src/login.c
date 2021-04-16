@@ -82,10 +82,7 @@ int login_menu()
 		if (inventory_menu())
 			return login_menu();
 	case COMPRAS:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+	return compras_menu(); 
 	case VENTAS:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");

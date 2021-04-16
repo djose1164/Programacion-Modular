@@ -29,7 +29,7 @@ void registro_ventas() /* Muestra el Registro de Ventas realizadas */
     return print_factura();
 }
 
-void dinero_total ()
+void dinero_total()
 {
     clear_screen();
     printf("El Dinero Total Obtenido es: %d\n", obtener_ventas_suma() - obtener_suplidor_suma());
@@ -38,7 +38,7 @@ void dinero_total ()
 bool contabilidad_menu()
 {
 
-    char _temp[sizeof(short)*2];
+    char _temp[sizeof(short) * 2];
     short temp;
     bool flag = false;
     int time = 1;

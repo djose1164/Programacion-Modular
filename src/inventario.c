@@ -248,6 +248,8 @@ bool inventory_menu()
             return inventory_menu();
 
         case _report_inventory:
+            fflush(stdout);
+            system("cls||clear");
             report_inventory();
             for (size_t i = 0;; ++i)
             {

@@ -186,13 +186,17 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
     }
     else
     {
+#ifndef CREATED_TABLE
+#define CREATED_TABLE
         query = "CREATE TABLE IF NOT EXISTS products( "
-                "id INT AUTO_INCREMENT PRIMARY KEY, "
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 "nombre TEXT, "
                 "precio INT, "
                 "cantidad INT);";
 
         __create_table__(query);
+#endif //CREATED_TABLE
+
         query = "INSERT INTO products("
                 "id, nombre, precio, cantidad) "
                 "VALUES(NULL, ?, ?, ?);";
@@ -210,21 +214,23 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
 
         conn = sqlite3_prepare_v2(db, query, -1, &res, NULL);
         check_error(conn, db);
-        //printf("Testing: %s\n", data[0]);
+
         conn = sqlite3_bind_text(res, 1, data[0], -1, NULL);
         check_error(conn, db);
+
+        //Vinculacion de los datos.
         for (size_t i = 0; i < 2; i++)
         {
             conn = sqlite3_bind_int(res, i + 2, int_data[i]);
             check_error(conn, db);
         }
 
-        sqlite3_step(res);
+        conn = sqlite3_step(res);
 
         sqlite3_finalize(res);
         free(products);
         free(data);
-        return true;
+        return conn == SQLITE_DONE;
     }
 
     sqlite3_finalize(res);

@@ -1,14 +1,22 @@
 #ifndef COMPRA_H
 #define COMPRA_H
-#include <stdlib.h>
+#include <stdbool.h>
 
 enum opciones_compras_menu
 {
     COMPRAR_PRODUCTOS = 1,
-    CREAR_PRODUCTOS ,
-    ELIMINAR_EDITAR ,
+    CREAR_PRODUCTOS,
+    ELIMINAR_EDITAR,
     HISTORIAL_DEL_PRODUCTO,
     SALIR_COMPRA
+};
+
+struct Proveedor
+{
+    char producto_nombre;
+    unsigned cantidad;
+    unsigned precio;
+    bool full;
 };
 
 /**
@@ -25,9 +33,6 @@ struct compra
     bool comprado;
 };
 
-
-//variables constantes
-const size_t MAX_COMPRAS;
 
 /*
     Compras:  Comprar productos, Crear y comprar productos, Ver compras hechas, Eliminar 
@@ -79,7 +84,7 @@ bool historial_de_produc();
  * @return true si seleciona te redirecciona al inicio del programa.
  * @return false siendo los opuesto no se podra salir de la opcion de compras.
  */
-bool salir();
+void salir();
 
 /**
  * @brief una vez que se compre algo se tiene que guardar nombre del producto ,cantidad ,precio
@@ -88,6 +93,11 @@ bool salir();
  * @return false si no se guarda
  */
 bool compra_historial();
+
+
+void mostrar_productos_suplidor();
+
+void llenar_productos_suplidor();
 
 #endif //COMPRA_H
 

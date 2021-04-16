@@ -1,3 +1,4 @@
+#if 0 // COMMENTED
 #ifndef VENTA_H
 #define VENTA_H
 
@@ -75,3 +76,4 @@ void caja_registradora(Facturas);
 void salir();
 
 #endif //VENTA_H
+#endif // COMMENTED

@@ -39,11 +39,10 @@ bool contabilidad_menu();
 
 enum Opciones_Contabilidad_Menu{
 
-    _REG = 1,
-    _DT,
-    _REG_ING,
-    _REG_DEU,
-    _BACK_MENU
+    REG_DEU = 1,
+    REG_ING,
+    DT,
+    BACK_MENU
 
 };
 

@@ -23,7 +23,12 @@ void registro_ventas() /* Muestra el Registro de Ventas realizadas */
 {
     /* Muestra el Registro de Ventas */
     printf("Resgistro de Contabilidad de Ventas: \n");
-    return print_();
+    return print_factura();
+}
+
+void dinero_total (int compra_total, int venta_total)
+{
+    int compra_total;
 }
 
 bool contabilidad_menu()
@@ -45,37 +50,34 @@ bool contabilidad_menu()
         /* **Menu de Contabilidad **  */
         printf("\a\n\t\tBienvenido al Modulo de Contabilidad\n"
                "\t\t\tSeleccione la opcion que desea realizar: \n"
-               "\t1) Registro\n"
-               "\t2) Dinero Total\n"
-               "\t3) Registro de Ingresos\n"
-               "\t4) Registro de Deudas\n"
-               "\t5) Volver al Menu Principal\n");
+               "\t1) Registro de Deudas\n"
+               "\t2) Registro de Ingresos\n"
+               "\t3) Dinero Total\n"
+               "\t4) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);
         sscanf(_temp, "%hd", &temp);
         flag = true;
 
-    } while (temp < 0 || temp > 5);
+    } while (temp < 0 || temp > 4);
 
     switch (temp)
     {
-    case _REG:
-        registro_contabilidad;
+    case REG_DEU:
+        registro_compras();
+        getchar();
         break;
 
-    case _DT:
+    case REG_ING:
+        registro_ventas();
+        getchar();
+        break;
+
+    case DT:
         printf("Vuelva mas Tarde");
-        break;
-
-    case _REG_ING:
-        printf("Vuelva mas Tarde");
 
         break;
 
-    case _REG_DEU:
-
-        break;
-
-    case _BACK_MENU:
+    case BACK_MENU:
 
         printf("Vuelva mas Tarde");
         break;

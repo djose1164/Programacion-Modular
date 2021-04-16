@@ -76,11 +76,11 @@ bool go_back()
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-facturas cash_register(facturas Facturas)
+/*facturas cash_register(facturas Facturas)
 {
     printf("%d"); //Quiero imprimir todos los totales de las facturas para el reporte de caja
     return Facturas[50];
-}
+}*/
 
 /**
  * @brief Esta funcion eliminara totalmente las ventas hechas 
@@ -140,7 +140,7 @@ int edit_orders()
         printf("\a\tEl producto que has intentado modificar no existe.\n"
                "\tVerifica que hayas ingresado un id existente.\n"
                "Presione cualquier tecla para volver a menu Inventario...");
-        getch();
+        getchar();
     }
     return false;
 }

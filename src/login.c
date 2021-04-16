@@ -244,7 +244,6 @@ void system_loading(int time)
 
 char *get_username()
 {
-	printf("On get_username: %s\n", actual_user.username);
 	return actual_user.username;
 }
 

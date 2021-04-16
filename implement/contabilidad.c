@@ -6,6 +6,7 @@
 /* Librerias a usar */
 #include "../include/contabilidad.h"
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 
 void crear_registro(struct cont_reg *cont_reg) /* Creador del registro */
@@ -58,4 +59,73 @@ void registro_contabilidad(int registro_compras, int registro_ventas) /* Muestra
            "");
 
     fclose(Contabilidad);
+}
+
+bool contabilidad_menu()
+{
+
+    char _temp[sizeof(short)];
+    short temp;
+    bool flag = false;
+    int time = 1;
+    /**Sistema de carga para ingresar al modulo */
+    clear_screen();
+
+    printf("Ingresando al Modulo de Contabilidad...\n");
+    system_loading(time);
+    do
+    {
+        if (flag)
+            printf("Elige una opcion valida por favor\n");
+        /* **Menu de Contabilidad **  */
+        printf("\a\n\t\tBienvenido al Modulo de Contabilidad\n"
+               "\t\t\tSeleccione la opcion que desea realizar: \n"
+               "\t1) Registro\n"
+               "\t2) Dinero Total\n"
+               "\t3) Registro de Ingresos\n"
+               "\t4) Registro de Deudas\n"
+               "\t5) Volver al Menu Principal\n");
+        fgets(_temp, sizeof(_temp), stdin);
+        sscanf(_temp, "%hd", &temp);
+        flag = true;
+
+    } while (temp < 0 || temp > 5);
+
+    switch (temp)
+    {
+    case _REG:
+        /* Funcion de Mostrar Registro de Contabilidad */
+        if (sell_products())
+            return sell_products();
+        else
+            return ventas_menu();
+
+    case _DT:
+        print_factura();
+        getchar();
+        break;
+
+    case _REG_ING:
+        for (; edit_orders();)
+            ;
+        return ventas_menu();
+
+        break;
+
+    case _REG_DEU:
+
+        break;
+
+    case _BACK_MENU:
+
+        go_back();
+        return false;
+        break;
+
+    default:
+        fprintf(stderr, "\n\aHaz elegido una opcion incorrecta\n");
+        break;
+    }
+
+    return true;
 }

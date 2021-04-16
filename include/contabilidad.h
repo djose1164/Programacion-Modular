@@ -5,6 +5,7 @@
 
 #ifndef CONTABILIDAD_H /*CONTABILIDAD_H*/
 #define CONTABILIDAD_H
+#include <stdbool.h>
 /* Prototipos y Declaraciones */
 
 
@@ -53,5 +54,23 @@ void registro_contabilidad (int registro_compras, int registro_ventas);
  * @param venta_total ingresos totales de ventas realizadas
  */
 void dinero_total (int compra_total, int venta_total);
+
+/**
+ * @brief 
+ * 
+ * @return true 
+ * @return false 
+ */
+bool contabilidad_menu();
+
+enum Opciones_Contabilidad_Menu{
+
+    _REG = 1,
+    _DT,
+    _REG_ING,
+    _REG_DEU,
+    _BACK_MENU
+
+};
 
 #endif /*CONTABILIDAD_H*/

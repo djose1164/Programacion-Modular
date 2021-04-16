@@ -247,3 +247,9 @@ char *get_username()
 {
 	return actual_user.username;
 }
+
+void clear_screen()
+{
+	fflush(stdout);
+	system("cls||clear");
+}

@@ -2,7 +2,7 @@
 #define COMPRA_H
 #include <stdlib.h>
 
-enum opciones_conpras_menu
+enum opciones_compras_menu
 {
     COMPRAR_PRODUCTOS = 1,
     CREAR_PRODUCTOS ,
@@ -39,7 +39,7 @@ const size_t MAX_COMPRAS;
  * @return true el uusuario no ha salido. se ejecutara.
  * @return false el usurio salio. se parara.
  */
-bool conpras_menu();
+bool compras_menu();
 
 /**
  * @brief mostrar los productos a comprar.
@@ -47,7 +47,7 @@ bool conpras_menu();
  * @return true se ha podido compro el producto.
  * @return false no se pudo comprar el productointente otra vez.
  */
-bool compar_productos(); 
+bool comprar_productos(); 
 
 /**
  * @brief esta funcion me permitira crear los productos.  
@@ -81,6 +81,13 @@ bool historial_de_produc();
  */
 bool salir();
 
+/**
+ * @brief una vez que se compre algo se tiene que guardar nombre del producto ,cantidad ,precio
+ * 
+ * @return true si se guarda
+ * @return false si no se guarda
+ */
+bool compra_historial();
 
 #endif //COMPRA_H
 

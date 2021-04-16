@@ -6,6 +6,31 @@
 
 const size_t MAX_COMPRAS = 15;
     struct compra comprar_producto[MAX_COMPRAS];
+
+/**
+ * @brief mostrar los productos a comprar.
+ * 
+ * @return true se ha podido compro el producto.
+ * @return false no se pudo comprar el productointente otra vez.
+ */
+bool compar_productos(){
+    char nombre[50];
+    unsigned precio;
+    unsigned cantidad;
+
+    clear_screen();
+    for (size_t i = 0; i < MAX_COMPRAS; i++)
+    {
+        printf("Nombre del Producto\tPrecio\tCantidad\n");
+        scanf("%s",&nombre);
+        getchar();
+        scanf("%u",&precio);
+        getchar();
+        scanf("%u",&cantidad);
+    }
+    
+} 
+
 void inicia_producto(struct compra *comprar_producto)
 {
         for (size_t i = 0; i < MAX_COMPRAS; i++)

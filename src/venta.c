@@ -202,15 +202,15 @@ bool sell_products()
     printf("Estas en comprar producto.\n");
     report_inventory();
     putchar('\n');
-    printf("Ingrese el id del producto que desea comprar");
+    printf("Ingrese el id del producto que desea comprar:");
     scanf("%u", &id);
     getchar();
-    printf("Ingrese la cantidad que desea comprar");
+    printf("Ingrese la cantidad que desea comprar:");
     scanf("%u", &cantidad);
     getchar();
 
     llenar_facturas(id, cantidad);
-    printf("Continuar\n");
+    printf("Desea continuar\n");
     for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
         if (c == 's' || c == 'S')
             return true;

@@ -181,8 +181,6 @@ void print_factura()
                    Facturas[i].nombre_cliente, Facturas[i].nombre_producto,
                    Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total);
     }
-
-    getchar();
 }
 
 /**

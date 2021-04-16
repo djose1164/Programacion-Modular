@@ -4,41 +4,70 @@
 #include <stdlib.h>
 #include "../include/compra.h"
 #include "../include/login.h"
+#include "../include/inventario.h"
 
 #define MAX_COMPRAS 15
 struct compra comprar_producto[MAX_COMPRAS];
 struct Proveedor suplir_producto[MAX_COMPRAS];
 
+void mostrar_productos_suplidor()
+{
+    clear_screen();
+    printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
+           "%-20s%-20s%-20s%-20s\n",
+           "ID:", "Producto:", "Cantidad:", "Precio:");
+
+    for (size_t i = 0; i < MAX_COMPRAS; i++)
+    {
+        if (suplir_producto[i].full)
+            printf("%-20u%-20s%-20u%-20u\n",
+                   suplir_producto[i].id, suplir_producto[i].producto_nombre, suplir_producto[i].precio,
+                   suplir_producto[i].cantidad);
+    }
+}
+
 bool crear_productos()
 {
     bool _temp = true;
     char nombre[50];
-    char temp[sizeof(unsigned)];
+    char temp[sizeof(unsigned) * 2];
     unsigned cantidad, precio;
+    char c;
     clear_screen();
 
     getchar();
-    printf("Nombre del producto: ");
-    fgets(nombre, sizeof(nombre), stdin);
-
-    printf("Precio del producto: ");
-    fgets(temp, sizeof(temp), stdin);
-    sscanf(temp, "%u", &precio);
-
-    printf("Cantidad del producto: ");
-    fgets(temp, sizeof(temp), stdin);
-    sscanf(temp, "%u", &cantidad);
-
     for (size_t i = 0; i < MAX_COMPRAS && temp; i++)
     {
+        printf("Nombre del producto: ");
+        fgets(nombre, sizeof(nombre), stdin);
+
+        printf("Precio del producto: ");
+        fgets(temp, sizeof(temp), stdin);
+        sscanf(temp, "%u", &precio);
+
+        printf("Cantidad del producto: ");
+        fgets(temp, sizeof(temp), stdin);
+        sscanf(temp, "%u", &cantidad);
+
         if (!suplir_producto[i].full)
         {
             suplir_producto[i].full = true;
+            suplir_producto[i].id = i;
             strcpy(suplir_producto->producto_nombre, nombre);
             suplir_producto[i].precio = precio;
             suplir_producto[i].cantidad = cantidad;
+
             _temp = false;
         }
+
+        clear_screen();
+        printf("Deseas crear algun otro producto?\n"
+               "Para si 's'; cualquier otro tecla para no...");
+        for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
+            if (c == 's' || c == 'S')
+                return crear_productos();
+            else
+                return false;
     }
 
     return false;
@@ -52,21 +81,40 @@ bool crear_productos()
  */
 bool compar_productos()
 {
-    char nombre[50];
-    unsigned precio;
-    unsigned cantidad;
+    char temp[sizeof(unsigned) * 2];
+    unsigned id;
 
-    clear_screen();
+    mostrar_productos_suplidor();
+    putchar('\n');
+
+    printf("Ingrese el id del producto que desea comprar: ");
+    fgets(temp, sizeof(temp), stdin);
+    sscanf(temp, "%u", &id);
+
     for (size_t i = 0; i < MAX_COMPRAS; i++)
     {
-        printf("Nombre del Producto\tPrecio\tCantidad\n");
-        scanf("%s", &nombre);
-        getchar();
-        scanf("%u", &precio);
-        getchar();
-        scanf("%u", &cantidad);
-        getchar();
+        if (!comprar_producto[i].comprado)
+        {
+            for (size_t j = 0; j < MAX_COMPRAS; j++)
+            {
+                if (id == suplir_producto[j].id)
+                {
+                    comprar_producto[i].comprado = true;
+                    strcpy(comprar_producto[i].nombre,
+                           suplir_producto[j].producto_nombre);
+                    comprar_producto[i].precio = suplir_producto[j].precio;
+                    comprar_producto[i].cantidad = suplir_producto[j].cantidad;
+
+                    // Anade el producto a la database.
+                    return save_product(comprar_producto[i].nombre,
+                                        comprar_producto[i].precio, comprar_producto[i].cantidad);
+                }
+            }
+        }
     }
+
+    printf("\nComprado con exito\n");
+    return false;
 }
 
 void inicia_producto()
@@ -74,10 +122,7 @@ void inicia_producto()
     for (size_t i = 0; i < MAX_COMPRAS; i++)
     {
         comprar_producto[i].comprado = false;
-    }
-
-    for (size_t i = 0; i < MAX_COMPRAS; i++)
-    {
+        comprar_producto[i].eliminado = false;
         suplir_producto[i].full = false;
     }
 }
@@ -111,16 +156,18 @@ bool compras_menu()
         fgets(_temp, sizeof(_temp), stdin); // \n
         sscanf(_temp, "%hd", &temp);
         flag = true;
-    } while (temp <= 0 || temp > 3);
+    } while (temp <= 0 || temp > 5);
 
     switch (temp)
     {
     case COMPRAR_PRODUCTOS:
-        //compar_productos();
+        compar_productos();
         break;
 
     case CREAR_PRODUCTOS:
         crear_productos();
+        printf("Afuera de crear producto\n");
+        getchar();
         break;
 
     case ELIMINAR_EDITAR:

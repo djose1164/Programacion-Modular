@@ -13,14 +13,14 @@ enum opciones_compras_menu
 
 struct Proveedor
 {
-    char producto_nombre;
+    unsigned id;
+    char producto_nombre[50];
     unsigned cantidad;
     unsigned precio;
     bool full;
 };
 
 /**
- * 
  * @brief estructuras de comprar producto
  * me servira para organizar la opcion de compras 
  * 
@@ -31,8 +31,8 @@ struct compra
     unsigned precio;
     unsigned cantidad;
     bool comprado;
+    bool eliminado;
 };
-
 
 /*
     Compras:  Comprar productos, Crear y comprar productos, Ver compras hechas, Eliminar 
@@ -52,7 +52,7 @@ bool compras_menu();
  * @return true se ha podido compro el producto.
  * @return false no se pudo comprar el productointente otra vez.
  */
-bool comprar_productos(); 
+bool comprar_productos();
 
 /**
  * @brief esta funcion me permitira crear los productos.  
@@ -94,10 +94,8 @@ void salir();
  */
 bool compra_historial();
 
-
 void mostrar_productos_suplidor();
 
 void llenar_productos_suplidor();
 
 #endif //COMPRA_H
-

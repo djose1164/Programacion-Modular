@@ -27,7 +27,7 @@ void registro_ventas ();
  * @param compra_total cantidad de dinero utilizado en inversiones
  * @param venta_total ingresos totales de ventas realizadas
  */
-void dinero_total (int compra_total, int venta_total);
+void dinero_total ();
 
 /**
  * @brief 

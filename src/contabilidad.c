@@ -10,10 +10,12 @@
 #include <string.h>
 #include "../include/login.h"
 #include "../include/inventario.h"
+#include "../include/compra.h"
 #include "../include/venta.h"
 
 void registro_compras() /* Muestra el Registro de Compras realizadas */
 {
+    clear_screen();
     /* Muestra el Registro Compras */
     printf("Resgistro de Contabilidad de Compras: \n");
     return report_inventory();
@@ -21,20 +23,22 @@ void registro_compras() /* Muestra el Registro de Compras realizadas */
 
 void registro_ventas() /* Muestra el Registro de Ventas realizadas */
 {
+    clear_screen();
     /* Muestra el Registro de Ventas */
     printf("Resgistro de Contabilidad de Ventas: \n");
     return print_factura();
 }
 
-void dinero_total (int compra_total, int venta_total)
+void dinero_total ()
 {
-    
+    clear_screen();
+    printf("El Dinero Total Obtenido es: %d\n", obtener_ventas_suma() - obtener_suplidor_suma());
 }
 
 bool contabilidad_menu()
 {
 
-    char _temp[sizeof(short)];
+    char _temp[sizeof(short)*2];
     short temp;
     bool flag = false;
     int time = 1;
@@ -73,13 +77,12 @@ bool contabilidad_menu()
         break;
 
     case DT:
-        printf("Vuelva mas Tarde");
-
+        dinero_total;
         break;
 
     case BACK_MENU:
 
-        printf("Vuelva mas Tarde");
+        return login_menu();
         break;
 
     default:

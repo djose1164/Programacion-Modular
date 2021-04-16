@@ -323,7 +323,7 @@ static bool __update_name__(const unsigned id, const char *new_name)
 
     char *sql = "UPDATE products "
                 "SET nombre = ?"
-                "WHERE id = ?";
+                "WHERE id = ?;";
 
     conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
     check_error(conn, db);
@@ -347,7 +347,7 @@ static bool __update_quantity__(const unsigned id, const int quantity)
 
     char *sql = "UPDATE products "
                 "SET cantidad = cantidad + ?"
-                "WHERE id = ?";
+                "WHERE id = ?;";
 
     conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
     check_error(conn, db);
@@ -359,6 +359,7 @@ static bool __update_quantity__(const unsigned id, const int quantity)
     check_error(conn, db);
 
     conn = sqlite3_step(res);
+   // if (conn ==)
     sqlite3_finalize(res);
 
     return conn == SQLITE_DONE;
@@ -372,7 +373,7 @@ static bool __update_price__(const unsigned id, const unsigned new_price)
 
     char *sql = "UPDATE products "
                 "SET precio = ? "
-                "WHERE id = ?";
+                "WHERE id = ?;";
 
     conn = sqlite3_prepare_v2(db, sql, -1, &res, NULL);
     check_error(conn, db);

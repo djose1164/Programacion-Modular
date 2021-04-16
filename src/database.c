@@ -334,9 +334,9 @@ static bool __update_name__(const unsigned id, const char *new_name)
     conn = sqlite3_bind_int(res, 2, id);
     check_error(conn, db);
 
-    sqlite3_step(res);
+    conn = sqlite3_step(res);
     sqlite3_finalize(res);
-    return true;
+    return conn == SQLITE_DONE;
 }
 
 static bool __update_quantity__(const unsigned id, const int quantity)
@@ -362,7 +362,7 @@ static bool __update_quantity__(const unsigned id, const int quantity)
    // if (conn ==)
     sqlite3_finalize(res);
 
-    return !conn;
+    return conn == SQLITE_DONE;
 }
 
 static bool __update_price__(const unsigned id, const unsigned new_price)
@@ -384,9 +384,9 @@ static bool __update_price__(const unsigned id, const unsigned new_price)
     sqlite3_bind_int(res, 2, id);
     check_error(conn, db);
 
-    sqlite3_step(res);
+    conn = sqlite3_step(res);
     sqlite3_finalize(res);
-    return true;
+    return conn == SQLITE_DONE;
 }
 
 //! Obtener valores.

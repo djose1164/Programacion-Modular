@@ -71,7 +71,7 @@ $(OUTPUT):
 	$(MD) $(OUTPUT)
 
 $(MAIN): $(OBJECTS) 
-	$(CC) $(CFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS) -l sqlite3
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(OUTPUTMAIN) $(OBJECTS) $(LFLAGS) $(LIBS)
 
 # this is a suffix replacement rule for building .o's from .c's
 # it uses automatic variables $<: the name of the prerequisite of

@@ -98,4 +98,11 @@ void mostrar_productos_suplidor();
 
 void llenar_productos_suplidor();
 
+/**
+ * @brief Devuelve el suplidor.
+ * 
+ * @return struct Proveedor Una copia de la struct.
+ */
+int obtener_suplidor_suma();
+
 #endif //COMPRA_H

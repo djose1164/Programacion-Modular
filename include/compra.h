@@ -105,4 +105,6 @@ void llenar_productos_suplidor();
  */
 int obtener_suplidor_suma();
 
+void inicia_producto();
+
 #endif //COMPRA_H

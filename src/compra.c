@@ -31,56 +31,64 @@ void mostrar_productos_suplidor()
 
     for (size_t i = 0; i < MAX_COMPRAS; i++)
     {
-        if (suplir_producto[i].full)
-            printf("%-20u%-20s%-20u%-20u\n",
-                   suplir_producto[i].id, suplir_producto[i].producto_nombre, suplir_producto[i].precio,
-                   suplir_producto[i].cantidad);
+        printf("%-20u%-20s%-20u%-20u\n",
+               suplir_producto[i].id, suplir_producto[i].producto_nombre, suplir_producto[i].precio,
+               suplir_producto[i].cantidad);
     }
+
+    printf("En imprimir para compras");
+    getchar();
 }
 
 bool crear_productos()
 {
+#ifndef INIT
+#define INIT
+    inicia_producto();
+#endif //INIT
+
     bool _temp = true;
     char nombre[50];
     char temp[sizeof(unsigned) * 2];
     unsigned cantidad, precio;
     char c;
-    clear_screen();
 
     getchar();
-    for (size_t i = 0; i < MAX_COMPRAS && temp; i++)
+
+    clear_screen();
+    printf("Nombre del producto: ");
+    fgets(nombre, sizeof(nombre), stdin);
+
+    printf("Precio del producto: ");
+    fgets(temp, sizeof(temp), stdin);
+    sscanf(temp, "%u", &precio);
+
+    printf("Cantidad del producto: ");
+    fgets(temp, sizeof(temp), stdin);
+    sscanf(temp, "%u", &cantidad);
+
+    for (size_t i = 0; i < MAX_COMPRAS && _temp; i++)
     {
-        printf("Nombre del producto: ");
-        fgets(nombre, sizeof(nombre), stdin);
-
-        printf("Precio del producto: ");
-        fgets(temp, sizeof(temp), stdin);
-        sscanf(temp, "%u", &precio);
-
-        printf("Cantidad del producto: ");
-        fgets(temp, sizeof(temp), stdin);
-        sscanf(temp, "%u", &cantidad);
-
         if (!suplir_producto[i].full)
         {
             suplir_producto[i].full = true;
-            suplir_producto[i].id = i;
+            suplir_producto[i].id = i + 1;
             strcpy(suplir_producto->producto_nombre, nombre);
             suplir_producto[i].precio = precio;
             suplir_producto[i].cantidad = cantidad;
-
             _temp = false;
         }
-
-        clear_screen();
-        printf("Deseas crear algun otro producto?\n"
-               "Para si 's'; cualquier otro tecla para no...");
-        for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
-            if (c == 's' || c == 'S')
-                return crear_productos();
-            else
-                return false;
     }
+
+    clear_screen();
+    printf("Deseas crear algun otro producto?\n"
+           "Para si 's'; cualquier otro tecla para no...\n%d",
+           suplir_producto[0].full);
+    for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
+        if (c == 's' || c == 'S')
+            return crear_productos();
+        else
+            return false;
 
     return false;
 }
@@ -98,7 +106,7 @@ bool compar_productos()
 
     mostrar_productos_suplidor();
     putchar('\n');
-
+    getchar();
     printf("Ingrese el id del producto que desea comprar: ");
     fgets(temp, sizeof(temp), stdin);
     sscanf(temp, "%u", &id);
@@ -146,7 +154,7 @@ bool compras_menu()
     char _temp[sizeof(short)];
     short temp;
     bool flag = false;
-    int time = 2;
+    int time = 1;
 
     /** el sistema de carga del modulo compras*/
     clear_screen();
@@ -177,7 +185,7 @@ bool compras_menu()
         break;
 
     case CREAR_PRODUCTOS:
-        crear_productos();
+        (void)crear_productos();
         printf("Afuera de crear producto\n");
         getchar();
         break;

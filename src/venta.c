@@ -9,8 +9,10 @@
 
 #if defined(__WIN32) //Windows detectado
 #include <windows.h>
+#include <conio.h>
 #elif defined(__linux__) //Linux detectado
 #include <unistd.h>
+#include "../include/getch.h"
 #endif
 #define MAX_FACTURAS 100
 #define MAX_LETTERS 50
@@ -97,21 +99,24 @@ void cash_register()
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
         if (!Facturas[i].full)
+        {
             printf("%-20s%-20u%-20.2f\n",
-
                    Facturas[i].nombre_cliente, Facturas[i].Total, Facturas[i].TotalaPagar);
+
+            printf("Presione cualquier tecla para salir: ");
+            while ((c = getchar()) != '\n' || (c = getchar()) != '\r')
+                if (c == 'm')
+                    return;
+        }
         else
         {
             printf("No se ha realizado ninguna venta el dia de hoy =( ");
+#ifdef __linux__
+            sleep(20);
+#else
             Sleep(20);
+#endif //__linux__
             exit(0);
-        }
-       else if
-        {
-            printf("Presione cualquier tecla para salir: ");
-            while ((c = getchar()) != '\n')
-                if (c == 'm')
-                    return true;
         }
     }
 }
@@ -131,14 +136,13 @@ void delete_orders()
         scanf("%s", &c);
         for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
             if (c == 's' || c == 'S')
-                return true;
+                return;
             else
                 break;
         if (!Facturas[i].eliminado)
         {
             Facturas[i].eliminado = true;
         }
-        return false;
     }
 }
 

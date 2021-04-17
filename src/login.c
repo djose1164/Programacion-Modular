@@ -12,8 +12,8 @@
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/inventario.h"
-#include "../include/venta.h"
-#include "../include/compra.h"
+#include "../include/contabilidad.h"
+//#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
 static struct actual_user actual_user;
@@ -99,10 +99,8 @@ int login_menu()
 	case VENTAS:
 		break; //return ventas_menu();
 	case CONTABILIDAD:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+		return contabilidad_menu();
+		
 	case SALIR:
 		fflush(stdout);
 		system("cls||clear");
@@ -125,6 +123,7 @@ int login_user()
 
 	/**Donde se guardara la opcion eligida por el usuario. */
 	unsigned temp = 0;
+	int temp_validate;
 	/** Cuenta las veces que intenta el usuario*/
 	int chances = 0;
 
@@ -197,17 +196,22 @@ int login_user()
 			printf("\t\aPassword: ");
 			set_password(actual_user.password);
 
-			if (!validate(actual_user.username, actual_user.password))
+			temp_validate = validate(actual_user.username, actual_user.password);
+			if (!temp_validate)
 			// TODO: mostrar el login menu y/o mostrar un mensaje de que se ha logeado.
 			{
-				// Quita el anterior mensaje para mostrar este printf y el sistema
-				// de carga.
-				system("cls||clear");
-				printf("\n\t\t\aEfectivamente estas dentro!\n");
-
 				for (; login_menu();)
 					;
 				return 0;
+			}
+			else if (temp_validate == -1)
+			{
+				system("cls||clear");
+				printf("\t\t\aUps! Esta es la primera vez que estas ejucutando el programa.\n\n"
+					   "\tPor favor registrarse primero.\n"
+					   "\tPresione cualquier tecla para finalizar la ejecucion...\n");
+				getch();
+				exit(-1);
 			}
 			else
 			{

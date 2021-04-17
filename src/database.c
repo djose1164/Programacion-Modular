@@ -79,7 +79,7 @@ static int __validate__(const char *const username, const char *const password)
     int conn;
     __init_database__(database_name);
 
-    // Array de punteros a los datos a validar.
+    // Array de punteros a los datos a validar.2
     const char *to_validate[] = {
         username,
         password};
@@ -93,6 +93,8 @@ static int __validate__(const char *const username, const char *const password)
 
     // Prepara la coneccion.
     conn = sqlite3_prepare_v2(db, queries, -1, &res, NULL);
+    if (conn == SQLITE_ERROR)
+        return -1;
     check_error(conn, db);
 
     for (size_t i = 0; i <= (sizeof *queries) / (sizeof queries[0]); i++)
@@ -186,6 +188,17 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
     }
     else
     {
+#ifndef CREATED_TABLE
+#define CREATED_TABLE
+        query = "CREATE TABLE IF NOT EXISTS products( "
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                "nombre TEXT, "
+                "precio INT, "
+                "cantidad INT);";
+
+        __create_table__(query);
+#endif //CREATED_TABLE
+
         query = "INSERT INTO products("
                 "id, nombre, precio, cantidad) "
                 "VALUES(NULL, ?, ?, ?);";
@@ -203,21 +216,23 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
 
         conn = sqlite3_prepare_v2(db, query, -1, &res, NULL);
         check_error(conn, db);
-        //printf("Testing: %s\n", data[0]);
+
         conn = sqlite3_bind_text(res, 1, data[0], -1, NULL);
         check_error(conn, db);
+
+        //Vinculacion de los datos.
         for (size_t i = 0; i < 2; i++)
         {
             conn = sqlite3_bind_int(res, i + 2, int_data[i]);
             check_error(conn, db);
         }
 
-        sqlite3_step(res);
+        conn = sqlite3_step(res);
 
         sqlite3_finalize(res);
         free(products);
         free(data);
-        return true;
+        return conn == SQLITE_DONE;
     }
 
     sqlite3_finalize(res);
@@ -227,7 +242,7 @@ bool __insert_into__(struct users_to_insert *const users_to_insert,
 
 //! Realizar una consulta.
 
-void __make_query__(const char *query)
+bool __make_query__(const char *query)
 {
     __init_database__(database_name);
     char *errmsg;
@@ -235,9 +250,12 @@ void __make_query__(const char *query)
     int callback(void *data, int column_count, char **columns, char **columns_names);
 
     int conn = sqlite3_exec(db, query, callback, NULL, &errmsg);
+    if (conn == SQLITE_ERROR)
+        return false;
     check_error(conn, db);
     // Para la ultima linea de la tabla.
     printf("*--------*--------------------*----------*----------*\n");
+    return true;
 }
 
 //! Anandir nuevo usuario a la database.
@@ -359,7 +377,7 @@ static bool __update_quantity__(const unsigned id, const int quantity)
     check_error(conn, db);
 
     conn = sqlite3_step(res);
-   // if (conn ==)
+    // if (conn ==)
     sqlite3_finalize(res);
 
     return conn == SQLITE_DONE;

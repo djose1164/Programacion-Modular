@@ -22,6 +22,18 @@ struct products;
 //TODO para que le pase cantidad a Facturas.cantidad y asi poder
 //TODO pasarselo a venta_return_contabilidad.
 
+int obtener_ventas_suma()
+{
+    int sum = 0;
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    {
+        if (Facturas[i].full)
+            sum += Facturas[i].Total;
+    }
+
+    return sum;
+}
+
 void llenar_facturas(unsigned id, unsigned cantidad)
 {
     bool temp = true;
@@ -318,7 +330,6 @@ bool ventas_menu()
         break;
 
     case DELETE_ORDERS:
-
         return ventas_menu();
         break;
 

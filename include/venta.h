@@ -27,6 +27,7 @@ typedef struct IngresodeVentas
     
 } facturas;
 
+} facturas;
 
 enum options_modulo_ventas
 {
@@ -104,7 +105,7 @@ void cash_register();
  * @return true el usuario ha salido del modulo y se va al menu inicial del programa
  * @return false no se ejecutara la funcion
  */
-bool go_back();//TODO ver si esto funcionara o solo dejar el menu
+bool go_back(); //TODO ver si esto funcionara o solo dejar el menu
 
 /**
  * @brief Imprime las opciones del usuario
@@ -114,11 +115,12 @@ bool go_back();//TODO ver si esto funcionara o solo dejar el menu
  */
 bool ventas_menu();
 
-
 /**
  * @brief Imprime el encabezado del modulo ventas opcion 1
  * 
  */
 void print_factura();
+
+int obtener_ventas_suma();
 
 #endif //VENTA_H

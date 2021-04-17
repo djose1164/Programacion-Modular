@@ -64,7 +64,13 @@ bool save_product(char const *product_name, unsigned int sell_price,
 
 void report_inventory()
 {
-    __make_query__("SELECT * FROM products;");
+    if (!__make_query__("SELECT * FROM products;"))
+    {
+        fflush(stdout);
+        system("cls||clear");
+        fprintf(stderr, "\t\t\aUps! Parece que no hay ningun producto guardado.\n"
+                        "\t\tIntenta guardar uno primero!.\n");
+    }
 }
 
 bool edit_product()
@@ -248,6 +254,8 @@ bool inventory_menu()
             return inventory_menu();
 
         case _report_inventory:
+            fflush(stdout);
+            system("cls||clear");
             report_inventory();
             for (size_t i = 0;; ++i)
             {

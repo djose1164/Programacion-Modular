@@ -29,13 +29,26 @@ void registro_ventas() /* Muestra el Registro de Ventas realizadas */
     return print_factura();
 }
 
+void modificar_compras () /* Modifica el Registro de Compras existentes */
+{
+    clear_screen();
+    /* Modifica el Registro de Compras */
+}
+
+void modificar_ventas () /* Modifica el Registro de Ventas existentes */
+{
+    clear_screen();
+    /* Modifica el Registro de Ventas */
+    return edit_orders();
+}
+
 void dinero_total() /* Muestra el total del dinero */
 {
     clear_screen();
     printf("El Dinero Total Obtenido es: %d\n", obtener_ventas_suma() - obtener_suplidor_suma());
 }
 
-bool contabilidad_menu()
+bool contabilidad_menu() /* Menu de Opciones disponibles en el Modulo de Contabilidad */
 {
 
     char _temp[sizeof(short) * 2];
@@ -56,13 +69,15 @@ bool contabilidad_menu()
                "\t\t\tSeleccione la opcion que desea realizar: \n"
                "\t1) Registro de Deudas\n"
                "\t2) Registro de Ingresos\n"
-               "\t3) Dinero Total\n"
-               "\t4) Volver al Menu Principal\n");
+               "\t3) Modificacion de Registro de Compras"
+               "\t4) Modificacion de Registro de Ventas"
+               "\t5) Dinero Total\n"
+               "\t6) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);
         sscanf(_temp, "%hd", &temp);
         flag = true;
 
-    } while (temp < 0 || temp > 5);
+    } while (temp < 0 || temp > 6);
 
     switch (temp)
     {
@@ -74,6 +89,14 @@ bool contabilidad_menu()
     case REG_ING:
         registro_ventas();
         getchar();
+        break;
+
+    case MOD_DEU:
+        modificar_compras();
+        break;
+
+    case MOD_ING:
+        modificar_ventas();
         break;
 
     case DT:

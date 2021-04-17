@@ -69,8 +69,8 @@ bool contabilidad_menu() /* Menu de Opciones disponibles en el Modulo de Contabi
                "\t\t\tSeleccione la opcion que desea realizar: \n"
                "\t1) Registro de Deudas\n"
                "\t2) Registro de Ingresos\n"
-               "\t3) Modificacion de Registro de Compras"
-               "\t4) Modificacion de Registro de Ventas"
+               "\t3) Modificacion de Registro de Compras\n"
+               "\t4) Modificacion de Registro de Ventas\n"
                "\t5) Dinero Total\n"
                "\t6) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);

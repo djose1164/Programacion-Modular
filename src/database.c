@@ -398,10 +398,7 @@ void *get_column_value(const unsigned id, const unsigned __request_value)
         return NULL;
 
     if (__request_value == NAME)
-    {
-        sqlite3_finalize(res);
         return __get_name__(id);
-    }
     else if (__request_value == PRICE)
         return __get_price__(id);
     //else if (__request_value == QUANTITY)

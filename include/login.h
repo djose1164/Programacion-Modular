@@ -76,4 +76,10 @@ void system_loading(int time);
  */
 char *get_username();
 
+/**
+ * @brief Limpia la pantalla.
+ * 
+ */
+void clear_screen();
+
 #endif //LOGIN_H

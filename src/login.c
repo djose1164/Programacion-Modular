@@ -12,13 +12,16 @@
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/inventario.h"
-//#include"inventario.h"
+#include "../include/venta.h"
+#include "../include/compra.h"
 
 // Usuario actual que esta ejecutando el programa.
 static struct actual_user actual_user;
 
 // Tiempo que durara el copilador parado.
 const short time = 2;
+
+#define LONGITUD 50
 
 void set_password(char *const password)
 {
@@ -30,8 +33,18 @@ void set_password(char *const password)
 			password[i] = '\0';
 			return;
 		}
-		else
+		else if (c == 8)
+		{
+			if (i > 0)
+			{
+				printf("\b \b"); //mueve el cursor hacia la izquierda
+			}
+		}
+		else if (i < LONGITUD)
+		{
+			printf("*");
 			password[i] = c;
+		}
 	}
 }
 
@@ -82,12 +95,9 @@ int login_menu()
 		if (inventory_menu())
 			return login_menu();
 	case COMPRAS:
-	return compras_menu(); 
+		return compras_menu();
 	case VENTAS:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+		break; //return ventas_menu();
 	case CONTABILIDAD:
 		printf("\aUps! En construccion!\n"
 			   "Presione cualquier tecla para finalizar la ejecucion...");
@@ -244,4 +254,10 @@ void system_loading(int time)
 char *get_username()
 {
 	return actual_user.username;
+}
+
+void clear_screen()
+{
+	fflush(stdout);
+	system("cls||clear");
 }

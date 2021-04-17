@@ -64,7 +64,13 @@ bool save_product(char const *product_name, unsigned int sell_price,
 
 void report_inventory()
 {
-    __make_query__("SELECT * FROM products;");
+    if (!__make_query__("SELECT * FROM products;"))
+    {
+        fflush(stdout);
+        system("cls||clear");
+        fprintf(stderr, "\t\t\aUps! Parece que no hay ningun producto guardado.\n"
+                        "\t\tIntenta guardar uno primero!.\n");
+    }
 }
 
 bool edit_product()
@@ -305,6 +311,5 @@ int get_price_by_id(const unsigned id)
 char *get_name_by_id(const unsigned id)
 {
     char *str = (char *)get_column_value(id, NAME);
-    printf("Name: %s\n", str);
     return str;
 }

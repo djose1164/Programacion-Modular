@@ -27,8 +27,6 @@ typedef struct IngresodeVentas
     
 } facturas;
 
-} facturas;
-
 enum options_modulo_ventas
 {
     SELL_PRODUCTS = 1,

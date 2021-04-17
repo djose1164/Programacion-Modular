@@ -95,29 +95,20 @@ void cash_register()
     char c;
     clear_screen();
     //Quiero imprimir todos los totales de las facturas para el reporte de caja
-    printf("\t\t\t\n\aEstas en la Caja Registradora\n");
-    for (size_t i = 0; i < MAX_FACTURAS; i++)
-    {
-        if (!Facturas[i].full)
-        {
-            printf("%-20s%-20u%-20.2f\n",
-                   Facturas[i].nombre_cliente, Facturas[i].Total, Facturas[i].TotalaPagar);
+    printf("\t\t\t\aEstas en la Caja Registradora\n");
 
-            printf("Presione cualquier tecla para salir: ");
-            while ((c = getchar()) != '\n' || (c = getchar()) != '\r')
-                if (c == 'm')
-                    return;
-        }
-        else
-        {
-            printf("No se ha realizado ninguna venta el dia de hoy =( ");
-#ifdef __linux__
-            sleep(20);
-#else
-            Sleep(20);
-#endif //__linux__
-            exit(0);
-        }
+    if (Facturas[0].full)
+    {
+        printf("\t\t\aEl total generado ha sido de: %d.\n\n", obtener_ventas_suma());
+
+        printf("Presione cualquier tecla para volver al menu principal...");
+        getch();
+    }
+    else
+    {
+        printf("No se ha realizado ninguna venta el dia de hoy =( ");
+        printf("Presione cualquier tecla para salir: ");
+        getch();
     }
 }
 
@@ -129,7 +120,8 @@ void cash_register()
 void delete_orders()
 {
     char str[50];
-
+    clear_screen();
+    getchar();
     printf("Cual de estas estas facturas desea eliminar.\n");
     print_factura();
     printf("\nIngre el nombre de usario: ");
@@ -142,6 +134,8 @@ void delete_orders()
             Facturas[i].eliminado = true;
         }
     }
+
+    printf("Pedido elimando con exito!\n");
 }
 
 /**
@@ -158,16 +152,26 @@ int edit_orders()
     char _temp[sizeof(int) + sizeof(unsigned)];
     unsigned temp = 0;
 
+    getchar();
+    clear_screen();
+
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
         if (1) //ver si es admin o no, si es puede editar, sino sale error
         {
             printf("\n\aEstas ahora en el editor de pedidos\n"
                    "\nSolo podras editar las cantidades de productos a vender\n"
-                   "\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
+                   "Ingrese el id del producto: ");
+            scanf("%u", &id);
+            getchar();
+
+            printf("\n\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
             fgets(_temp, sizeof(_temp), stdin);
             sscanf(_temp, "%d", &Facturas[i].Cantidad);
-            flag = edit_availableQuantity(id, Facturas[i].Cantidad);
+
+            //flag = edit_availableQuantity(id, Facturas[i].Cantidad);
+            printf("Exito!");
+            break;
         }
         else
         {
@@ -179,6 +183,7 @@ int edit_orders()
 
     if (flag)
     {
+        clear_screen();
         printf("\t\t\aHa modificado la cantidad del producto\n\n"
                "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
                "\tpara salir.\n");
@@ -196,28 +201,6 @@ int edit_orders()
         getch();
     }
     return false;
-}
-
-/**
- * @brief Esta funcion devolvera lo que se venda para llevarlo a contabilidad
- *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio) 
- * @return int 
- */
-unsigned venta_return_contabilidad() //TODO REVISAR
-{
-    for (size_t i = 0; i < MAX_FACTURAS; i++)
-    {
-        printf("\a\n\t*************Estos son los ingresos para Contabilidad*************\n\n");
-
-        for (size_t i = 0; i < MAX_FACTURAS; i++)
-        {
-            if (Facturas[i].full)
-                printf("%-20u%-20u%-20u\n",
-                       Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].TotalaPagar);
-        }
-    }
-
-    return 0;
 }
 
 /**
@@ -246,7 +229,9 @@ void print_factura()
  */
 bool sell_products()
 {
-    char c;
+    char c[10];
+    char temp;
+    int flag = 0;
     unsigned id, cantidad;
 
     clear_screen();
@@ -262,13 +247,14 @@ bool sell_products()
     getchar();
 
     llenar_facturas(id, cantidad);
-    printf("Desea continuar\n");
-    for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
-        if (c == 's' || c == 'S')
-            return true;
-        else
-            break;
+    flag = -cantidad;
+    edit_availableQuantity(id, flag);
+    printf("Desea continuar? 's' para si, cualquier otra tecla para no.\n");
+    fgets(c, sizeof(c), stdin);
+    sscanf(c, "%c", &temp);
 
+    if (temp == 's' || temp == 'S')
+        return true;
     return false;
 }
 
@@ -281,8 +267,8 @@ bool ventas_menu()
 {
 
     char _temp[sizeof(short)];
-    short temp;
-    bool flag = false;
+    short temp = 0;
+
     int time = 1;
     /**Sistema de carga para ingresar al modulo */
     clear_screen();
@@ -291,7 +277,7 @@ bool ventas_menu()
     system_loading(time);
     do
     {
-        if (flag)
+        if (temp != 0)
             printf("Elige una opcion valida por favor\n");
         /** ******Menu de Ventas *****  */
         printf("\a\n\t\tBienvenido al Modulo Ventas\n"
@@ -304,7 +290,6 @@ bool ventas_menu()
                "\t6) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);
         sscanf(_temp, "%hd", &temp);
-        flag = true;
 
     } while (temp < 0 || temp > 6);
 
@@ -334,7 +319,7 @@ bool ventas_menu()
 
     case DELETE_ORDERS:
         delete_orders();
-        return;
+        return false;
     case CASH_REGISTER:
         cash_register();
         getchar();

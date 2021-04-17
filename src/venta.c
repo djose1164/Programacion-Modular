@@ -128,18 +128,16 @@ void cash_register()
  */
 void delete_orders()
 {
-    char c;
+    char str[50];
+
+    printf("Cual de estas estas facturas desea eliminar.\n");
+    print_factura();
+    printf("\nIngre el nombre de usario: ");
+    fgets(str, sizeof(str), stdin);
+
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
-        printf("Desea eliminar esta factura de %s");
-        print_factura();
-        scanf("%s", &c);
-        for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
-            if (c == 's' || c == 'S')
-                return;
-            else
-                break;
-        if (!Facturas[i].eliminado)
+        if (!strcmp(str, Facturas[i].nombre_cliente))
         {
             Facturas[i].eliminado = true;
         }
@@ -162,14 +160,14 @@ int edit_orders()
 
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
-        if (add_user) //ver si es admin o no, si es puede editar, sino sale error
+        if (1) //ver si es admin o no, si es puede editar, sino sale error
         {
             printf("\n\aEstas ahora en el editor de pedidos\n"
                    "\nSolo podras editar las cantidades de productos a vender\n"
                    "\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
             fgets(_temp, sizeof(_temp), stdin);
             sscanf(_temp, "%d", &Facturas[i].Cantidad);
-            flag = update(id, NULL, NULL, &Facturas[i].Cantidad);
+            flag = edit_availableQuantity(id, Facturas[i].Cantidad);
         }
         else
         {
@@ -184,7 +182,7 @@ int edit_orders()
         printf("\t\t\aHa modificado la cantidad del producto\n\n"
                "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
                "\tpara salir.\n");
-        while ((c = getchar()) != '\n')
+        while ((c = getchar()) != '\n' || (c = getchar()) != '\r')
             if (c == 'm')
                 return true;
             else
@@ -228,15 +226,14 @@ unsigned venta_return_contabilidad() //TODO REVISAR
  */
 void print_factura()
 {
-    clear_screen();
     printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
-           "%-20s%-20s%-20s%-20s%-20s\n",
-           "Nombre cliente:", "Producto:", "Cantidad:", "Precio:", "Total:");
+           "%-20s%-20s%-20s%-20s%-20s%-20s\n",
+           "Nombre cliente:", "Producto:", "Cantidad:", "Precio:", "Total:", "Total a pagar:");
 
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
         if (Facturas[i].full)
-            printf("%-20s%-20s%-20u%-20u%-20u\t%-20f\n",
+            printf("%-20s%-20s%-20u%-20u%-20u\t%-20.2f\n",
                    Facturas[i].nombre_cliente, Facturas[i].nombre_producto,
                    Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total, Facturas[i].TotalaPagar);
     }
@@ -322,7 +319,9 @@ bool ventas_menu()
             return ventas_menu();
 
     case SEE_ORDERS:
+        clear_screen();
         print_factura();
+        getchar();
         getchar();
         break;
 
@@ -334,9 +333,8 @@ bool ventas_menu()
         break;
 
     case DELETE_ORDERS:
-        return ventas_menu();
-        break;
-
+        delete_orders();
+        return;
     case CASH_REGISTER:
         cash_register();
         getchar();

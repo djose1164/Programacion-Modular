@@ -76,10 +76,32 @@ bool go_back()
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-facturas cash_register(facturas Facturas)
+void cash_register()
 {
-    printf("%d"); //Quiero imprimir todos los totales de las facturas para el reporte de caja
-    return Facturas[50];
+    char c;
+    clear_screen();
+    //Quiero imprimir todos los totales de las facturas para el reporte de caja
+    printf("\t\t\t\n\aEstas en la Caja Registradora\n");
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    {
+        if (!Facturas[i].full)
+            printf("%-20s%-20u%-20.2f\n",
+
+                   Facturas[i].nombre_cliente, Facturas[i].Total, Facturas[i].TotalaPagar);
+        else
+        {
+            printf("No se ha realizado ninguna venta el dia de hoy =( ");
+            Sleep(20);
+            exit(0);
+        }
+       else if
+        {
+            printf("Presione cualquier tecla para salir: ");
+            while ((c = getchar()) != '\n')
+                if (c == 'm')
+                    return true;
+        }
+    }
 }
 
 /**
@@ -87,9 +109,26 @@ facturas cash_register(facturas Facturas)
  * Permite editar cualquier factura, con la clave y usuario del admin
  * Introduciendo el nombre del cliente se elimina automaticamente la factura
  */
-/*void delete_orders(Facturas)
+void delete_orders()
 {
-}*/
+    char c;
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    {
+        printf("Desea eliminar esta factura de %s");
+        print_factura();
+        scanf("%s", &c);
+        for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
+            if (c == 's' || c == 'S')
+                return true;
+            else
+                break;
+        if (!Facturas[i].eliminado)
+        {
+            Facturas[i].eliminado = true;
+        }
+        return false;
+    }
+}
 
 /**
  * @brief Permite editar cualquier factura, con la clave y usuario del admin
@@ -130,7 +169,7 @@ int edit_orders()
                "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
                "\tpara salir.\n");
         while ((c = getchar()) != '\n')
-            if (c == 'i')
+            if (c == 'm')
                 return true;
             else
                 exit(0);
@@ -154,7 +193,6 @@ unsigned venta_return_contabilidad() //TODO REVISAR
 {
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
-        clear_screen();
         printf("\a\n\t*************Estos son los ingresos para Contabilidad*************\n\n");
 
         for (size_t i = 0; i < MAX_FACTURAS; i++)
@@ -182,9 +220,9 @@ void print_factura()
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
         if (Facturas[i].full)
-            printf("%-20s%-20s%-20u%-20u%-20u\n",
+            printf("%-20s%-20s%-20u%-20u%-20u\t%-20f\n",
                    Facturas[i].nombre_cliente, Facturas[i].nombre_producto,
-                   Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total);
+                   Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total, Facturas[i].TotalaPagar);
     }
 }
 
@@ -280,13 +318,13 @@ bool ventas_menu()
         break;
 
     case DELETE_ORDERS:
-    for (;venta_return_contabilidad();)
-        ;
+
         return ventas_menu();
         break;
 
     case CASH_REGISTER:
-
+        cash_register();
+        getchar();
         break;
 
     case GO_BACK_OUT_VENTAS:

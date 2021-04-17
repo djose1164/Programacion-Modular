@@ -23,6 +23,7 @@ typedef struct IngresodeVentas
     float TotalaPagar;
     bool full;
     unsigned id_producto_deseado; //guarda el id que el user ingreso
+    bool eliminado;
     
 } facturas;
 
@@ -95,7 +96,7 @@ unsigned venta_return_contabilidad();
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-void cash_register(facturas Facturas);
+void cash_register();
 
 /**
  * @brief Regresa al usuario a lo que es el menu de inicio de los modulos

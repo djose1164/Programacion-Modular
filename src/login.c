@@ -104,7 +104,7 @@ int login_menu()
 	case VENTAS:
 		return ventas_menu();
 	case CONTABILIDAD:
-		return contabilidad_menu();
+		break;//return contabilidad_menu();
 		
 	case SALIR:
 		fflush(stdout);

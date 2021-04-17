@@ -1,26 +1,18 @@
 #ifndef COMPRA_H
 #define COMPRA_H
-#include <stdbool.h>
+#include <stdlib.h>
 
-enum opciones_compras_menu
+enum opciones_compras_menu//opciones del menu
 {
     COMPRAR_PRODUCTOS = 1,
-    CREAR_PRODUCTOS,
-    ELIMINAR_EDITAR,
+    CREAR_PRODUCTOS ,
+    ELIMINAR_EDITAR ,
     HISTORIAL_DEL_PRODUCTO,
     SALIR_COMPRA
 };
 
-struct Proveedor
-{
-    unsigned id;
-    char producto_nombre[50];
-    unsigned cantidad;
-    unsigned precio;
-    bool full;
-};
-
 /**
+ * 
  * @brief estructuras de comprar producto
  * me servira para organizar la opcion de compras 
  * 
@@ -31,8 +23,11 @@ struct compra
     unsigned precio;
     unsigned cantidad;
     bool comprado;
-    bool eliminado;
 };
+
+
+//variables constantes
+const size_t MAX_COMPRAS;
 
 /*
     Compras:  Comprar productos, Crear y comprar productos, Ver compras hechas, Eliminar 
@@ -52,7 +47,7 @@ bool compras_menu();
  * @return true se ha podido compro el producto.
  * @return false no se pudo comprar el productointente otra vez.
  */
-bool comprar_productos();
+bool comprar_productos(); 
 
 /**
  * @brief esta funcion me permitira crear los productos.  
@@ -84,7 +79,7 @@ bool historial_de_produc();
  * @return true si seleciona te redirecciona al inicio del programa.
  * @return false siendo los opuesto no se podra salir de la opcion de compras.
  */
-void salir();
+bool salir();
 
 /**
  * @brief una vez que se compre algo se tiene que guardar nombre del producto ,cantidad ,precio
@@ -94,15 +89,11 @@ void salir();
  */
 bool compra_historial();
 
-void mostrar_productos_suplidor();
-
-void llenar_productos_suplidor();
-
-/**
- * @brief Devuelve el suplidor.
- * 
- * @return struct Proveedor Una copia de la struct.
- */
-int obtener_suplidor_suma();
-
 #endif //COMPRA_H
+
+
+
+
+
+
+

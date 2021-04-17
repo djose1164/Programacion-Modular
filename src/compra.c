@@ -10,6 +10,14 @@
 struct compra comprar_producto[MAX_COMPRAS];
 struct Proveedor suplir_producto[MAX_COMPRAS];
 
+bool compra_historial()
+{
+    printf("Historial de compras");
+    
+    getchar();
+}
+
+
 int obtener_suplidor_suma()
 {
     int sum = 0;
@@ -18,14 +26,13 @@ int obtener_suplidor_suma()
         if (suplir_producto[i].full)
             sum += suplir_producto[i].precio;
     }
-
     return sum;
 }
 
 void mostrar_productos_suplidor()
 {
     clear_screen();
-    printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
+    printf("\t*************Bienvenido a Colmado Hackeando la NASA (Compras) *************\n\n"
            "%-20s%-20s%-20s%-20s\n",
            "ID:", "Producto:", "Cantidad:", "Precio:");
 
@@ -187,12 +194,12 @@ bool compras_menu()
         break;
 
     case HISTORIAL_DEL_PRODUCTO:
-        //  historial_de_produc();
+        compra_historial();
+        getchar();
         break;
 
     case SALIR_COMPRA:
-        //  salir();
-        return false;
+        return login_menu();
     default:
         fprintf(stderr, "Has introducido una funcion incorrecta!"
                         "Si crees que es un error mande un issue detallando"

@@ -1,18 +1,15 @@
-/**
- * @file main.c
- * @author @djose1164, @Engeers, @milv24, @robert1090
- * @brief Ejecucion del programa.
- * 
- * Mas detalles aca
- * 
- * Para iniciar seccion como root deberas pasar la contraseña: 1234, por la terminal
- * cuando vayas a ejucutar el programa. Ej: En Linux ./main 1234.
- * @version 0.1
- * @date 2021-04-01
- * 
- * @copyright Copyright (c) 2021
- * 
- */
+/************************************************************/
+/*           Programacion para mecatronicos                 */
+/*  Nombres y matriculas: 									*/
+/*     	Jose S. Daniel - 2020-10646							*/
+/*     	Milvia Victorio - 2020-9598							*/
+/*     	Engeers O.Rossis - 2020-10573 						*/
+/*     	Robeert Avila - 2019-8215							*/
+/*  Seccion: Miercoles                                      */
+/*  Practica: Programacion modular.                         */
+/*  Fecha: 17/4/2021                                        */
+/************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -27,7 +24,7 @@ int main(int argc, char *const argv[])
 #ifdef __linux__
 	printf("\033[100m"
 		   "\033[34m"); // Cambia el color de la letra en linux.
-						 // Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
+						// Para mas info: https://opensource.com/article/19/9/linux-terminal-colors
 #else
 	system("color 8B"); //cambia el color, el numero cambia el fondo
 						// y la letra cambia el color de letra

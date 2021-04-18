@@ -12,8 +12,17 @@ struct Proveedor suplir_producto[MAX_COMPRAS];
 
 bool compra_historial()
 {
-    printf("Historial de compras");
-    
+    clear_screen();
+    printf("\t*************Historial de producto*************\n\n"
+           "%-20s%-20s%-20s\n",
+           "Producto:", "Cantidad:", "Precio:");
+    for (size_t i = 0; i < MAX_COMPRAS; i++)
+    {
+        printf("%-20s%-20u%-20u\n",
+               suplir_producto[i].producto_nombre, suplir_producto[i].precio,
+               suplir_producto[i].cantidad);
+    }
+    printf("preiona cualquier tecla para salir");
     getchar();
 }
 
@@ -203,7 +212,7 @@ bool compras_menu()
 
     case HISTORIAL_DEL_PRODUCTO:
         compra_historial();
-        getchar();
+        return compras_menu();
         break;
 
     case SALIR_COMPRA:

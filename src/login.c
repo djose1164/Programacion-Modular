@@ -11,9 +11,9 @@
 #endif //__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
+#include "../include/compra.h"
 #include "../include/inventario.h"
 #include "../include/contabilidad.h"
-#include "../include/compra.h"
 //#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
@@ -100,12 +100,12 @@ int login_menu()
 		if (inventory_menu())
 			return login_menu();
 	case COMPRAS:
-		return compras_menu();
+			return compras_menu();
 	case VENTAS:
 		break; //return ventas_menu();
 	case CONTABILIDAD:
 		return contabilidad_menu();
-
+		
 	case SALIR:
 		fflush(stdout);
 		system("cls||clear");

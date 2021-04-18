@@ -126,7 +126,7 @@ bool compar_productos()
     char temp[sizeof(unsigned) * 2];
     unsigned id;
 
-    mostrar_productos_suplidor();
+    report_inventory();
     putchar('\n');
     getchar();
     printf("Ingrese el id del producto que desea comprar: ");
@@ -204,6 +204,8 @@ bool compras_menu()
     {
     case COMPRAR_PRODUCTOS:
         compar_productos();
+        getchar();
+        getchar();
         break;
 
     case CREAR_PRODUCTOS:

@@ -21,6 +21,18 @@ void registro_compras ();
 void registro_ventas ();
 
 /**
+ * @brief Esta funcion se encargara de modificar el registro de compras
+ * 
+ */
+void modificar_compras ();
+
+/**
+ * @brief Esta funcion se encargara de modificar el registro de ventas
+ * 
+ */
+void modificar_ventas ();
+
+/**
  * @brief Esta funcion se encargara de llevar el total de dinero que posee
  * la tienda en base a las compras y ventas realizadas
  * 
@@ -39,6 +51,8 @@ enum Opciones_Contabilidad_Menu{
 
     REG_DEU = 1,
     REG_ING,
+    MOD_DEU,
+    MOD_ING,
     DT,
     BACK_MENU
 

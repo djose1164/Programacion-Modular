@@ -62,21 +62,6 @@ bool comprar_productos();
  */
 bool crear_productos();
 
-/**
- * @brief esta funcion me permitira editar y eliminar los prductos.
- * 
- * @return true si el producto se ha podido editar.
- * @return false si el producto no se pudo editar. 
- */
-bool editar();
-
-/**
- * @brief Esta funcion sirve para eliminar las opciones guardadas 
- * 
- * @return true la funcion opcion no funciono
- * @return false la opcion no fue eliminada
- */
-bool eliminar();
 
 /**
  * @brief que vueelve a la interfaz inicial del programa.
@@ -94,9 +79,9 @@ void salir();
  */
 bool compra_historial();
 
-void mostrar_productos_suplidor();
+void mostrar_productos_suplidor();//me servira para ver los productos del la funcion.
 
-void llenar_productos_suplidor();
+void llenar_productos_suplidor();//esta de aca me servira para llenar el lugar con nombre etc...de producto. 
 
 /**
  * @brief Devuelve el suplidor.
@@ -105,6 +90,6 @@ void llenar_productos_suplidor();
  */
 int obtener_suplidor_suma();
 
-void inicia_producto();
+void inicia_producto();//inicializacion
 
 #endif //COMPRA_H

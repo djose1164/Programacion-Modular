@@ -134,7 +134,7 @@ void delete_orders()
             Facturas[i].eliminado = true;
         }
     }
-
+    clear_screen();
     printf("Pedido elimando con exito!\n");
 }
 

@@ -11,9 +11,9 @@
 #endif //__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
+#include "../include/compra.h"
 #include "../include/inventario.h"
 #include "../include/contabilidad.h"
-#include "../include/compra.h"
 //#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
@@ -35,7 +35,6 @@ void set_password(char *const password)
 			return;
 		}
 		else if (c == 8)
-<<<<<<< HEAD
 		{
 			if (i > 0)
 			{
@@ -48,22 +47,6 @@ void set_password(char *const password)
 			password[i] = c;
 		}
 	}
-=======
-            {
-                if (i > 0)
-                {
-                    printf("\b \b"); //mueve el cursor hacia la izquierda
-                }
-            }
-            else if (i < LONGITUD)
-                        
-                {
-                    printf("*");
-                    password[i] = c;
-                   
-                }
-    }
->>>>>>> 2c28b8c278ed7d7e3d5556d32bc6fe5621edc038
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-
@@ -113,12 +96,12 @@ int login_menu()
 		if (inventory_menu())
 			return login_menu();
 	case COMPRAS:
-		return compras_menu();
+			return compras_menu();
 	case VENTAS:
 		break; //return ventas_menu();
 	case CONTABILIDAD:
 		return contabilidad_menu();
-
+		
 	case SALIR:
 		fflush(stdout);
 		system("cls||clear");

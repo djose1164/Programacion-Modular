@@ -1,10 +1,10 @@
 /************************************************************/
 /*           Programacion para mecatronicos                 */
-/*  Nombres y matriculas: 									*/
-/*     	Jose S. Daniel - 2020-10646							*/
-/*     	Milvia Victorio - 2020-9598							*/
-/*     	Engeers O.Rossis - 2020-10573 						*/
-/*     	Robeert Avila - 2019-8215							*/
+/*  Nombres y matriculas: 								    */
+/*     	Jose S. Daniel - 2020-10646						    */
+/*     	Milvia Victorio - 2020-9598						    */
+/*     	Engeers O.Rossis - 2020-10573 					    */
+/*     	Robeert Avila - 2019-8215						    */
 /*  Seccion: Miercoles                                      */
 /*  Practica: Programacion modular.                         */
 /*  Fecha: 17/4/2021                                        */

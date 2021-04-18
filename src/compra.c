@@ -213,7 +213,7 @@ bool compras_menu()
         return compras_menu();
 
     case ELIMINAR_EDITAR:
-        //editar();
+        edit_product();
         break;
 
     case HISTORIAL_DEL_PRODUCTO:

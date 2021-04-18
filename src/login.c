@@ -13,7 +13,7 @@
 #include "../include/login.h"
 #include "../include/compra.h"
 #include "../include/inventario.h"
-#include "../include/contabilidad.h"
+#include "../include/venta.h"
 //#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
@@ -22,7 +22,8 @@ static struct actual_user actual_user;
 // Tiempo que durara el copilador parado.
 const short time = 2;
 
-#define LONGITUD 50
+#define LONGITUD 50 
+
 
 void set_password(char *const password)
 {
@@ -35,7 +36,6 @@ void set_password(char *const password)
 			return;
 		}
 		else if (c == 8)
-
             {
                 if (i > 0)
                 {
@@ -50,7 +50,6 @@ void set_password(char *const password)
                    
                 }
     }
-
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-
@@ -102,9 +101,10 @@ int login_menu()
 	case COMPRAS:
 			return compras_menu();
 	case VENTAS:
-		break; //return ventas_menu();
+		return ventas_menu();
+
 	case CONTABILIDAD:
-		return contabilidad_menu();
+		break;//return contabilidad_menu();
 		
 	case SALIR:
 		fflush(stdout);

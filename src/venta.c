@@ -9,8 +9,10 @@
 
 #if defined(__WIN32) //Windows detectado
 #include <windows.h>
+#include <conio.h>
 #elif defined(__linux__) //Linux detectado
 #include <unistd.h>
+#include "../include/getch.h"
 #endif
 #define MAX_FACTURAS 100
 #define MAX_LETTERS 50
@@ -88,20 +90,53 @@ bool go_back()
  * @brief Da el total de todas las facturas/ventas realizadas al momento
  * 
  */
-/*facturas cash_register(facturas Facturas)
+void cash_register()
 {
-    printf("%d"); //Quiero imprimir todos los totales de las facturas para el reporte de caja
-    return Facturas[50];
-}*/
+    char c;
+    clear_screen();
+    //Quiero imprimir todos los totales de las facturas para el reporte de caja
+    printf("\t\t\t\aEstas en la Caja Registradora\n");
+
+    if (Facturas[0].full)
+    {
+        printf("\t\t\aEl total generado ha sido de: %d.\n\n", obtener_ventas_suma());
+
+        printf("Presione cualquier tecla para volver al menu principal...");
+        getch();
+    }
+    else
+    {
+        printf("No se ha realizado ninguna venta el dia de hoy =( ");
+        printf("Presione cualquier tecla para salir: ");
+        getch();
+    }
+}
 
 /**
  * @brief Esta funcion eliminara totalmente las ventas hechas 
  * Permite editar cualquier factura, con la clave y usuario del admin
  * Introduciendo el nombre del cliente se elimina automaticamente la factura
  */
-/*void delete_orders(Facturas)
+void delete_orders()
 {
-}*/
+    char str[50];
+    clear_screen();
+    getchar();
+    printf("Cual de estas estas facturas desea eliminar.\n");
+    print_factura();
+    printf("\nIngre el nombre de usario: ");
+    fgets(str, sizeof(str), stdin);
+
+    for (size_t i = 0; i < MAX_FACTURAS; i++)
+    {
+        if (!strcmp(str, Facturas[i].nombre_cliente))
+        {
+            Facturas[i].eliminado = true;
+        }
+    }
+
+    printf("Pedido elimando con exito!\n");
+}
 
 /**
  * @brief Permite editar cualquier factura, con la clave y usuario del admin
@@ -116,17 +151,31 @@ int edit_orders()
     bool flag;
     char _temp[sizeof(int) + sizeof(unsigned)];
     unsigned temp = 0;
+    int cantidad;
+
+    getchar();
+    clear_screen();
 
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
-        if (add_user) //ver si es admin o no, si es puede editar, sino sale error
+        if (1) //ver si es admin o no, si es puede editar, sino sale error
         {
             printf("\n\aEstas ahora en el editor de pedidos\n"
                    "\nSolo podras editar las cantidades de productos a vender\n"
-                   "\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
+                   "Ingrese el id del producto: ");
+            scanf("%u", &id);
+            getchar();
+
+            printf("\n\t\aIngrese la cantidad (positivo para suma, negativo para resta):");
             fgets(_temp, sizeof(_temp), stdin);
             sscanf(_temp, "%d", &Facturas[i].Cantidad);
-            flag = update(id, NULL, NULL, &Facturas[i].Cantidad);
+
+            
+            cantidad = Facturas[i].Cantidad;
+            cantidad *= -1; 
+            flag = edit_availableQuantity(id, cantidad);
+            printf("Exito!");
+            break;
         }
         else
         {
@@ -138,11 +187,12 @@ int edit_orders()
 
     if (flag)
     {
+        clear_screen();
         printf("\t\t\aHa modificado la cantidad del producto\n\n"
-               "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
+               "\tPresiona 'm' para volver al menu anterior o  cualquier otra tecla "
                "\tpara salir.\n");
-        while ((c = getchar()) != '\n')
-            if (c == 'i')
+        while ((c = getchar()) != '\n' || (c = getchar()) != '\r')
+            if (c == 'm')
                 return true;
             else
                 exit(0);
@@ -151,33 +201,10 @@ int edit_orders()
     {
         printf("\a\tEl producto que has intentado modificar no existe.\n"
                "\tVerifica que hayas ingresado un id existente.\n"
-               "Presione cualquier tecla para volver a menu Inventario...");
-        getchar();
+               "Presione cualquier tecla para volver a menu Ventas...");
+        getch();
     }
     return false;
-}
-
-/**
- * @brief Esta funcion devolvera lo que se venda para llevarlo a contabilidad
- *  es decir, le dara una copia de las ventas a contabilidad (cantidad/precio) 
- * @return int 
- */
-unsigned venta_return_contabilidad() //TODO REVISAR
-{
-    for (size_t i = 0; i < MAX_FACTURAS; i++)
-    {
-        clear_screen();
-        printf("\a\n\t*************Estos son los ingresos para Contabilidad*************\n\n");
-
-        for (size_t i = 0; i < MAX_FACTURAS; i++)
-        {
-            if (Facturas[i].full)
-                printf("%-20u%-20u%-20u\n",
-                       Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].TotalaPagar);
-        }
-    }
-
-    return 0;
 }
 
 /**
@@ -186,17 +213,16 @@ unsigned venta_return_contabilidad() //TODO REVISAR
  */
 void print_factura()
 {
-    clear_screen();
     printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
-           "%-20s%-20s%-20s%-20s%-20s\n",
-           "Nombre cliente:", "Producto:", "Cantidad:", "Precio:", "Total:");
+           "%-20s%-20s%-20s%-20s%-20s%-20s\n",
+           "Nombre cliente:", "Producto:", "Cantidad:", "Precio:", "Total:", "Total a pagar:");
 
     for (size_t i = 0; i < MAX_FACTURAS; i++)
     {
         if (Facturas[i].full)
-            printf("%-20s%-20s%-20u%-20u%-20u\n",
+            printf("%-20s%-20s%-20u%-20u%-20u\t%-20.2f\n",
                    Facturas[i].nombre_cliente, Facturas[i].nombre_producto,
-                   Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total);
+                   Facturas[i].Cantidad, Facturas[i].Precio, Facturas[i].Total, Facturas[i].TotalaPagar);
     }
 }
 
@@ -207,7 +233,9 @@ void print_factura()
  */
 bool sell_products()
 {
-    char c;
+    char c[10];
+    char temp;
+    int flag = 0;
     unsigned id, cantidad;
 
     clear_screen();
@@ -223,14 +251,18 @@ bool sell_products()
     getchar();
 
     llenar_facturas(id, cantidad);
-    printf("Desea continuar\n");
-    for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
-        if (c == 's' || c == 'S')
-            return true;
-        else
-            break;
+    flag = -cantidad;
+    edit_availableQuantity(id, flag);
+    printf("Desea continuar? 's' para si, cualquier otra tecla para no.\n");
+    fgets(c, sizeof(c), stdin);
+    sscanf(c, "%c", &temp);
 
+    if (temp == 's' || temp == 'S')
+        return true;
+    else 
+    ventas_menu();
     return false;
+
 }
 
 /**
@@ -242,8 +274,8 @@ bool ventas_menu()
 {
 
     char _temp[sizeof(short)];
-    short temp;
-    bool flag = false;
+    short temp = 0;
+
     int time = 1;
     /**Sistema de carga para ingresar al modulo */
     clear_screen();
@@ -252,7 +284,7 @@ bool ventas_menu()
     system_loading(time);
     do
     {
-        if (flag)
+        if (temp != 0)
             printf("Elige una opcion valida por favor\n");
         /** ******Menu de Ventas *****  */
         printf("\a\n\t\tBienvenido al Modulo Ventas\n"
@@ -265,7 +297,6 @@ bool ventas_menu()
                "\t6) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);
         sscanf(_temp, "%hd", &temp);
-        flag = true;
 
     } while (temp < 0 || temp > 6);
 
@@ -277,11 +308,15 @@ bool ventas_menu()
         if (sell_products())
             return sell_products();
         else
-            return ventas_menu();
+         ventas_menu();
+         getchar();
 
     case SEE_ORDERS:
+        clear_screen();
         print_factura();
         getchar();
+        getchar();
+        ventas_menu();
         break;
 
     case EDIT_ORDERS:
@@ -292,13 +327,11 @@ bool ventas_menu()
         break;
 
     case DELETE_ORDERS:
-        for (; venta_return_contabilidad();)
-            ;
-        return ventas_menu();
-        break;
-
+        delete_orders();
+        return false;
     case CASH_REGISTER:
-
+        cash_register();
+        getchar();
         break;
 
     case GO_BACK_OUT_VENTAS:

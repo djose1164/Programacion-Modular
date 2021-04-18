@@ -10,6 +10,23 @@
 struct compra comprar_producto[MAX_COMPRAS];
 struct Proveedor suplir_producto[MAX_COMPRAS];
 
+bool compra_historial()
+{
+    clear_screen();
+    printf("\t*************Historial de producto*************\n\n"
+           "%-20s%-20s%-20s\n",
+           "Producto:", "Cantidad:", "Precio:");
+    for (size_t i = 0; i < MAX_COMPRAS; i++)
+    {
+        printf("%-20s%-20u%-20u\n",
+               suplir_producto[i].producto_nombre, suplir_producto[i].precio,
+               suplir_producto[i].cantidad);
+    }
+    printf("preiona cualquier tecla para salir");
+    getchar();
+    getchar();
+}
+
 int obtener_suplidor_suma()
 {
     int sum = 0;
@@ -18,69 +35,82 @@ int obtener_suplidor_suma()
         if (suplir_producto[i].full)
             sum += suplir_producto[i].precio;
     }
-
     return sum;
 }
 
 void mostrar_productos_suplidor()
 {
     clear_screen();
-    printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
+    printf("\t*************Bienvenido a Colmado Hackeando la NASA (Compras) *************\n\n"
            "%-20s%-20s%-20s%-20s\n",
            "ID:", "Producto:", "Cantidad:", "Precio:");
 
     for (size_t i = 0; i < MAX_COMPRAS; i++)
     {
-        if (suplir_producto[i].full)
-            printf("%-20u%-20s%-20u%-20u\n",
-                   suplir_producto[i].id, suplir_producto[i].producto_nombre, suplir_producto[i].precio,
-                   suplir_producto[i].cantidad);
+        printf("%-20u%-20s%-20u%-20u\n",
+               suplir_producto[i].id, suplir_producto[i].producto_nombre, suplir_producto[i].precio,
+               suplir_producto[i].cantidad);
     }
+
+    printf("En imprimir para compras");
+    getchar();
 }
 
 bool crear_productos()
 {
+#ifndef INIT
+#define INIT
+    inicia_producto();
+#endif //INIT
+
     bool _temp = true;
     char nombre[50];
     char temp[sizeof(unsigned) * 2];
     unsigned cantidad, precio;
     char c;
-    clear_screen();
 
     getchar();
-    for (size_t i = 0; i < MAX_COMPRAS && temp; i++)
+
+    clear_screen();
+    printf("Nombre del producto: ");
+    fgets(nombre, sizeof(nombre), stdin);
+    nombre[strcspn(nombre, "\n")] = 0;
+
+    printf("Precio del producto: ");
+    fgets(temp, sizeof(temp), stdin);
+    sscanf(temp, "%u", &precio);
+
+    printf("Cantidad del producto: ");
+    fgets(temp, sizeof(temp), stdin);
+    sscanf(temp, "%u", &cantidad);
+
+    for (size_t i = 0; i < MAX_COMPRAS && _temp; i++)
     {
-        printf("Nombre del producto: ");
-        fgets(nombre, sizeof(nombre), stdin);
-
-        printf("Precio del producto: ");
-        fgets(temp, sizeof(temp), stdin);
-        sscanf(temp, "%u", &precio);
-
-        printf("Cantidad del producto: ");
-        fgets(temp, sizeof(temp), stdin);
-        sscanf(temp, "%u", &cantidad);
-
         if (!suplir_producto[i].full)
         {
             suplir_producto[i].full = true;
-            suplir_producto[i].id = i;
+            suplir_producto[i].id = i + 1;
             strcpy(suplir_producto->producto_nombre, nombre);
             suplir_producto[i].precio = precio;
             suplir_producto[i].cantidad = cantidad;
 
+            if (!save_product(suplir_producto[i].producto_nombre,
+                              suplir_producto[i].precio, suplir_producto[i].cantidad))
+                fprintf(stderr, "Bobo dectetado.\n");
+
             _temp = false;
         }
-
-        clear_screen();
-        printf("Deseas crear algun otro producto?\n"
-               "Para si 's'; cualquier otro tecla para no...");
-        for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
-            if (c == 's' || c == 'S')
-                return crear_productos();
-            else
-                return false;
     }
+
+    clear_screen();
+    printf("Deseas crear algun otro producto?\n"
+           "Para si 's'; cualquier otro tecla para no...\n%d",
+           suplir_producto[0].full);
+    for (; (c = getchar()) != '\n' || (c = getchar()) != '\r';)
+        if (c == 's' || c == 'S')
+            return crear_productos();
+        else
+            return false;
 
     return false;
 }
@@ -98,7 +128,7 @@ bool compar_productos()
 
     mostrar_productos_suplidor();
     putchar('\n');
-
+    getchar();
     printf("Ingrese el id del producto que desea comprar: ");
     fgets(temp, sizeof(temp), stdin);
     sscanf(temp, "%u", &id);
@@ -146,7 +176,7 @@ bool compras_menu()
     char _temp[sizeof(short)];
     short temp;
     bool flag = false;
-    int time = 2;
+    int time = 1;
 
     /** el sistema de carga del modulo compras*/
     clear_screen();
@@ -177,22 +207,24 @@ bool compras_menu()
         break;
 
     case CREAR_PRODUCTOS:
-        crear_productos();
+        (void)crear_productos();
         printf("Afuera de crear producto\n");
         getchar();
-        break;
+        return compras_menu();
 
     case ELIMINAR_EDITAR:
-        //editar();
+        edit_product();
         break;
 
     case HISTORIAL_DEL_PRODUCTO:
-        //  historial_de_produc();
+        clear_screen();
+        report_inventory();
+        getchar();
+        getchar();
         break;
 
     case SALIR_COMPRA:
-        //  salir();
-        return false;
+        return login_menu();
     default:
         fprintf(stderr, "Has introducido una funcion incorrecta!"
                         "Si crees que es un error mande un issue detallando"

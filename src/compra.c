@@ -24,6 +24,7 @@ bool compra_historial()
     }
     printf("preiona cualquier tecla para salir");
     getchar();
+    getchar();
 }
 
 
@@ -138,6 +139,7 @@ bool compar_productos()
                     comprar_producto[i].comprado = true;
                     strcpy(comprar_producto[i].nombre,
                            suplir_producto[j].producto_nombre);
+                           comprar_producto[i].nombre[strcspn(comprar_producto[i].nombre,"\n")] = 0;
                     comprar_producto[i].precio = suplir_producto[j].precio;
                     comprar_producto[i].cantidad = suplir_producto[j].cantidad;
 
@@ -204,7 +206,7 @@ bool compras_menu()
         (void)crear_productos();
         printf("Afuera de crear producto\n");
         getchar();
-        break;
+        return compras_menu();
 
     case ELIMINAR_EDITAR:
         //editar();
@@ -212,7 +214,6 @@ bool compras_menu()
 
     case HISTORIAL_DEL_PRODUCTO:
         compra_historial();
-        return compras_menu();
         break;
 
     case SALIR_COMPRA:

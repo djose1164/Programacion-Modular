@@ -35,18 +35,22 @@ void set_password(char *const password)
 			return;
 		}
 		else if (c == 8)
-		{
-			if (i > 0)
-			{
-				printf("\b \b"); //mueve el cursor hacia la izquierda
-			}
-		}
-		else if (i < LONGITUD)
-		{
-			printf("*");
-			password[i] = c;
-		}
-	}
+
+            {
+                if (i > 0)
+                {
+                    printf("\b \b"); //mueve el cursor hacia la izquierda
+                }
+            }
+            else if (i < LONGITUD)
+                        
+                {
+                    printf("*");
+                    password[i] = c;
+                   
+                }
+    }
+
 }
 
 // *-*-*-*-*-*-*-*-*-*-*-*- Login para el Menu *-*-*-*-*-*-*-*-*-*-*-*-

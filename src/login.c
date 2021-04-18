@@ -12,6 +12,7 @@
 #include "../include/database.h"
 #include "../include/login.h"
 #include "../include/compra.h"
+#include "../include/contabilidad.h"
 #include "../include/inventario.h"
 #include "../include/venta.h"
 //#include"inventario.h"
@@ -104,7 +105,7 @@ int login_menu()
 		return ventas_menu();
 
 	case CONTABILIDAD:
-		break;//return contabilidad_menu();
+		return contabilidad_menu();
 		
 	case SALIR:
 		fflush(stdout);

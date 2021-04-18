@@ -10,6 +10,23 @@
 struct compra comprar_producto[MAX_COMPRAS];
 struct Proveedor suplir_producto[MAX_COMPRAS];
 
+bool compra_historial()
+{
+    clear_screen();
+    printf("\t*************Historial de producto*************\n\n"
+           "%-20s%-20s%-20s\n",
+           "Producto:", "Cantidad:", "Precio:");
+    for (size_t i = 0; i < MAX_COMPRAS; i++)
+    {
+        printf("%-20s%-20u%-20u\n",
+               suplir_producto[i].producto_nombre, suplir_producto[i].precio,
+               suplir_producto[i].cantidad);
+    }
+    printf("preiona cualquier tecla para salir");
+    getchar();
+    getchar();
+}
+
 int obtener_suplidor_suma()
 {
     int sum = 0;
@@ -18,14 +35,13 @@ int obtener_suplidor_suma()
         if (suplir_producto[i].full)
             sum += suplir_producto[i].precio;
     }
-
     return sum;
 }
 
 void mostrar_productos_suplidor()
 {
     clear_screen();
-    printf("\t*************Bienvenido a Colmado Hackeando la NASA (VENTAS) *************\n\n"
+    printf("\t*************Bienvenido a Colmado Hackeando la NASA (Compras) *************\n\n"
            "%-20s%-20s%-20s%-20s\n",
            "ID:", "Producto:", "Cantidad:", "Precio:");
 
@@ -58,6 +74,7 @@ bool crear_productos()
     clear_screen();
     printf("Nombre del producto: ");
     fgets(nombre, sizeof(nombre), stdin);
+    nombre[strcspn(nombre, "\n")] = 0;
 
     printf("Precio del producto: ");
     fgets(temp, sizeof(temp), stdin);
@@ -76,6 +93,11 @@ bool crear_productos()
             strcpy(suplir_producto->producto_nombre, nombre);
             suplir_producto[i].precio = precio;
             suplir_producto[i].cantidad = cantidad;
+
+            if (!save_product(suplir_producto[i].producto_nombre,
+                              suplir_producto[i].precio, suplir_producto[i].cantidad))
+                fprintf(stderr, "Bobo dectetado.\n");
+
             _temp = false;
         }
     }
@@ -188,19 +210,21 @@ bool compras_menu()
         (void)crear_productos();
         printf("Afuera de crear producto\n");
         getchar();
-        break;
+        return compras_menu();
 
     case ELIMINAR_EDITAR:
-        //editar();
+        edit_product();
         break;
 
     case HISTORIAL_DEL_PRODUCTO:
-        //  historial_de_produc();
+        clear_screen();
+        report_inventory();
+        getchar();
+        getchar();
         break;
 
     case SALIR_COMPRA:
-        //  salir();
-        return false;
+        return login_menu();
     default:
         fprintf(stderr, "Has introducido una funcion incorrecta!"
                         "Si crees que es un error mande un issue detallando"

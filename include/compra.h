@@ -71,12 +71,12 @@ bool crear_productos();
 bool editar();
 
 /**
- * @brief Aqui podre ver las busquedas realizadas.
+ * @brief Esta funcion sirve para eliminar las opciones guardadas 
  * 
- * @return true si se pudo se mostrara.
- * @return false de lo contrario no se mostrara.
+ * @return true la funcion opcion no funciono
+ * @return false la opcion no fue eliminada
  */
-bool historial_de_produc();
+bool eliminar();
 
 /**
  * @brief que vueelve a la interfaz inicial del programa.

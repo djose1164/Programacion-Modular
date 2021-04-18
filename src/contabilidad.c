@@ -19,6 +19,7 @@ void registro_compras() /* Muestra el Registro de Compras realizadas */
     /* Muestra el Registro Compras */
     printf("Resgistro de Contabilidad de Compras: \n");
     return report_inventory();
+    printf("\nPresione nuevamente para volver al menu");
 }
 
 void registro_ventas() /* Muestra el Registro de Ventas realizadas */
@@ -27,12 +28,14 @@ void registro_ventas() /* Muestra el Registro de Ventas realizadas */
     /* Muestra el Registro de Ventas */
     printf("Resgistro de Contabilidad de Ventas: \n");
     return print_factura();
+    printf("\nPresione nuevamente para volver al menu");
 }
 
 void modificar_compras () /* Modifica el Registro de Compras existentes */
 {
     clear_screen();
     /* Modifica el Registro de Compras */
+    return editar();
 }
 
 void modificar_ventas () /* Modifica el Registro de Ventas existentes */
@@ -46,6 +49,7 @@ void dinero_total() /* Muestra el total del dinero */
 {
     clear_screen();
     printf("El Dinero Total Obtenido es: %d\n", obtener_ventas_suma() - obtener_suplidor_suma());
+    printf("\nPresione nuevamente para volver al menu");
 }
 
 bool contabilidad_menu() /* Menu de Opciones disponibles en el Modulo de Contabilidad */

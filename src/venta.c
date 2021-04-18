@@ -169,7 +169,8 @@ int edit_orders()
             fgets(_temp, sizeof(_temp), stdin);
             sscanf(_temp, "%d", &Facturas[i].Cantidad);
 
-            //flag = edit_availableQuantity(id, Facturas[i].Cantidad);
+            Facturas[i].Cantidad *= -1;
+            flag = edit_availableQuantity(id, Facturas[i].Cantidad);
             printf("Exito!");
             break;
         }
@@ -255,7 +256,10 @@ bool sell_products()
 
     if (temp == 's' || temp == 'S')
         return true;
+    else 
+    ventas_menu();
     return false;
+
 }
 
 /**
@@ -301,13 +305,15 @@ bool ventas_menu()
         if (sell_products())
             return sell_products();
         else
-            return ventas_menu();
+         ventas_menu();
+         getchar();
 
     case SEE_ORDERS:
         clear_screen();
         print_factura();
         getchar();
         getchar();
+        ventas_menu();
         break;
 
     case EDIT_ORDERS:

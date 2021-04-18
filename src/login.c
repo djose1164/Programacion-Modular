@@ -11,6 +11,7 @@
 #endif //__WIN32
 #include "../include/database.h"
 #include "../include/login.h"
+#include "../include/compra.h"
 #include "../include/inventario.h"
 #include "../include/venta.h"
 //#include"inventario.h"
@@ -22,6 +23,7 @@ static struct actual_user actual_user;
 const short time = 2;
 
 #define LONGITUD 50 
+
 
 void set_password(char *const password)
 {
@@ -97,12 +99,10 @@ int login_menu()
 		if (inventory_menu())
 			return login_menu();
 	case COMPRAS:
-		printf("\aUps! En construccion!\n"
-			   "Presione cualquier tecla para finalizar la ejecucion...");
-		getch();
-		break;
+			return compras_menu();
 	case VENTAS:
 		return ventas_menu();
+
 	case CONTABILIDAD:
 		break;//return contabilidad_menu();
 		

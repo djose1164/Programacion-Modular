@@ -19,6 +19,7 @@ void registro_compras() /* Muestra el Registro de Compras realizadas */
     /* Muestra el Registro Compras */
     printf("Resgistro de Contabilidad de Compras: \n");
     return report_inventory();
+    printf("\nPresione nuevamente para volver al menu");
 }
 
 void registro_ventas() /* Muestra el Registro de Ventas realizadas */
@@ -27,15 +28,31 @@ void registro_ventas() /* Muestra el Registro de Ventas realizadas */
     /* Muestra el Registro de Ventas */
     printf("Resgistro de Contabilidad de Ventas: \n");
     return print_factura();
+    printf("\nPresione nuevamente para volver al menu");
+}
+
+void modificar_compras () /* Modifica el Registro de Compras existentes */
+{
+    clear_screen();
+    /* Modifica el Registro de Compras */
+    return edit_product();
+}
+
+void modificar_ventas () /* Modifica el Registro de Ventas existentes */
+{
+    clear_screen();
+    /* Modifica el Registro de Ventas */
+    return edit_orders();
 }
 
 void dinero_total() /* Muestra el total del dinero */
 {
     clear_screen();
     printf("El Dinero Total Obtenido es: %d\n", obtener_ventas_suma() - obtener_suplidor_suma());
+    printf("\nPresione nuevamente para volver al menu");
 }
 
-bool contabilidad_menu()
+bool contabilidad_menu() /* Menu de Opciones disponibles en el Modulo de Contabilidad */
 {
 
     char _temp[sizeof(short) * 2];
@@ -56,29 +73,46 @@ bool contabilidad_menu()
                "\t\t\tSeleccione la opcion que desea realizar: \n"
                "\t1) Registro de Deudas\n"
                "\t2) Registro de Ingresos\n"
-               "\t3) Dinero Total\n"
-               "\t4) Volver al Menu Principal\n");
+               "\t3) Modificacion de Registro de Compras\n"
+               "\t4) Modificacion de Registro de Ventas\n"
+               "\t5) Dinero Total\n"
+               "\t6) Volver al Menu Principal\n");
         fgets(_temp, sizeof(_temp), stdin);
         sscanf(_temp, "%hd", &temp);
         flag = true;
 
-    } while (temp < 0 || temp > 5);
+    } while (temp < 0 || temp > 6);
 
     switch (temp)
     {
     case REG_DEU:
         registro_compras();
         getchar();
+        return contabilidad_menu();
         break;
 
     case REG_ING:
         registro_ventas();
         getchar();
+        return contabilidad_menu();
+        break;
+
+    case MOD_DEU:
+        modificar_compras();
+        getchar();
+        return contabilidad_menu();
+        break;
+
+    case MOD_ING:
+        modificar_ventas();
+        getchar();
+        return contabilidad_menu();
         break;
 
     case DT:
         dinero_total();
         getchar();
+        return contabilidad_menu();
         break;
 
     case BACK_MENU:

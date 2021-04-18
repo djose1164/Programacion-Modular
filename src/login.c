@@ -13,6 +13,7 @@
 #include "../include/login.h"
 #include "../include/inventario.h"
 #include "../include/contabilidad.h"
+#include "../include/compra.h"
 //#include"inventario.h"
 
 // Usuario actual que esta ejecutando el programa.
@@ -100,7 +101,7 @@ int login_menu()
 		break; //return ventas_menu();
 	case CONTABILIDAD:
 		return contabilidad_menu();
-		
+
 	case SALIR:
 		fflush(stdout);
 		system("cls||clear");

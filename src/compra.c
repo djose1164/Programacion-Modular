@@ -27,7 +27,6 @@ bool compra_historial()
     getchar();
 }
 
-
 int obtener_suplidor_suma()
 {
     int sum = 0;
@@ -75,6 +74,7 @@ bool crear_productos()
     clear_screen();
     printf("Nombre del producto: ");
     fgets(nombre, sizeof(nombre), stdin);
+    nombre[strcspn(nombre, "\n")] = 0;
 
     printf("Precio del producto: ");
     fgets(temp, sizeof(temp), stdin);
@@ -93,6 +93,11 @@ bool crear_productos()
             strcpy(suplir_producto->producto_nombre, nombre);
             suplir_producto[i].precio = precio;
             suplir_producto[i].cantidad = cantidad;
+
+            if (!save_product(suplir_producto[i].producto_nombre,
+                              suplir_producto[i].precio, suplir_producto[i].cantidad))
+                fprintf(stderr, "Bobo dectetado.\n");
+
             _temp = false;
         }
     }
@@ -139,7 +144,6 @@ bool compar_productos()
                     comprar_producto[i].comprado = true;
                     strcpy(comprar_producto[i].nombre,
                            suplir_producto[j].producto_nombre);
-                           comprar_producto[i].nombre[strcspn(comprar_producto[i].nombre,"\n")] = 0;
                     comprar_producto[i].precio = suplir_producto[j].precio;
                     comprar_producto[i].cantidad = suplir_producto[j].cantidad;
 
@@ -213,7 +217,10 @@ bool compras_menu()
         break;
 
     case HISTORIAL_DEL_PRODUCTO:
-        compra_historial();
+        clear_screen();
+        report_inventory();
+        getchar();
+        getchar();
         break;
 
     case SALIR_COMPRA:

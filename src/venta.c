@@ -151,6 +151,7 @@ int edit_orders()
     bool flag;
     char _temp[sizeof(int) + sizeof(unsigned)];
     unsigned temp = 0;
+    int cantidad;
 
     getchar();
     clear_screen();
@@ -169,8 +170,10 @@ int edit_orders()
             fgets(_temp, sizeof(_temp), stdin);
             sscanf(_temp, "%d", &Facturas[i].Cantidad);
 
-            Facturas[i].Cantidad *= -1;
-            flag = edit_availableQuantity(id, Facturas[i].Cantidad);
+            
+            cantidad = Facturas[i].Cantidad;
+            cantidad *= -1; 
+            flag = edit_availableQuantity(id, cantidad);
             printf("Exito!");
             break;
         }
@@ -186,7 +189,7 @@ int edit_orders()
     {
         clear_screen();
         printf("\t\t\aHa modificado la cantidad del producto\n\n"
-               "\tPresiona 'm' para volver al inventario  o  cualquier otra tecla "
+               "\tPresiona 'm' para volver al menu anterior o  cualquier otra tecla "
                "\tpara salir.\n");
         while ((c = getchar()) != '\n' || (c = getchar()) != '\r')
             if (c == 'm')
@@ -198,7 +201,7 @@ int edit_orders()
     {
         printf("\a\tEl producto que has intentado modificar no existe.\n"
                "\tVerifica que hayas ingresado un id existente.\n"
-               "Presione cualquier tecla para volver a menu Inventario...");
+               "Presione cualquier tecla para volver a menu Ventas...");
         getch();
     }
     return false;

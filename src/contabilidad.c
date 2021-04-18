@@ -84,24 +84,31 @@ bool contabilidad_menu() /* Menu de Opciones disponibles en el Modulo de Contabi
     case REG_DEU:
         registro_compras();
         getchar();
+        return contabilidad_menu();
         break;
 
     case REG_ING:
         registro_ventas();
         getchar();
+        return contabilidad_menu();
         break;
 
     case MOD_DEU:
         modificar_compras();
+        getchar();
+        return contabilidad_menu();
         break;
 
     case MOD_ING:
         modificar_ventas();
+        getchar();
+        return contabilidad_menu();
         break;
 
     case DT:
         dinero_total();
         getchar();
+        return contabilidad_menu();
         break;
 
     case BACK_MENU:

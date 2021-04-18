@@ -35,7 +35,7 @@ void modificar_compras () /* Modifica el Registro de Compras existentes */
 {
     clear_screen();
     /* Modifica el Registro de Compras */
-    return editar();
+    return edit_product();
 }
 
 void modificar_ventas () /* Modifica el Registro de Ventas existentes */
